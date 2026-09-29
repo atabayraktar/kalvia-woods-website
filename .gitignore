@@ -1,0 +1,29 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+
+# env
+.env*.local
+
+# vercel
+.vercel
+
+# firebase
+.firebase/
+firebase-debug.log
+
+# typescript
+*.tsbuildinfo
+
+# claude tooling — local dev scripts, brand reference assets, raw source drops and
+# settings; not referenced by app code (everything needed is already processed into
+# public/), kept out of the repo entirely.
+.claude/

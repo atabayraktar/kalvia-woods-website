@@ -1,0 +1,195 @@
+// The dark walnut is the header's and footer's colour ONLY. Every child component (nav,
+// mobile menu panel) keeps consuming the generic tokens; re-scoping them here is what turns
+// the whole subtree light-on-wood. The logo images carry their own fixed wood-brown tone
+// and aren't affected by this — they read fine on both the ivory page and the wood bars.
+.site-header,
+.site-footer {
+  --surface: var(--wood-raised);
+  --border: var(--wood-line);
+  --ink: var(--wood-ink);
+  --ink-muted: var(--wood-muted);
+  --accent: var(--wood-accent);
+  --accent-hover: var(--wood-accent-hover);
+  --accent-wash: color-mix(in srgb, var(--wood-ink) 10%, var(--wood));
+  --shadow-surface: 0 10px 24px rgba(0, 0, 0, 0.35);
+  --shadow-raised: 0 14px 32px rgba(0, 0, 0, 0.4);
+}
+
+.site-header {
+  // A full-width walnut bar flush to the top edge. Fixed (not sticky) so it stays out of
+  // flow and the hero still starts at y=0 underneath it.
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-header);
+  transition: box-shadow 0.3s var(--ease-out);
+
+  // Lifts off the page once content is passing underneath (Header.jsx toggles it).
+  &.is-scrolled {
+    box-shadow: var(--shadow-bar);
+  }
+
+  // Content aligns with the page container below it.
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding: 12px var(--container-pad);
+    min-height: var(--header-height);
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  &__logo-link {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    height: 48px;
+    width: auto;
+
+    @media (min-width: 1024px) {
+      height: 56px;
+    }
+  }
+
+  // Nav + burger read as one grouped cluster on the right.
+  &__nav-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    flex-shrink: 0;
+  }
+
+  &__nav {
+    display: none;
+
+    @media (min-width: 900px) {
+      display: block;
+    }
+
+    ul {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    // Plain text, not buttons: full wood-ink at rest, honey on hover
+    // (.accent-hover:hover is more specific than this rule, so hover still wins).
+    a {
+      font-family: var(--font-body);
+      font-variation-settings: 'wght' 450, 'wdth' 95;
+      font-size: 16px;
+      white-space: nowrap;
+      color: var(--ink);
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  // Drops from the bar as a raised walnut panel, inset from the sides.
+  &__mobile-menu {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: var(--space-3);
+    right: var(--space-3);
+    // Show/hide is Surface.scss's --veil (opacity); this block only owns the slide.
+    transform: translateY(-8px);
+
+    &.is-open {
+      transform: translateY(0);
+    }
+
+    @media (min-width: 900px) {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transform: none;
+    }
+  }
+
+  &__mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-5);
+
+    nav ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    nav a {
+      font-size: 18px;
+      font-family: var(--font-display);
+      font-variation-settings: 'wght' 300, 'wdth' 118;
+      display: block;
+      padding: var(--space-2) var(--space-3);
+      margin-inline: calc(var(--space-3) * -1);
+      border-radius: var(--radius);
+      color: var(--ink);
+      transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--accent-wash);
+      }
+    }
+  }
+}
+
+.nav__burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+
+  @media (min-width: 900px) {
+    display: none;
+  }
+
+  span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+  }
+
+  &[aria-expanded='true'] {
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}

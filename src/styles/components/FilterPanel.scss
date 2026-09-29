@@ -1,0 +1,155 @@
+@use '../marks' as *;
+
+.filter-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.filter-panel__title {
+  @include eyebrow;
+  color: var(--ink);
+}
+
+.filter-panel__reset {
+  font-size: 13px;
+  color: var(--ink-muted);
+  transition: color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent-hover);
+  }
+}
+
+.filter-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+// Flat rows; the selected category gets the accent wash and its label underlined.
+.filter-panel__item {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-size: 14.5px;
+  color: var(--ink-muted);
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent-wash);
+    color: var(--ink);
+  }
+
+  &--active {
+    background: var(--accent-wash);
+    color: var(--accent);
+    font-variation-settings: 'wght' 500, 'wdth' 95;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+}
+
+// Mobile full-screen filter sheet. Always in the DOM (see FilterPanel.jsx); the scrim
+// fades its background-color, the sheet itself fades via Surface.scss's --veil.
+.filter-sheet__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+
+  // The scrim is a ::before sibling of the sheet. Pseudo-elements aren't event targets, so
+  // the mousedown-to-close check in FilterPanel.jsx still sees the wrapper as the target.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(36, 26, 18, 0);
+    transition: background-color 0.18s var(--ease-out);
+  }
+
+  &.is-open {
+    pointer-events: auto;
+
+    &::before {
+      background-color: rgba(36, 26, 18, 0.45);
+      transition: background-color 0.24s var(--ease-out);
+    }
+  }
+
+  @media (min-width: 640px) {
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+  }
+}
+
+.filter-sheet {
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 0;
+  // Show/hide opacity is Surface.scss's --veil; this block only owns the slide direction.
+  transform: translateY(24px);
+
+  &.is-open {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 640px) {
+    max-width: 420px;
+    max-height: 80vh;
+    border-radius: var(--radius);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+  }
+}
+
+.filter-sheet__content {
+  padding: var(--space-5);
+}
+
+.filter-sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.filter-sheet__heading {
+  font-family: var(--font-display);
+  font-variation-settings: 'wght' 300, 'wdth' 118;
+  font-size: 20px;
+}
+
+.filter-sheet__close {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: background-color 0.3s var(--ease-out), border-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--wood-ink);
+  }
+}

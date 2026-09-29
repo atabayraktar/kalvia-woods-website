@@ -1,0 +1,91 @@
+@use '../marks' as *;
+
+// Unlike the homepage's hero (deliberately full-bleed under the fixed header), this is
+// a plain content page — its own top padding clears the fixed header.
+.products-page {
+  padding-top: calc(var(--header-height) + var(--space-8));
+  padding-bottom: var(--space-9);
+}
+
+.products-page__title {
+  font-size: clamp(28px, 4vw, 44px);
+  margin-bottom: var(--space-3);
+}
+
+.products-page__intro {
+  color: var(--ink-muted);
+  font-size: 16px;
+  max-width: 60ch;
+  margin-bottom: var(--space-6);
+}
+
+.products-page__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.products-page__toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+// Only the entry point into the mobile filter sheet — the desktop sidebar panel handles
+// filtering directly above 900px.
+.products-page__filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 11px 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-surface);
+  transition: border-color 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+  flex-shrink: 0;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+  }
+
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
+
+.products-page__layout {
+  display: grid;
+  gap: var(--space-6);
+
+  @media (min-width: 900px) {
+    grid-template-columns: 220px 1fr;
+    align-items: start;
+  }
+}
+
+.products-page__filter-panel {
+  display: none;
+
+  @media (min-width: 900px) {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}
+
+.products-page__results {
+  min-width: 0;
+}

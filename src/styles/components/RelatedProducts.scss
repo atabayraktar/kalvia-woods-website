@@ -1,0 +1,85 @@
+.related-products {
+  margin-top: var(--space-9);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border);
+}
+
+.related-products__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.related-products__title {
+  font-size: clamp(21px, 2.6vw, 28px);
+}
+
+// Same square icon-button system as CategorySlider's arrows.
+.related-products__arrows {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.related-products__control {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  .related-products__control-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// This container's own border-box clips the overflowing track (the section already sits
+// inside .container). Small padding so the cards' shadows aren't clipped.
+.related-products__track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--space-1) var(--space-1) var(--space-3);
+  margin-inline: calc(var(--space-1) * -1);
+  scrollbar-width: none;
+  cursor: grab;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+
+    .related-products__card {
+      pointer-events: none;
+    }
+  }
+}
+
+.related-products__card {
+  flex: 0 0 auto;
+  width: 60vw;
+  max-width: 240px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  @media (min-width: 640px) {
+    width: 38vw;
+    max-width: 240px;
+  }
+
+  @media (min-width: 1024px) {
+    // Exactly 4 cards + 3 gaps fill the row with no partial 5th card peeking in at rest.
+    width: calc((100% - 3 * 20px) / 4);
+    max-width: none;
+  }
+}

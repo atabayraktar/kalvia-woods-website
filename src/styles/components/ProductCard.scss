@@ -1,0 +1,129 @@
+@use '../marks' as *;
+
+// Flat white card on the ivory page: hairline border, image well on the alt tint, copy
+// beneath. The whole card is the link; hover lifts it and lights the border.
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-surface);
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.35s var(--ease-out), transform 0.35s var(--ease-spring);
+}
+
+a.product-card:hover,
+a.product-card:focus-visible {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-2px);
+}
+
+// Image well with the registration marks — the site's signature, drawn over the corners.
+.product-card__image-wrap {
+  @include reg-marks(10px);
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+
+  // Non-overshooting curve on the way back to rest; the hover rule below restores the
+  // springier entrance.
+  img {
+    transition: transform 0.4s var(--ease-out);
+  }
+}
+
+.product-card:hover .product-card__image-wrap img,
+.product-card:focus-visible .product-card__image-wrap img {
+  transform: scale(1.05);
+  transition: transform 0.6s var(--ease-spring);
+}
+
+// "Yeni" tag: honey fill, dark label (4.5:1), small caps.
+.product-card__badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 3;
+  padding: 5px 10px;
+  border-radius: var(--radius);
+  background: var(--accent-fill);
+  color: var(--ink);
+  font-size: 11px;
+  font-variation-settings: 'wght' 600, 'wdth' 95;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// Out-of-stock: the card is a plain <div>, not a link — dim the media and copy, but keep
+// the "Stokta Yok" badge at full strength so the state is read from text.
+.product-card--out-of-stock {
+  cursor: default;
+
+  .product-card__image-wrap img {
+    opacity: 0.45;
+    filter: grayscale(0.35);
+  }
+
+  .product-card__body {
+    opacity: 0.6;
+  }
+
+  &:hover .product-card__image-wrap img {
+    transform: none;
+  }
+
+  .product-card__badge--stock {
+    opacity: 1;
+    background: var(--surface);
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+  }
+}
+
+.product-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--space-4);
+}
+
+.product-card__name {
+  font-family: var(--font-display);
+  font-variation-settings: 'wght' 340, 'wdth' 108;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.product-card__variant {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.product-card__price {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-block: var(--space-1) var(--space-3);
+
+  // A real amount is data: mono utility face, terracotta.
+  &--amount {
+    @include mono-label;
+    font-size: 14px;
+    color: var(--accent);
+  }
+}
+
+.product-card__cta {
+  align-self: flex-start;
+}
+
+.product-card__cta-content {
+  display: block;
+  padding: 8px 16px;
+  font-size: 13px;
+}

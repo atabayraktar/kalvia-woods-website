@@ -1,0 +1,187 @@
+@use '../marks' as *;
+
+.product-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.product-gallery__main {
+  position: relative;
+}
+
+// Plays whenever the main image changes (the <Image> is keyed on its src). transform only,
+// deliberately not opacity — the ancestor already fades in via [data-reveal].
+.product-gallery__image-wrap img {
+  animation: gallery-image-in 0.5s var(--ease-out);
+}
+
+@keyframes gallery-image-in {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-gallery__image-wrap img {
+    animation: none;
+  }
+}
+
+// Main frame: white well with a hairline border and the registration marks in its corners.
+.product-gallery__image-wrap {
+  @include reg-marks(12px);
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  // object-fit:contain (set on the <Image>) always shows the whole shot, letterboxed on
+  // the surface colour for anything that isn't already square.
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  transition: border-color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+  }
+}
+
+// A gallery slide that's genuinely a video — same box as the image slide, native controls.
+.product-gallery__video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--ink);
+  border: 1px solid var(--border);
+}
+
+.product-gallery__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-gallery__thumb-video {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-alt);
+  color: var(--ink);
+}
+
+.product-gallery__zoom-hint {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-surface);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.product-gallery__image-wrap:hover .product-gallery__zoom-hint,
+.product-gallery__image-wrap:focus-visible .product-gallery__zoom-hint {
+  opacity: 1;
+}
+
+// No hover on touch devices — the hint has to just be visible there.
+@media (hover: none) {
+  .product-gallery__zoom-hint {
+    opacity: 1;
+  }
+}
+
+// Same square icon-button system as the category slider's arrows.
+.product-gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  // Surface.scss's generic hover lift would drop the vertical centering — keep the
+  // translateY and only add the press scale.
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-50%);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.96);
+  }
+
+  &--prev {
+    left: var(--space-3);
+  }
+
+  &--next {
+    right: var(--space-3);
+  }
+}
+
+.product-gallery__arrow-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-gallery__thumbs {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  // As a flex child in a column layout this element's automatic minimum size is its
+  // content's min-content width — min-width:0 keeps it scrolling internally instead of
+  // widening the page on narrow phones.
+  min-width: 0;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Thumbnails: hairline frames, terracotta when active.
+.product-gallery__thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  transition: border-color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--ink-muted);
+  }
+
+  &--active,
+  &--active:hover {
+    border-color: var(--accent);
+  }
+}

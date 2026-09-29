@@ -1,0 +1,166 @@
+// Flat panel (Surface.jsx): white card on the ivory page, hairline border, soft light
+// shadow. Interaction = border/colour shift + a one-pixel lift, nothing else. Modifiers set
+// the fill / line / label colours; consumers only ever pad the __content wrapper.
+.surface {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-surface);
+  color: var(--ink);
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out),
+    background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+
+  &__content {
+    position: relative;
+    display: block;
+  }
+}
+
+// Interactive shells (links/buttons) answer the pointer with an accent border + a slight
+// lift; pressed state settles back down.
+a.surface,
+button.surface {
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-raised);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: var(--shadow-surface);
+  }
+}
+
+// Primary CTA: terracotta fill, light label (4.7:1). Hover deepens the fill.
+.surface--cta {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--wood-ink);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+}
+
+// Square icon buttons (slider/gallery arrows, the corner FABs).
+.surface--icon {
+  color: var(--ink);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent-wash);
+    color: var(--accent-hover);
+  }
+}
+
+// Large structural panes (contact form, banner panel, dropdown/sheet panels): no hover
+// lift — a whole panel lurching under the cursor reads as a glitch.
+.surface--calm {
+  &:hover,
+  &:focus-visible {
+    transform: none;
+    border-color: var(--border);
+    box-shadow: var(--shadow-surface);
+  }
+}
+
+// The wood bars (header, footer): full-width walnut rectangles flush to the viewport edge —
+// no border, no radius, no card shadow (the header's own scroll shadow lives in Header.scss).
+.surface--flush {
+  background: var(--wood);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--wood-ink);
+}
+
+// ─── Show/hide ────────────────────────────────────────────────────────────────────────
+$veil-in: 0.24s;
+$veil-out: 0.18s;
+$peel-in: 0.3s;
+$peel-out: 0.2s;
+
+// Veil — always-mounted panels toggled with .is-open (mobile nav, filter sheet, promo
+// card). The component owns the closed/open `transform` (its slide direction); this block
+// owns opacity + pointer-events. Closed-state declarations carry the CLOSE timings,
+// .is-open the OPEN timings.
+.surface--veil {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $veil-out var(--ease-out), transform $veil-out var(--ease-out),
+    box-shadow $veil-out var(--ease-out);
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity $veil-in var(--ease-out), transform $veil-in var(--ease-spring),
+      box-shadow $veil-in var(--ease-out);
+  }
+}
+
+// Peel — popovers that mount on open and unmount after usePresence's exit timer (language
+// dropdown, sort menu, stock filter). Keyframe-driven because the node is fresh on every
+// open. Separate *-out keyframe names on purpose (see globals.scss's modal-fade note).
+.surface--peel {
+  animation: surface-peel $peel-in var(--ease-spring);
+
+  &.is-closing {
+    pointer-events: none;
+    animation: surface-peel-out $peel-out var(--ease-out) forwards;
+  }
+}
+
+@keyframes surface-peel {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes surface-peel-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.surface,
+  button.surface {
+    &:hover,
+    &:focus-visible,
+    &:active {
+      transform: none;
+    }
+  }
+
+  .surface--veil,
+  .surface--veil.is-open {
+    transition: none;
+  }
+
+  .surface--peel {
+    animation: none;
+  }
+
+  // Without the exit animation a closing popover would sit fully visible until usePresence
+  // unmounts it — hide it outright instead.
+  .surface--peel.is-closing {
+    visibility: hidden;
+  }
+}

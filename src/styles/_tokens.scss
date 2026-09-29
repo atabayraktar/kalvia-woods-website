@@ -1,0 +1,82 @@
+// Kalvia Woods design tokens — the single source of truth for colour, motion, spacing and
+// layout. "Atölye" (open workshop): a light, warm-ivory page body with the dark walnut
+// appearing ONLY as the header and footer bars that frame it. Flat shapes, one small
+// radius, soft light shadows. No light/dark toggle, no gradient system, no glass /
+// backdrop-blur system, no clip-path shape tricks. Do not add any of them back.
+
+:root {
+  // ─── Colour (the ONLY colour tokens — every component consumes these) ─────────────
+  --bg: #f7f3ec; // page background — warm ivory / pale wood
+  --surface: #ffffff; // cards / panels on top of --bg
+  --surface-alt: #f1eae0; // subtle alternate section tint
+  --ink: #241a12; // primary text — near-black warm brown
+  --ink-muted: #7c6b5a; // secondary / meta text
+  --border: #e3d8c8; // hairline borders / dividers
+  --wood: #1e1611; // dark walnut — header, footer, and their own content only
+  --wood-ink: #f2e8dc; // text / icons ON the wood bars
+  --accent: #a15a2e; // terracotta — links, icons, text accents, primary CTA fill (4.7:1 on --bg)
+  --accent-fill: #b07a45; // honey — badges / selected chips carrying a dark (--ink) label
+  --accent-hover: #8b4a24; // darker terracotta for hover / active in both roles
+
+  // Derived mixes for content that sits ON the wood bars (Header.scss / Footer.scss scope
+  // the generic tokens to these, so every child component recolours without knowing).
+  --wood-muted: color-mix(in srgb, var(--wood-ink) 66%, var(--wood));
+  --wood-raised: color-mix(in srgb, var(--wood) 90%, var(--wood-ink));
+  --wood-line: color-mix(in srgb, var(--wood-ink) 16%, var(--wood));
+  --wood-accent: var(--accent-fill); // honey reads 4.5:1 on walnut; terracotta would not
+  --wood-accent-hover: color-mix(in srgb, var(--accent-fill) 72%, var(--wood-ink));
+  // Light accent wash for hover backgrounds on the ivory page.
+  --accent-wash: color-mix(in srgb, var(--accent) 8%, var(--surface));
+
+  // ─── Motion ───────────────────────────────────────────────────────────────────────
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 2.2);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  // ─── Shape — flat and crisp: ONE soft radius, used everywhere (not a pill) ────────
+  --radius: 8px;
+  // Registration mark (the site's one signature detail — see _marks.scss).
+  --mark-size: 12px;
+
+  // ─── Spacing scale (4/8pt rhythm) ─────────────────────────────────────────────────
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  // ─── Layout ───────────────────────────────────────────────────────────────────────
+  --container-max: 1440px;
+  --container-pad: clamp(20px, 5vw, 64px);
+  --header-height: 80px;
+
+  // ─── Elevation — soft, low, warm-neutral (a light theme wants lift, not drama) ─────
+  --shadow-surface: 0 1px 2px rgba(36, 26, 18, 0.06), 0 6px 16px rgba(36, 26, 18, 0.05);
+  --shadow-raised: 0 2px 4px rgba(36, 26, 18, 0.06), 0 14px 32px rgba(36, 26, 18, 0.09);
+  --shadow-bar: 0 2px 14px rgba(36, 26, 18, 0.16); // the fixed header once content scrolls under
+
+  // ─── z-index scale ────────────────────────────────────────────────────────────────
+  --z-base: 0;
+  --z-content: 10;
+  --z-surface: 20;
+  --z-header: 40;
+  --z-fab: 60;
+  --z-modal: 100;
+}
+
+// Typography fallback stacks. --font-archivo/--font-hanken/--font-plex-mono are injected by
+// next/font/google as CSS vars scoped to the .font-root wrapper div (see _app.jsx), NOT to
+// :root — so --font-display/--font-body/--font-mono must be declared on that same element.
+// Custom properties substitute var() at the element where they're DECLARED, then inherit
+// the already-resolved value — declaring `--font-display: var(--font-archivo), …` at :root
+// would resolve --font-archivo before it exists there, permanently invalidating
+// --font-display (and silently falling back every consumer to the browser's default serif).
+.font-root {
+  --font-display: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
+  --font-body: var(--font-hanken), 'Helvetica Neue', Arial, sans-serif;
+  // Utility face for data-like labels only (see the mono-label mixin in _marks.scss).
+  --font-mono: var(--font-plex-mono), ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}

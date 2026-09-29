@@ -1,0 +1,43 @@
+@use '../marks' as *;
+
+.variant-picker {
+  width: 100%;
+  margin-bottom: var(--space-5);
+}
+
+.variant-picker__label {
+  @include eyebrow;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.variant-picker__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+// Outlined flat chips; the selected one fills honey with a dark label.
+.variant-picker__option {
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 13.5px;
+  color: var(--ink-muted);
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  &--active,
+  &--active:hover {
+    background: var(--accent-fill);
+    border-color: var(--accent-fill);
+    color: var(--ink);
+  }
+}

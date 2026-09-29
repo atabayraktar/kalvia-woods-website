@@ -1,0 +1,85 @@
+// The bottom walnut rail (.surface--flush): full width, flush to the very bottom of the
+// page, no inset. Token re-scoping to the wood palette lives in Header.scss (shared rule).
+.site-footer {
+  margin: var(--space-8) 0 0;
+
+  @media (min-width: 768px) {
+    margin-top: var(--space-9);
+  }
+}
+
+// Three-part layout — logo / copy / icons — with the copy genuinely centered on the row
+// via a 1fr/auto/1fr grid. Aligned to the page container.
+.site-footer__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: var(--space-4);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--container-pad);
+  text-align: center;
+
+  @media (min-width: 700px) {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-5);
+  }
+}
+
+.site-footer__logo {
+  display: flex;
+  align-items: center;
+
+  @media (min-width: 700px) {
+    justify-self: start;
+  }
+}
+
+.site-footer__logotype {
+  height: 36px;
+  width: auto;
+}
+
+.site-footer__center {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  @media (min-width: 700px) {
+    justify-self: center;
+  }
+}
+
+.site-footer__rights {
+  color: var(--ink-muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.site-footer__icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  @media (min-width: 700px) {
+    justify-self: end;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    color: var(--ink-muted);
+    transition: color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--accent-hover);
+      background: var(--accent-wash);
+    }
+  }
+}

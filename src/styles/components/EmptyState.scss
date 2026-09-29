@@ -1,0 +1,44 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-9) var(--space-4);
+  color: var(--ink-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.empty-state__title {
+  font-family: var(--font-display);
+  font-variation-settings: 'wght' 300, 'wdth' 118;
+  font-size: 20px;
+  color: var(--ink);
+  margin-top: var(--space-5);
+}
+
+.empty-state__info {
+  font-size: 14.5px;
+  max-width: 40ch;
+  margin-top: var(--space-2);
+}
+
+// Outlined flat button.
+.empty-state__reset {
+  margin-top: var(--space-5);
+  font-size: 14px;
+  font-variation-settings: 'wght' 450, 'wdth' 95;
+  color: var(--accent);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent-wash);
+    border-color: var(--accent);
+    color: var(--accent-hover);
+  }
+}

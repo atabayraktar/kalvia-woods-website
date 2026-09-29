@@ -1,0 +1,59 @@
+// Atölye shared helpers.
+//
+// reg-marks() — the site's one signature detail: flat L-shaped "registration marks" (print
+// alignment / focus-bracket ticks), 1px lines in the accent colour, drawn ON TOP of a plain
+// rectangle at its top-left and bottom-right corners. They never change the box's shape.
+// Used sparingly: the hero copy block, product / gallery / about image frames, the active
+// filter item. Not on every element.
+//   $inset  distance from the corner. Negative sits just outside the box (needs no
+//           overflow:hidden on the element); positive sits inside, over the content.
+//   $color  the mark colour.
+// Uses both pseudo-elements — the element must not need them for anything else.
+@mixin reg-marks($inset: 8px, $size: var(--mark-size), $color: var(--accent)) {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: $size;
+    height: $size;
+    border: 0 solid $color;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    top: $inset;
+    left: $inset;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  &::after {
+    bottom: $inset;
+    right: $inset;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+}
+
+// The one utility face: IBM Plex Mono for short data-like labels only (price, product code,
+// spec lines, pagination numbers, counters). Resets the body face's variable-axis settings,
+// which a static font would otherwise carry as dead weight.
+@mixin mono-label($weight: 500) {
+  font-family: var(--font-mono);
+  font-variation-settings: normal;
+  font-weight: $weight;
+  letter-spacing: 0.01em;
+  font-feature-settings: 'tnum' 1;
+}
+
+// Small uppercase eyebrow / meta label.
+@mixin eyebrow {
+  font-size: 12px;
+  font-variation-settings: 'wght' 500, 'wdth' 95;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}

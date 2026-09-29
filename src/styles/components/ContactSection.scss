@@ -1,0 +1,239 @@
+@use '../marks' as *;
+
+// Sits on the alternate tint so the white map / form panels read as objects on a worktop.
+.contact-section {
+  padding-block: var(--space-8);
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border);
+  // Clears the fixed header when the nav's "#iletisim" link scrolls here.
+  scroll-margin-top: var(--header-height);
+
+  @media (min-width: 768px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.contact-section__title {
+  font-size: clamp(24px, 3.2vw, 36px);
+  margin-bottom: var(--space-6);
+}
+
+.contact-section__grid {
+  display: grid;
+  gap: var(--space-5);
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
+  }
+}
+
+// Embedded map — the whole frame is one big link out to Google Maps.
+.contact-section__map {
+  position: relative;
+  min-height: 280px;
+  height: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-surface);
+}
+
+.contact-section__map-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  // Slightly desaturated so the default Google palette sits quietly on the ivory page.
+  filter: saturate(0.75) contrast(0.95);
+}
+
+.contact-section__map-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+  transition: background-color 0.3s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(161, 90, 46, 0.08);
+  }
+}
+
+.contact-section__form-content {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.contact-section__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  label {
+    @include eyebrow;
+    color: var(--ink);
+  }
+
+  // Flat fields: ivory well, hairline border, terracotta ring on focus.
+  input,
+  textarea {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    padding: 13px 14px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    resize: vertical;
+    transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+
+    &::placeholder {
+      color: var(--ink-muted);
+    }
+
+    &:hover {
+      border-color: var(--ink-muted);
+    }
+
+    // Accent-toned error state instead of the browser's default red outline — validation
+    // is fully custom (form has noValidate), driven by aria-invalid so it only lights up
+    // after a real submit attempt. Kept BEFORE :focus-visible so the focus ring wins.
+    &[aria-invalid='true'] {
+      border-color: var(--accent);
+      background: var(--accent-wash);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-wash), inset 0 0 0 1px var(--accent);
+    }
+  }
+}
+
+// Always in the DOM (see ContactSection.jsx) so its min-height reserves the same space
+// whether or not there's an error.
+.contact-section__error {
+  min-height: 20.5px;
+  font-size: 12.5px;
+  color: var(--accent-hover);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-out);
+
+  &.is-visible {
+    opacity: 1;
+  }
+
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: 4px;
+    height: 4px;
+    background: currentColor;
+  }
+}
+
+.contact-section__submit {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+
+.contact-section__submit-content {
+  display: block;
+  padding: 13px 28px;
+  font-size: 15px;
+}
+
+// Single row of contact info: 2x2 on mobile, one row of four from 480px up.
+.contact-section__info-row {
+  margin-top: var(--space-7);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(4, auto);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  li {
+    display: flex;
+    min-width: 0;
+  }
+}
+
+// The whole item is one link (icon + label + value).
+.contact-section__info-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  border-radius: var(--radius);
+  transition: transform 0.3s var(--ease-spring);
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-1px);
+
+    .contact-section__info-value {
+      color: var(--accent-hover);
+    }
+
+    .contact-section__info-icon {
+      border-color: var(--accent);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+}
+
+.contact-section__info-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s var(--ease-out);
+
+  &--whatsapp {
+    color: #25d366;
+  }
+}
+
+.contact-section__info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.contact-section__info-value {
+  font-size: 14px;
+  color: var(--ink);
+  transition: color 0.3s var(--ease-out);
+}
+
+.contact-section__info-label {
+  @include eyebrow;
+  font-size: 11px;
+}

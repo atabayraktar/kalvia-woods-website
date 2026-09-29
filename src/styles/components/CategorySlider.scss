@@ -1,0 +1,188 @@
+.category-slider {
+  padding-block: var(--space-8);
+
+  @media (min-width: 768px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.category-slider__head {
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-3);
+}
+
+.category-slider__title {
+  font-size: clamp(24px, 3.4vw, 38px);
+}
+
+// The bottom line of a two-line title reads as bold — applied via font-variation-settings
+// specifically: the app-wide weight on .font-root is a registered variable-axis value, and
+// inherited variation-settings win over a plain font-weight declaration.
+.category-slider__title-line--bold {
+  font-variation-settings: 'wght' 600, 'wdth' 118;
+}
+
+// Arrows at the far right of the title row — mobile-only. Hidden from tablet up, where the
+// section becomes a static 4-up grid with nothing to scroll.
+.category-slider__arrows {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+
+  @media (min-width: 640px) {
+    display: none;
+  }
+}
+
+.category-slider__control {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  .category-slider__control-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Non-scrolling wrapper: carries the same left/right inset as every other section's
+// .container, and its own border-box clips the track's peeking cards at rest.
+.category-slider__viewport {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+// Mobile: a plain scrollable (non-looping) row — native touch/trackpad scrolling plus
+// mouse-drag (see CategorySlider.jsx). From tablet up it becomes a static grid.
+.category-slider__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  padding-bottom: var(--space-2);
+  scrollbar-width: none;
+  cursor: grab;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // Applied for the duration of a mouse drag — turns off snap and card hover affordances
+  // so the drag tracks the cursor 1:1.
+  &.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+
+    .category-slider__card {
+      pointer-events: none;
+    }
+  }
+
+  @media (min-width: 640px) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+    cursor: auto;
+  }
+}
+
+.category-slider__card {
+  display: block;
+  flex: 0 0 auto;
+  width: 45vw;
+  max-width: 220px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  // Snapping the last card to "end" makes its right edge the snap target, so the scroll
+  // simply stops there with nothing left over.
+  &:last-child {
+    scroll-snap-align: end;
+  }
+
+  @media (min-width: 640px) {
+    width: auto;
+    max-width: none;
+  }
+}
+
+// Flat image tile: hairline frame on the alt tint, title overlaid on a grounded scrim.
+.category-slider__image-wrap {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-surface);
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.35s var(--ease-out);
+
+  // Non-overshooting curve on the way back to rest; the hover rule below restores the
+  // springier entrance.
+  img {
+    transition: transform 0.4s var(--ease-out);
+  }
+}
+
+// A grounded scrim so the overlaid title stays legible over any photo.
+.category-slider__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(30, 22, 17, 0.72) 0%, rgba(30, 22, 17, 0.2) 45%, transparent 70%);
+  pointer-events: none;
+}
+
+.category-slider__card:hover .category-slider__image-wrap,
+.category-slider__card:focus-visible .category-slider__image-wrap {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-raised);
+}
+
+.category-slider__card:hover .category-slider__image-wrap img,
+.category-slider__card:focus-visible .category-slider__image-wrap img {
+  transform: scale(1.05);
+  transition: transform 0.6s var(--ease-spring);
+}
+
+// Reveal stagger: cards trail each other by 40ms as the row enters the viewport.
+.category-slider__track {
+  @for $i from 1 through 8 {
+    .category-slider__card:nth-child(#{$i}) {
+      --reveal-delay: #{($i - 1) * 40}ms;
+    }
+  }
+}
+
+// Overlaid on the image, anchored to the bottom-left corner. Light on the scrim; the
+// .accent-hover ancestor rule in globals.scss turns it terracotta on card hover.
+.category-slider__card-title {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 1;
+  font-family: var(--font-display);
+  font-variation-settings: 'wght' 320, 'wdth' 118;
+  font-size: clamp(19px, 2.6vw, 24px);
+  line-height: 1.15;
+  color: var(--wood-ink);
+}
+
+.category-slider__card:hover .category-slider__card-title,
+.category-slider__card:focus-visible .category-slider__card-title {
+  color: var(--accent-fill);
+}

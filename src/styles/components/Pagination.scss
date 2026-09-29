@@ -1,0 +1,61 @@
+@use '../marks' as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+}
+
+.pagination__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), opacity 0.25s var(--ease-out);
+
+  &:hover:not(:disabled) {
+    background: var(--surface);
+    border-color: var(--border);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
+
+.pagination__list {
+  display: flex;
+  gap: 2px;
+}
+
+// Page numbers are data: mono utility face. Flat squares; the current page is terracotta.
+.pagination__page {
+  @include mono-label;
+  min-width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-size: 13.5px;
+  color: var(--ink-muted);
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+
+  &:hover {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--ink);
+  }
+
+  &--active,
+  &--active:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--wood-ink);
+  }
+}

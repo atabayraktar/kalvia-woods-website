@@ -1,0 +1,96 @@
+@use '../marks' as *;
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.product-info__name {
+  font-size: clamp(26px, 3.2vw, 38px);
+  margin-bottom: var(--space-3);
+}
+
+.product-info__tagline {
+  font-size: 16px;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.product-info__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+// Price and product code are data: mono utility face.
+.product-info__price {
+  @include mono-label;
+  font-size: 22px;
+  color: var(--accent);
+}
+
+.product-info__code {
+  @include mono-label(400);
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+
+.product-info__description {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin-bottom: var(--space-3);
+
+  &:last-of-type {
+    margin-bottom: var(--space-5);
+  }
+}
+
+.product-info__features {
+  width: 100%;
+  margin-bottom: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.product-info__features-label {
+  @include eyebrow;
+  margin-bottom: var(--space-3);
+}
+
+// Spec lines ("Malzeme: …", "Ölçü: …") are data: mono utility face, small square ticks.
+.product-info__features-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  li {
+    @include mono-label(400);
+    position: relative;
+    padding-left: var(--space-4);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+    }
+  }
+}
+
+.product-info__cta-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 15px 28px;
+  font-size: 15px;
+}

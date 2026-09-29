@@ -1,0 +1,57 @@
+// Tag-qualified (not just `.whatsapp-fab`) because Surface.scss's generic hover/active lift
+// is written as `a.surface:hover` / `a.surface:active` — a bare class selector here would
+// lose that specificity fight (the tag qualifier outweighs an extra class), so hovering would
+// silently replace the --fab-lift transform with a flat translateY(-1px), snapping the button
+// down whenever it's lifted clear of the footer. Matching the tag qualifier lets source order
+// (this file loads after Surface.scss) decide instead.
+a.whatsapp-fab {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-fab);
+  width: 56px;
+  height: 56px;
+  opacity: 1;
+  pointer-events: auto;
+  // --fab-lift (WhatsAppFab.jsx, scroll-driven) is 0 until the footer's top edge starts
+  // rising past this rest position, then tracks the overlap 1:1.
+  transform: translateY(calc(var(--fab-lift, 0px) * -1));
+  transition: opacity 0.3s var(--ease-out), transform 0.4s var(--ease-spring), border-color 0.25s var(--ease-out),
+    box-shadow 0.35s var(--ease-out), background-color 0.25s var(--ease-out);
+
+  // Surface.scss's generic hover lift would fight the --fab-lift transform; keep the
+  // border/shadow response only.
+  &:hover,
+  &:focus-visible {
+    transform: translateY(calc(var(--fab-lift, 0px) * -1));
+  }
+
+  &:active {
+    transform: translateY(calc(var(--fab-lift, 0px) * -1)) scale(0.97);
+  }
+
+  @media (min-width: 768px) {
+    right: var(--space-6);
+    bottom: var(--space-6);
+  }
+}
+
+.whatsapp-fab__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// WhatsApp's own green (a third-party mark, not a palette token).
+.whatsapp-fab__badge {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius);
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

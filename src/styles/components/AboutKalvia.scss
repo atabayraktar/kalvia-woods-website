@@ -1,0 +1,136 @@
+@use '../marks' as *;
+
+.about-kw {
+  padding-block: var(--space-8);
+  // Clears the fixed header when the nav's "#hakkimizda" link scrolls here.
+  scroll-margin-top: var(--header-height);
+
+  @media (min-width: 768px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.about-kw__top {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  margin-bottom: var(--space-8);
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: start;
+    text-align: left;
+  }
+}
+
+// Photo frame with the registration marks in its corners.
+.about-kw__image-wrap {
+  @include reg-marks(12px);
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-surface);
+}
+
+.about-kw__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 900px) {
+    align-items: flex-start;
+    justify-self: stretch;
+  }
+}
+
+.about-kw__title {
+  font-size: clamp(24px, 3.2vw, 36px);
+  margin-bottom: var(--space-4);
+}
+
+.about-kw__paragraph {
+  color: var(--ink);
+  font-size: 16.5px;
+  line-height: 1.7;
+  max-width: 46ch;
+
+  @media (min-width: 1280px) {
+    max-width: 47ch;
+  }
+}
+
+.about-kw__boxes {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+
+  @media (min-width: 560px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+// Card anatomy: big display stat + a quiet line icon on one row, description beneath —
+// the stat carries the hierarchy and goes terracotta on card hover.
+.about-kw__box {
+  &:hover {
+    border-color: var(--accent);
+  }
+}
+
+.about-kw__box-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  height: 100%;
+}
+
+// Reveal stagger — boxes trail each other by 40ms as the row enters.
+.about-kw__boxes {
+  @for $i from 1 through 5 {
+    .about-kw__box:nth-child(#{$i}) {
+      --reveal-delay: #{($i - 1) * 40}ms;
+    }
+  }
+}
+
+.about-kw__box-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.about-kw__stat.accent-hover {
+  font-family: var(--font-display);
+  font-variation-settings: 'wght' 300, 'wdth' 118;
+  font-size: clamp(26px, 2.2vw, 32px);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  // Full ink at rest — this is the card's headline (overrides .accent-hover's muted rest
+  // colour; the hover accent still applies).
+  color: var(--ink);
+}
+
+.about-kw__box-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.about-kw__box-info {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
