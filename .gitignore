@@ -27,3 +27,4 @@ firebase-debug.log
 # settings; not referenced by app code (everything needed is already processed into
 # public/), kept out of the repo entirely.
 .claude/
+.agents/
