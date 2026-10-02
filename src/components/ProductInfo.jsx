@@ -1,41 +1,62 @@
+import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { contactSection } from '@/data/homepageContent';
 import Surface from './Surface';
 import VariantPicker from './VariantPicker';
-import { formatPrice } from './ProductCard';
 
 const WHATSAPP_MESSAGE = {
-  tr: (name, id) => `Merhaba, ${name} (${id}) hakkında bilgi almak istiyorum.`,
-  en: (name, id) => `Hello, I'd like information about ${name} (${id}).`,
-  de: (name, id) => `Hallo, ich hätte gerne Informationen zu ${name} (${id}).`,
+  tr: (name) => `Merhaba, ${name} hakkında bilgi almak istiyorum.`,
+  en: (name) => `Hello, I'd like information about ${name}.`,
+  de: (name) => `Hallo, ich hätte gerne Informationen zu ${name}.`,
 };
 const CTA_LABEL = { tr: 'WhatsApp ile Bilgi Al', en: 'Ask on WhatsApp', de: 'Über WhatsApp anfragen' };
 const FEATURES_LABEL = { tr: 'Özellikler', en: 'Features', de: 'Merkmale' };
-const CODE_LABEL = { tr: 'Ürün kodu', en: 'Product code', de: 'Artikelnummer' };
+const DIMENSIONS_LABEL = { tr: 'Ölçü', en: 'Dimensions', de: 'Maße' };
+const CATEGORY_NAV_LABEL = { tr: 'Kategori', en: 'Category', de: 'Kategorie' };
 
-export default function ProductInfo({ product, siblings }) {
+// `category` / `subcategory` are the resolved PRODUCT_CATEGORIES / PRODUCT_SUBCATEGORIES rows
+// (or undefined) — rendered as links back into the filtered listing.
+export default function ProductInfo({ product, siblings, category, subcategory }) {
   const { t, lang } = useLanguage();
 
-  // The page's primary action: a pre-filled WhatsApp message carrying the product name + code.
-  const whatsappMessage = (WHATSAPP_MESSAGE[lang] ?? WHATSAPP_MESSAGE.tr)(t(product.name), product.id);
+  // The page's primary action: a pre-filled WhatsApp message carrying the product name.
+  const whatsappMessage = (WHATSAPP_MESSAGE[lang] ?? WHATSAPP_MESSAGE.tr)(t(product.name));
   const whatsappHref = `${contactSection.whatsappHref}?text=${encodeURIComponent(whatsappMessage)}`;
   const features = product.features || [];
 
   return (
     <div className="product-info">
+      {category && (
+        <nav className="product-info__category" aria-label={t(CATEGORY_NAV_LABEL)}>
+          <Link href={`/urunler?kategori=${category.slug}`} className="product-info__category-link accent-hover">
+            {t(category.label)}
+          </Link>
+          {subcategory && (
+            <>
+              <span className="product-info__category-sep" aria-hidden="true">›</span>
+              <Link
+                href={`/urunler?kategori=${category.slug}&altkategori=${subcategory.slug}`}
+                className="product-info__category-link accent-hover"
+              >
+                {t(subcategory.label)}
+              </Link>
+            </>
+          )}
+        </nav>
+      )}
       <h1 className="product-info__name">{t(product.name)}</h1>
       <p className="product-info__tagline">{t(product.tagline)}</p>
 
-      <p className="product-info__meta">
-        {typeof product.price === 'number' && (
-          <span className="product-info__price">{formatPrice(product.price, lang)}</span>
-        )}
-        <span className="product-info__code">
-          {t(CODE_LABEL)}: {product.id}
-        </span>
-      </p>
 
       {siblings.length > 0 && <VariantPicker current={product} siblings={siblings} />}
+
+      {/* Free-text size line(s) from the catalog sheet — may span several lines. */}
+      {product.dimensions && (
+        <p className="product-info__dimensions">
+          <span className="product-info__dimensions-label">{t(DIMENSIONS_LABEL)}</span>
+          <span className="product-info__dimensions-value">{product.dimensions}</span>
+        </p>
+      )}
 
       {/* Descriptions are \n\n-separated paragraphs — rendered as separate <p>s. */}
       {t(product.description)

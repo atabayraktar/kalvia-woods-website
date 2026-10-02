@@ -1,19 +1,21 @@
-import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { customOrderBanner } from '@/data/homepageContent';
+import { products } from '@/data/products';
 import Surface from './Surface';
-import QuizModal from './QuizModal';
 
-// Full-width banner (title + button over a wide image). The button opens the product-finder
-// quiz pop-up (QuizModal.jsx) — a solid panel over a dimmed backdrop.
+// Full-width image banner promoting ONE product. Set `featuredProductId` in
+// homepageContent.js; falls back to the first product. The whole banner is the link; the
+// button is its visual affordance.
 export default function CustomOrderBanner() {
   const { t } = useLanguage();
-  const [quizOpen, setQuizOpen] = useState(false);
+  const product = products.find((p) => p.id === customOrderBanner.featuredProductId) || products[0];
+  if (!product) return null;
 
   return (
     <section className="order-banner">
-      <div className="order-banner__frame" data-reveal>
+      <Link href={`/urunler/${product.id}`} className="order-banner__frame" data-reveal>
         {/* Portrait crop for mobile, plain CSS breakpoint swap — see CustomOrderBanner.scss. */}
         {customOrderBanner.mobileImage && (
           <Image
@@ -28,28 +30,29 @@ export default function CustomOrderBanner() {
         )}
         <Image
           src={customOrderBanner.image}
-          alt="Kalvia Woods lazer kesim atölyesi (yer tutucu görsel)"
+          alt=""
+          aria-hidden="true"
           fill
-          sizes="(max-width: 900px) 100vw, 1200px"
+          sizes="100vw"
           className={customOrderBanner.mobileImage ? 'order-banner__image-desktop' : undefined}
           style={{ objectFit: 'cover' }}
         />
-        <Surface as="div" className="order-banner__panel surface--calm" contentClassName="order-banner__panel-content">
-          <h2 className="order-banner__title">{t(customOrderBanner.title)}</h2>
+        <div className="order-banner__scrim" aria-hidden="true" />
+        <div className="order-banner__content">
+          <span className="order-banner__tag">{t(customOrderBanner.tag)}</span>
+          <h2 className="order-banner__title">{t(product.name)}</h2>
           <Surface
-            as="button"
-            type="button"
+            as="span"
             className="order-banner__cta surface--cta"
             contentClassName="order-banner__cta-content"
-            onClick={() => setQuizOpen(true)}
-            aria-haspopup="dialog"
           >
             <span className="btn__label">{t(customOrderBanner.cta)}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </Surface>
-        </Surface>
-      </div>
-
-      <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
+        </div>
+      </Link>
     </section>
   );
 }

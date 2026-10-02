@@ -1,4 +1,4 @@
-// Flat panel (Surface.jsx): white card on the ivory page, hairline border, soft light
+// Flat panel (Surface.jsx): cream card on the kraft page, hairline border, soft light
 // shadow. Interaction = border/colour shift + a one-pixel lift, nothing else. Modifiers set
 // the fill / line / label colours; consumers only ever pad the __content wrapper.
 .surface {
@@ -31,16 +31,16 @@ button.surface {
   }
 
   &:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(1px);
     box-shadow: var(--shadow-surface);
   }
 }
 
-// Primary CTA: terracotta fill, light label (4.7:1). Hover deepens the fill.
+// Primary CTA: terracotta fill, cream label (4.9:1). Hover deepens the fill.
 .surface--cta {
   background: var(--accent);
   border-color: var(--accent);
-  color: var(--wood-ink);
+  color: var(--frame-ink);
 
   &:hover,
   &:focus-visible {
@@ -71,14 +71,14 @@ button.surface {
   }
 }
 
-// The wood bars (header, footer): full-width walnut rectangles flush to the viewport edge —
+// The frame bars (header, footer): full-width bottle-green rectangles flush to the viewport edge —
 // no border, no radius, no card shadow (the header's own scroll shadow lives in Header.scss).
 .surface--flush {
-  background: var(--wood);
+  background: var(--frame);
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  color: var(--wood-ink);
+  color: var(--frame-ink);
 }
 
 // ─── Show/hide ────────────────────────────────────────────────────────────────────────

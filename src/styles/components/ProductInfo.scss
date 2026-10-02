@@ -6,8 +6,66 @@
   align-items: flex-start;
 }
 
+// Catalog position: "Duvar Dekoru › Aynalar", each half a link back into the filtered list.
+.product-info__category {
+  @include eyebrow;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.product-info__category-link {
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.product-info__category-sep {
+  color: var(--border);
+}
+
+// Dimensions are data: mono label, newline-separated size lines kept as lines.
+.product-info__dimensions {
+  @include mono-label(400);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  width: 100%;
+  margin-bottom: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.product-info__dimensions-label {
+  @include eyebrow;
+  font-size: 11px;
+}
+
+.product-info__dimensions-value {
+  white-space: pre-line;
+  flex: 1 1 200px;
+}
+
 .product-info__name {
-  font-size: clamp(26px, 3.2vw, 38px);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
   margin-bottom: var(--space-3);
 }
 
@@ -25,13 +83,7 @@
   margin-bottom: var(--space-5);
 }
 
-// Price and product code are data: mono utility face.
-.product-info__price {
-  @include mono-label;
-  font-size: 22px;
-  color: var(--accent);
-}
-
+// Product code is data: mono utility face.
 .product-info__code {
   @include mono-label(400);
   font-size: 12.5px;
@@ -74,6 +126,8 @@
     font-size: 13.5px;
     line-height: 1.55;
     color: var(--ink);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border);
 
     &::before {
       content: '';

@@ -4,11 +4,14 @@
 // a plain content page — its own top padding clears the fixed header.
 .products-page {
   padding-top: calc(var(--header-height) + var(--space-8));
-  padding-bottom: var(--space-9);
+  padding-bottom: var(--space-7);
 }
 
 .products-page__title {
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(30px, 4.4vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+
   margin-bottom: var(--space-3);
 }
 
@@ -88,4 +91,12 @@
 
 .products-page__results {
   min-width: 0;
+  min-height: 60vh; // no layout jump while results swap
+  opacity: 1;
+  transition: opacity 0.25s ease-out; // fade-in
+
+  &.is-changing {
+    opacity: 0;
+    transition-duration: 0.15s; // fade-out
+  }
 }

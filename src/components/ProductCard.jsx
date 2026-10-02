@@ -1,35 +1,30 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { PRODUCT_CATEGORIES, PRODUCT_SUBCATEGORIES } from '@/data/products';
 import Surface from './Surface';
+
+// Category / subcategory labels for the card's eyebrow — a small static lookup so the lean
+// list props only need to carry the slugs.
+const categoryLabel = (slug) => PRODUCT_CATEGORIES.find((c) => c.slug === slug)?.label;
+const subcategoryLabel = (slug) => PRODUCT_SUBCATEGORIES.find((s) => s.slug === slug)?.label;
 
 const TEXT = {
   new: { tr: 'Yeni', en: 'New', de: 'Neu' },
   outOfStock: { tr: 'Stokta Yok', en: 'Out of Stock', de: 'Nicht auf Lager' },
-  askPrice: { tr: "Fiyat için WhatsApp'tan ulaşın", en: 'Contact us on WhatsApp for pricing', de: 'Preis auf Anfrage über WhatsApp' },
   unavailable: { tr: 'Şu an temin edilemiyor', en: 'Currently unavailable', de: 'Derzeit nicht verfügbar' },
   view: { tr: 'İncele', en: 'View', de: 'Ansehen' },
 };
 
-// Prices are stored as plain TRY numbers in src/data/products.js; formatted per locale
-// here. A product with no price falls back to the WhatsApp-inquiry line.
-const PRICE_LOCALE = { tr: 'tr-TR', en: 'en-GB', de: 'de-DE' };
-export function formatPrice(price, lang) {
-  return new Intl.NumberFormat(PRICE_LOCALE[lang] ?? 'tr-TR', {
-    style: 'currency',
-    currency: 'TRY',
-    maximumFractionDigits: 0,
-  }).format(price);
-}
-
 export default function ProductCard({ product, priority = false }) {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   // Out-of-stock products render as a dimmed, non-interactive card: on a static export
   // the detail page still exists at its URL, so the way to keep people out of it is simply
   // not linking there — a plain <div> instead of the <Link>.
   const inStock = product.inStock !== false;
-  const hasPrice = typeof product.price === 'number';
+  const catLabel = categoryLabel(product.category);
+  const subLabel = subcategoryLabel(product.subcategory);
 
   const body = (
     <>
@@ -39,7 +34,7 @@ export default function ProductCard({ product, priority = false }) {
           alt={t(product.name)}
           fill
           sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-          style={{ objectFit: 'contain' }}
+          style={{ objectFit: 'cover' }}
           priority={priority}
         />
         {product.isNew && inStock && <span className="product-card__badge">{t(TEXT.new)}</span>}
@@ -47,6 +42,13 @@ export default function ProductCard({ product, priority = false }) {
         {!inStock && <span className="product-card__badge product-card__badge--stock">{t(TEXT.outOfStock)}</span>}
       </span>
       <span className="product-card__body">
+        {/* Where the product sits in the catalog: "Duvar Dekoru › Aynalar". */}
+        {catLabel && (
+          <span className="product-card__category">
+            {t(catLabel)}
+            {subLabel && <> › {t(subLabel)}</>}
+          </span>
+        )}
         <span className="product-card__name">{t(product.name)}</span>
         {/* Sibling variants share a name and differ only by colour/size — show which. */}
         {(product.color || product.size) && (
@@ -54,9 +56,6 @@ export default function ProductCard({ product, priority = false }) {
         )}
         {inStock ? (
           <>
-            <span className={`product-card__price${hasPrice ? ' product-card__price--amount' : ''}`}>
-              {hasPrice ? formatPrice(product.price, lang) : t(TEXT.askPrice)}
-            </span>
             <Surface
               as="span"
               className="product-card__cta surface--cta"

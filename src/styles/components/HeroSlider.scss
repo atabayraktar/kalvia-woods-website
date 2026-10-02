@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: var(--wood);
+  background: var(--frame);
 }
 
 .hero-slider__viewport {
@@ -29,12 +29,12 @@
   flex: 0 0 100%;
   min-width: 100%;
   height: 100svh;
-  min-height: 560px;
+  min-height: 600px;
   max-height: 900px;
   display: flex;
   align-items: flex-end;
 
-  @media (max-width: 480px) and (orientation: landscape) {
+  @media (max-height: 480px) {
     height: 100svh;
     min-height: 380px;
   }
@@ -43,7 +43,7 @@
 .hero-slider__media {
   position: absolute;
   inset: 0;
-  background: var(--wood);
+  background: var(--frame);
 
   video,
   img {
@@ -69,40 +69,79 @@
   }
 }
 
-// Gentle scrim so overlay text stays legible over any media.
+// Plain dark-to-transparent scrim (legibility only, no brand colour).
 .hero-slider__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(30, 22, 17, 0.7) 0%, rgba(30, 22, 17, 0.2) 45%, rgba(30, 22, 17, 0.08) 70%);
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--frame-deep) 80%, transparent) 0%,
+    color-mix(in srgb, var(--frame-deep) 40%, transparent) 55%,
+    transparent 100%
+  );
 }
 
-// Copy block, framed by the registration marks — the hero is the first place the site's
-// signature detail appears.
+// Copy block: left-aligned to the page grid, framed by honey registration marks, with a
+// rubber stamp pressed on its top edge. Asymmetric on purpose — the right half of the hero
+// stays open for the footage.
 .hero-slider__copy {
-  @include reg-marks(0, 20px, var(--accent-fill));
+  @include reg-marks(0, 22px, var(--accent-fill));
   z-index: var(--z-content);
-  color: var(--wood-ink);
-  margin: 0 var(--container-pad) var(--space-8);
-  padding: var(--space-6) var(--space-6) var(--space-6);
-  max-width: 620px;
+  color: var(--frame-ink);
+  margin: 0 var(--container-pad) var(--space-9);
+  margin-left: max(var(--container-pad), calc((100% - var(--container-max)) / 2 + var(--container-pad)));
+  padding: var(--space-7) var(--space-7) var(--space-6);
+  width: min(780px, calc(100% - 2 * var(--container-pad)));
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
+    margin-bottom: var(--space-8);
+    padding: var(--space-6) var(--space-4) var(--space-5);
+  }
+
+  @media (max-height: 480px) {
     margin-bottom: var(--space-7);
-    padding: var(--space-5) var(--space-4);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+  }
+}
+
+.hero-slider__eyebrow {
+  @include eyebrow;
+  color: var(--frame-accent);
+  margin-bottom: var(--space-4);
+
+  @media (max-height: 480px) {
+    margin-bottom: var(--space-2);
   }
 }
 
 .hero-slider__title {
-  color: var(--wood-ink);
+  color: var(--frame-ink);
   font-size: clamp(28px, 5vw, 52px);
-  margin-bottom: var(--space-4);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-5);
+  text-wrap: balance;
+  max-width: 20ch;
+
+  @media (max-height: 480px) {
+    font-size: clamp(24px, 4.6vw, 36px);
+    margin-bottom: var(--space-3);
+    max-width: none;
+  }
 }
 
 .hero-slider__info {
-  color: var(--wood-muted);
+  color: var(--frame-ink);
+  opacity: 0.88;
+  font-style: italic;
   font-size: clamp(14px, 1.6vw, 17px);
-  max-width: 52ch;
-  margin-bottom: var(--space-5);
+  line-height: 1.55;
+  max-width: 50ch;
+  margin-bottom: var(--space-6);
+
+  @media (max-height: 480px) {
+    display: none;
+  }
 }
 
 .hero-slider__cta {
@@ -113,7 +152,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    padding: 15px 16px 15px 26px;
+    padding: 16px 18px 16px 28px;
     font-size: 15px;
 
     svg {
@@ -130,18 +169,30 @@
 .hero-slider__dots {
   position: absolute;
   bottom: var(--space-4);
-  left: 50%;
-  transform: translateX(-50%);
+  right: var(--container-pad);
   z-index: var(--z-content);
   display: flex;
-  gap: var(--space-2);
+  align-items: center;
+  gap: var(--space-1);
+
+  // Clear the fixed WhatsApp button in the bottom-right corner.
+  // Small screens: dots go bottom-left so the WhatsApp button owns the bottom-right.
+  @media (max-width: 767px) {
+    right: auto;
+    left: calc(var(--container-pad) - 8px);
+    bottom: var(--space-2);
+  }
+
+  @media (min-width: 1440px) {
+    right: calc((100% - var(--container-max)) / 2 + var(--container-pad));
+  }
 }
 
 // Visual marker stays small (a flat tick); the button's actual hit area is enlarged to meet
 // the 24x24px WCAG 2.5.8 target-size minimum via a centered ::after.
 .hero-slider__dot {
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: transparent;
   padding: 0;
@@ -151,16 +202,20 @@
 
   &::after {
     content: '';
-    width: 18px;
-    height: 2px;
-    background: var(--wood-ink);
-    opacity: 0.45;
-    transition: background-color 0.3s var(--ease-out), opacity 0.3s var(--ease-out), transform 0.3s var(--ease-spring);
+    width: 20px;
+    height: 3px;
+    background: var(--frame-ink);
+    opacity: 0.4;
+    transition: background-color 0.3s var(--ease-out), opacity 0.3s var(--ease-out), width 0.3s var(--ease-out);
+  }
+
+  &:hover::after {
+    opacity: 0.8;
   }
 
   &--active::after {
     background: var(--accent-fill);
     opacity: 1;
-    transform: scaleX(1.4);
+    width: 28px;
   }
 }

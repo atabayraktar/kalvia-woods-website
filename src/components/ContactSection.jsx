@@ -85,11 +85,19 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="contact-section container" id="iletisim">
-      <h2 className="contact-section__title" data-reveal>{t(contactSection.title)}</h2>
+    <section className="contact-section" id="iletisim">
+      <div className="container">
+      <div className="contact-section__head" data-reveal>
+        <h2 className="contact-section__title">{t(contactSection.title)}</h2>
+      </div>
 
       <div className="contact-section__grid" data-reveal>
         <div className="contact-section__map">
+          {/* Static fallback sits UNDER the iframe: if the embed is slow or blocked, the box still reads as a location card. */}
+          <div className="contact-section__map-fallback" aria-hidden="true">
+            {ADDRESS_ICON}
+            <span className="contact-section__map-fallback-address">{contactSection.address}</span>
+          </div>
           <iframe
             className="contact-section__map-frame"
             src={`https://www.google.com/maps?q=${contactSection.mapCoords}&z=14&output=embed`}
@@ -100,13 +108,18 @@ export default function ContactSection() {
           {/* Transparent overlay spanning the whole frame — an iframe is its own browsing
               context, so clicks land inside the embedded map instead of bubbling to a
               wrapping link; this catches them and sends the whole map to Google Maps. */}
+          <span className="contact-section__map-tag" aria-hidden="true">
+            Atölye konumu
+          </span>
           <a
             className="contact-section__map-overlay"
             href={contactSection.mapHref}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t(labels.addressCta)}
-          />
+          >
+            <span className="contact-section__map-cta">{t(labels.addressCta)} ↗</span>
+          </a>
         </div>
 
         <Surface
@@ -242,6 +255,7 @@ export default function ContactSection() {
           </a>
         </li>
       </ul>
+      </div>
     </section>
   );
 }

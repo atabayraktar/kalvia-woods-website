@@ -70,6 +70,7 @@ export default function CategorySlider() {
   return (
     <section className="category-slider" aria-label={t(title).join(' ')}>
       <div className="container category-slider__head" data-reveal>
+        <div className="category-slider__heading">
         <h2 className="category-slider__title">
           {t(title).map((line, i, arr) => (
             <span
@@ -81,6 +82,7 @@ export default function CategorySlider() {
             </span>
           ))}
         </h2>
+        </div>
 
         <div className="category-slider__arrows">
           <Surface
@@ -118,12 +120,21 @@ export default function CategorySlider() {
           onClickCapture={onTrackClickCapture}
         >
           {categories.map((cat) => (
-            <Link key={cat.slug} href={`/urunler?kategori=${cat.slug}`} className="category-slider__card" data-reveal>
+            <Link
+              key={`${cat.slug}/${cat.sub ?? ''}`}
+              href={`/urunler?kategori=${cat.slug}${cat.sub ? `&altkategori=${cat.sub}` : ''}`}
+              className="category-slider__card"
+              data-reveal
+            >
               {/* alt="" — the title overlay right on top repeats the same text. */}
               <span className="category-slider__image-wrap">
                 <Image src={cat.image} alt="" fill sizes="(max-width: 640px) 45vw, 280px" style={{ objectFit: 'cover' }} />
                 <span className="category-slider__scrim" aria-hidden="true" />
-                <span className="category-slider__card-title accent-hover">{t(cat.title)}</span>
+                <span className="category-slider__card-title accent-hover">
+                  {/* Subcategory cards name their parent category on a small eyebrow line. */}
+                  {cat.eyebrow && <span className="category-slider__card-eyebrow">{t(cat.eyebrow)}</span>}
+                  {t(cat.title)}
+                </span>
               </span>
             </Link>
           ))}

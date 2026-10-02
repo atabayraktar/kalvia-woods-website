@@ -9,25 +9,21 @@ a.whatsapp-fab {
   right: var(--space-4);
   bottom: var(--space-4);
   z-index: var(--z-fab);
+  display: block;
   width: 56px;
   height: 56px;
-  opacity: 1;
-  pointer-events: auto;
   // --fab-lift (WhatsAppFab.jsx, scroll-driven) is 0 until the footer's top edge starts
   // rising past this rest position, then tracks the overlap 1:1.
   transform: translateY(calc(var(--fab-lift, 0px) * -1));
-  transition: opacity 0.3s var(--ease-out), transform 0.4s var(--ease-spring), border-color 0.25s var(--ease-out),
-    box-shadow 0.35s var(--ease-out), background-color 0.25s var(--ease-out);
+  transition: transform 0.4s var(--ease-spring), filter 0.25s var(--ease-out);
 
-  // Surface.scss's generic hover lift would fight the --fab-lift transform; keep the
-  // border/shadow response only.
   &:hover,
   &:focus-visible {
-    transform: translateY(calc(var(--fab-lift, 0px) * -1));
+    filter: brightness(0.92);
   }
 
   &:active {
-    transform: translateY(calc(var(--fab-lift, 0px) * -1)) scale(0.97);
+    transform: translateY(calc(var(--fab-lift, 0px) * -1)) scale(0.96);
   }
 
   @media (min-width: 768px) {
@@ -36,22 +32,19 @@ a.whatsapp-fab {
   }
 }
 
-.whatsapp-fab__content {
+// WhatsApp's own green (a third-party mark, not a palette token) — the button IS the badge.
+.whatsapp-fab__badge {
   width: 100%;
   height: 100%;
+  border-radius: var(--radius);
+  background: #25d366;
+  box-shadow: var(--shadow-raised);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-// WhatsApp's own green (a third-party mark, not a palette token).
-.whatsapp-fab__badge {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius);
-  background: #25d366;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.whatsapp-fab__badge svg {
+  width: 30px;
+  height: 30px;
 }

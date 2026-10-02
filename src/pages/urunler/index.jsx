@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import SearchBar from '@/components/SearchBar';
@@ -9,13 +9,13 @@ import ProductGrid from '@/components/ProductGrid';
 import Pagination from '@/components/Pagination';
 import EmptyState from '@/components/EmptyState';
 import { useLanguage } from '@/context/LanguageContext';
-import { products, PRODUCT_CATEGORIES } from '@/data/products';
+import { products, PRODUCT_CATEGORIES, PRODUCT_SUBCATEGORIES } from '@/data/products';
 import useScrollReveal from '@/hooks/useScrollReveal';
 
 const SITE_URL = 'https://kalviawoods.example';
 const TITLE = 'Ürünler | Kalvia Woods';
 const DESCRIPTION =
-  'Kalvia Woods lazer kesim ürün kataloğu: ahşap dekor panoları, PVC tabelalar, ahşap kutular ve özel ölçü kesim ürünleri. Kategoriye göre filtreleyin.';
+  'Kalvia Woods lazer kesim ürün kataloğu: hobi ve boya istasyonları, makyaj organizerleri, katmanlı dekoratif aynalar ve 3D duvar tabloları. Kategori ve alt kategoriye göre filtreleyin.';
 const PAGE_SIZE = 12;
 
 const PAGE_TITLE = { tr: 'Ürünler', en: 'Products', de: 'Produkte' };
@@ -39,22 +39,26 @@ const BREADCRUMB_JSON_LD = {
 // explicit. Trimmed to only the fields the grid/search/sort/filter/card actually read so
 // the page's serialized data stays small.
 export async function getStaticProps() {
-  const listProducts = products.map(({ id, name, tagline, category, color, size, isNew, inStock, image, price }) => ({
+  const listProducts = products.map(({ id, name, tagline, category, subcategory, color, size, isNew, inStock, image }) => ({
     id,
     name,
     tagline,
     category,
+    subcategory,
     color,
     size,
     isNew,
     inStock,
     image,
-    price: price ?? null,
   }));
-  return { props: { products: listProducts, categories: PRODUCT_CATEGORIES } };
+  // The sheet lists main categories that have no products yet — only offer filters that can
+  // actually match something (an empty category would just land on the EmptyState).
+  const categories = PRODUCT_CATEGORIES.filter((c) => products.some((p) => p.category === c.slug));
+  const subcategories = PRODUCT_SUBCATEGORIES.filter((s) => products.some((p) => p.subcategory === s.slug));
+  return { props: { products: listProducts, categories, subcategories } };
 }
 
-export default function ProductsPage({ products: allProducts, categories }) {
+export default function ProductsPage({ products: allProducts, categories, subcategories }) {
   useScrollReveal();
   const { t } = useLanguage();
   const router = useRouter();
@@ -72,6 +76,7 @@ export default function ProductsPage({ products: allProducts, categories }) {
 
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState(null);
+  const [subcategory, setSubcategory] = useState(null);
   const [sort, setSort] = useState(SORT_OPTIONS[0].value);
   const [stock, setStock] = useState(null);
   const [page, setPage] = useState(1);
@@ -82,8 +87,15 @@ export default function ProductsPage({ products: allProducts, categories }) {
   // list, not a flash of empty.
   useEffect(() => {
     if (!router.isReady) return;
-    const { kategori, q, sirala, stok, sayfa } = router.query;
+    const { kategori, altkategori, q, sirala, stok, sayfa } = router.query;
     if (typeof kategori === 'string') setCategory(kategori);
+    // A subcategory only makes sense together with its own main category.
+    if (
+      typeof altkategori === 'string' &&
+      subcategories.some((s) => s.slug === altkategori && s.category === kategori)
+    ) {
+      setSubcategory(altkategori);
+    }
     if (typeof q === 'string') setQuery(q);
     if (typeof sirala === 'string' && SORT_OPTIONS.some((o) => o.value === sirala)) setSort(sirala);
     if (stok === 'in' || stok === 'out') setStock(stok);
@@ -96,22 +108,24 @@ export default function ProductsPage({ products: allProducts, categories }) {
     if (!router.isReady) return;
     const nextQuery = {};
     if (category) nextQuery.kategori = category;
+    if (category && subcategory) nextQuery.altkategori = subcategory;
     if (query) nextQuery.q = query;
     if (sort !== SORT_OPTIONS[0].value) nextQuery.sirala = sort;
     if (stock) nextQuery.stok = stock;
     if (page > 1) nextQuery.sayfa = String(page);
     router.replace({ pathname: '/urunler', query: nextQuery }, undefined, { shallow: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, query, sort, stock, page, router.isReady]);
+  }, [category, subcategory, query, sort, stock, page, router.isReady]);
 
   // Any filter/search/sort change resets pagination.
   useEffect(() => {
     setPage(1);
-  }, [category, query, sort, stock]);
+  }, [category, subcategory, query, sort, stock]);
 
   const filtered = useMemo(() => {
     let list = allProducts;
     if (category) list = list.filter((p) => p.category === category);
+    if (category && subcategory) list = list.filter((p) => p.subcategory === subcategory);
     if (stock === 'in') list = list.filter((p) => p.inStock !== false);
     else if (stock === 'out') list = list.filter((p) => p.inStock === false);
     if (query.trim()) {
@@ -127,14 +141,37 @@ export default function ProductsPage({ products: allProducts, categories }) {
     else sorted.sort((a, b) => t(a.name).localeCompare(t(b.name), 'tr'));
     return sorted;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, query, sort, stock, t, allProducts]);
+  }, [category, subcategory, query, sort, stock, t, allProducts]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
+  // Results fade out (150ms), swap while invisible, then fade in (250ms) whenever the
+  // filter/search/sort/page outcome changes. `view` is what's actually rendered; the
+  // container keeps its min-height via CSS so nothing jumps. Timer resets on rapid input.
+  const liveView = { pageItems, page, totalPages };
+  const liveSig = `${page}|${totalPages}|${pageItems.map((p) => p.id).join(',')}`;
+  const [view, setView] = useState(liveView);
+  const [changing, setChanging] = useState(false);
+  const liveRef = useRef(liveView);
+  liveRef.current = liveView;
+  const shownSigRef = useRef(liveSig);
+  useEffect(() => {
+    if (liveSig === shownSigRef.current) return undefined;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setChanging(true);
+    const id = window.setTimeout(() => {
+      shownSigRef.current = liveSig;
+      setView(liveRef.current);
+      setChanging(false);
+    }, reduce ? 0 : 150);
+    return () => window.clearTimeout(id);
+  }, [liveSig]);
+
   const resetFilters = () => {
     setQuery('');
     setCategory(null);
+    setSubcategory(null);
     setSort(SORT_OPTIONS[0].value);
     setStock(null);
   };
@@ -192,16 +229,19 @@ export default function ProductsPage({ products: allProducts, categories }) {
           <div className="products-page__layout">
             <FilterPanel
               categories={categories}
+              subcategories={subcategories}
               active={category}
+              activeSub={subcategory}
               onSelect={setCategory}
+              onSelectSub={setSubcategory}
               className="products-page__filter-panel"
             />
 
-            <div className="products-page__results">
-              {pageItems.length > 0 ? (
+            <div className={`products-page__results${changing ? ' is-changing' : ''}`}>
+              {view.pageItems.length > 0 ? (
                 <>
-                  <ProductGrid products={pageItems} />
-                  <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+                  <ProductGrid products={view.pageItems} />
+                  <Pagination page={view.page} totalPages={view.totalPages} onChange={setPage} />
                 </>
               ) : (
                 <EmptyState onReset={resetFilters} />
@@ -215,8 +255,11 @@ export default function ProductsPage({ products: allProducts, categories }) {
         open={filterSheetOpen}
         onClose={() => setFilterSheetOpen(false)}
         categories={categories}
+        subcategories={subcategories}
         active={category}
+        activeSub={subcategory}
         onSelect={setCategory}
+        onSelectSub={setSubcategory}
       />
     </>
   );

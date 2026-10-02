@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 // The one reusable solid surface every floating element is built from — header, footer,
 // buttons, dropdown panels, the mobile nav/filter sheets, the quiz panel. Opaque
-// wood-toned background + hairline border + a real drop shadow (see Surface.scss); no
+// cream background + hairline border + a real drop shadow (see Surface.scss); no
 // translucency of any kind. The `__content` wrapper stays so consumers keep a single hook
 // for padding/layout that's independent of the shell's shape/shadow.
 //

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Archivo, Hanken_Grotesk, IBM_Plex_Mono } from 'next/font/google';
+import { Courier_Prime, Fraunces } from 'next/font/google';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import '@/styles/main.scss';
@@ -11,72 +11,112 @@ import WhatsAppFab from '@/components/WhatsAppFab';
 import ScrollTopButton from '@/components/ScrollTopButton';
 
 // Self-hosted via next/font (built at compile time, no external request at runtime).
-// axes:['wdth'] pulls in Archivo's width axis for the wide display headings; Hanken
-// Grotesk on Google Fonts only exposes wght, so its wdth setting elsewhere in the CSS is a
-// harmless no-op fallback.
-const archivo = Archivo({
-  subsets: ['latin'],
-  variable: '--font-archivo',
-  axes: ['wdth'],
+// Exactly two families. latin-ext is required for Turkish (ş ğ İ ı).
+// Courier Prime = typewriter voice (headings, nav, labels, prices, codes); Fraunces = soft
+// warm serif for reading copy.
+const courierPrime = Courier_Prime({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-courier',
   display: 'swap',
 });
 
-const hankenGrotesk = Hanken_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-hanken',
-  display: 'swap',
-});
-
-// Third, narrowly-scoped utility face: data-like labels only (price, product code, spec
-// lines, pagination numbers, counters — see the mono-label mixin in _marks.scss). Static
-// family, so the weights are listed explicitly.
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-plex-mono',
+const fraunces = Fraunces({
+  subsets: ['latin', 'latin-ext'],
+  axes: ['opsz', 'SOFT'],
+  variable: '--font-fraunces',
   display: 'swap',
 });
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
-  // Page-reveal + scroll restoration, coordinated so a "blink" never happens: the incoming
-  // page stays invisible (opacity:0, see .page-transition/.is-visible in globals.scss)
-  // until we've positioned its scroll correctly, THEN it fades in already-settled.
-  //
-  // `ready` starts true (covers the very first load: server-rendered markup and the
-  // client's initial hydration pass agree, so there's nothing to hide or restore).
-  // `isFirstPathRef` skips the hide/restore dance on that same first run of the effect.
+  // Page fade-out -> swap -> fade-in, with scroll restored while the page is invisible.
+  //  1. routeChangeStart (real navigation, not a shallow query sync): ready=false, so the
+  //     current page fades to opacity 0 (FADE_OUT_MS).
+  //  2. routeChangeComplete: Next has already rendered the new route into this component,
+  //     but we keep showing the OLD page (`shown`) until the fade-out has finished, then
+  //     swap to the latest Component/pageProps under a fresh key (new wrapper mounts at
+  //     opacity 0 — no flash of unfaded content).
+  //  3. The swap effect restores scroll, then ready=true fades the new page in.
+  const FADE_OUT_MS = 200;
   const [ready, setReady] = useState(true);
-  const isFirstPathRef = useRef(true);
+  const [shown, setShown] = useState({ Component, pageProps, key: 0 });
+  const latestRef = useRef({ Component, pageProps });
+  latestRef.current = { Component, pageProps };
+  const startRef = useRef(0);
+  const swapTimerRef = useRef(0);
+  const swappedRef = useRef(false);
+  // Scroll position is only restored on browser back/forward; a normal link click always opens at the top.
+  const popRef = useRef(false);
+  const restoreRef = useRef(false);
+  const lenisRef = useRef(null);
+  const jumpTo = (y) => {
+    if (lenisRef.current) lenisRef.current.scrollTo(y, { immediate: true, force: true });
+    window.scrollTo(0, y);
+  };
 
-  // Keyed to router.pathname (not asPath) so shallow query-only updates on the same page
-  // (/urunler's filter/sort/page syncing) never trigger this — only a real navigation does.
   useEffect(() => {
-    if (isFirstPathRef.current) {
-      isFirstPathRef.current = false;
-      return undefined;
-    }
+    const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const onStart = (url, { shallow } = {}) => {
+      if (shallow) return;
+      clearTimeout(swapTimerRef.current);
+      startRef.current = performance.now();
+      setReady(false);
+    };
+    const onComplete = (url, { shallow } = {}) => {
+      if (shallow) return;
+      const wait = reduce() ? 0 : Math.max(0, FADE_OUT_MS - (performance.now() - startRef.current));
+      clearTimeout(swapTimerRef.current);
+      swapTimerRef.current = window.setTimeout(() => {
+        swappedRef.current = true;
+        restoreRef.current = popRef.current;
+        popRef.current = false;
+        setShown((prev) => ({ ...latestRef.current, key: prev.key + 1 }));
+      }, wait);
+    };
+    const onError = () => {
+      clearTimeout(swapTimerRef.current);
+      setReady(true);
+    };
+    router.beforePopState(() => {
+      popRef.current = true;
+      return true;
+    });
+    router.events.on('routeChangeStart', onStart);
+    router.events.on('routeChangeComplete', onComplete);
+    router.events.on('routeChangeError', onError);
+    return () => {
+      router.events.off('routeChangeStart', onStart);
+      router.events.off('routeChangeComplete', onComplete);
+      router.events.off('routeChangeError', onError);
+      clearTimeout(swapTimerRef.current);
+    };
+  }, [router.events]);
 
-    setReady(false);
+  // Runs only after a swap (never on first load or shallow updates).
+  useEffect(() => {
+    if (!swappedRef.current) return undefined;
+    swappedRef.current = false;
     const key = `scrollpos:${router.asPath}`;
-    const saved = sessionStorage.getItem(key);
+    const saved = restoreRef.current ? sessionStorage.getItem(key) : null;
+    sessionStorage.removeItem(key);
 
     let raf = 0;
     let cancelled = false;
 
     if (saved !== null) {
       const target = Number(saved);
-      // Poll until the document is actually tall enough for `target` (the destination
-      // page's client-hydrated content may not have grown yet), capped on wall-clock time
-      // so a throttled background tab still reveals within ~1.5s.
+      // Poll until the document is tall enough for `target` (client-hydrated content may not
+      // have grown yet), capped on wall-clock time so a throttled tab still reveals.
       const deadline = Date.now() + 1500;
       const waitForHeight = () => {
         if (cancelled) return;
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         if (maxScroll >= target || Date.now() >= deadline) {
           sessionStorage.removeItem(key);
-          window.scrollTo(0, target);
+          jumpTo(target);
           setReady(true);
         } else {
           raf = requestAnimationFrame(waitForHeight);
@@ -85,7 +125,7 @@ export default function App({ Component, pageProps }) {
       raf = requestAnimationFrame(waitForHeight);
     } else {
       raf = requestAnimationFrame(() => {
-        window.scrollTo(0, 0);
+        jumpTo(0);
         setReady(true);
       });
     }
@@ -95,7 +135,7 @@ export default function App({ Component, pageProps }) {
       cancelAnimationFrame(raf);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.pathname]);
+  }, [shown.key]);
 
   // Saved on every real navigation-away (routeChangeStart), keyed to the exact URL being
   // left (query included) so distinct filtered views each restore correctly.
@@ -113,11 +153,15 @@ export default function App({ Component, pageProps }) {
   // target sections. autoRaf:true — without it Lenis intercepts input but never ticks.
   useEffect(() => {
     const lenis = new Lenis({ anchors: true, autoRaf: true });
-    return () => lenis.destroy();
+    lenisRef.current = lenis;
+    return () => {
+      lenisRef.current = null;
+      lenis.destroy();
+    };
   }, []);
 
   return (
-    <div className={`${archivo.variable} ${hankenGrotesk.variable} ${plexMono.variable} font-root`}>
+    <div className={`${courierPrime.variable} ${fraunces.variable} font-root`}>
       <LanguageProvider>
         <a href="#main-content" className="skip-link">
           Ana içeriğe geç
@@ -126,13 +170,10 @@ export default function App({ Component, pageProps }) {
             siblings of the keyed page-transition div below, never inside it, so client-side
             navigation never unmounts/remounts them. None of these take props. */}
         <Header />
-        {/* Keyed to the route pattern (not full asPath, so filter/sort/page query changes
-            on the same page don't retrigger it) — remounting this wrapper on every real
-            navigation replays the fade-in. `ready` gates the actual fade. Opacity-only,
-            deliberately no transform: per-page content can contain fixed descendants
-            (modals), and a transforming ancestor would become their containing block. */}
-        <div key={router.pathname} className={`page-transition${ready ? ' is-visible' : ''}`}>
-          <Component {...pageProps} />
+        {/* Keyed to the swap counter; see the fade logic above. Opacity-only (no transform:
+            page content can contain fixed modals). */}
+        <div key={shown.key} className={`page-transition${ready ? ' is-visible' : ''}`}>
+          <shown.Component {...shown.pageProps} />
         </div>
         <Footer />
         <WhatsAppFab />

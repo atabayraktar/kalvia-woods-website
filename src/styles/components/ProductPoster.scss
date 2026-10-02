@@ -5,7 +5,7 @@
 // callout paragraphs). Same section rhythm as RelatedProducts: hairline top rule +
 // eyebrow, so the long-form text reads as an anchored editorial block, not a loose wall.
 .product-poster {
-  margin-top: var(--space-9);
+  margin-top: var(--space-8);
   padding-top: var(--space-7);
   border-top: 1px solid var(--border);
 }
@@ -38,7 +38,6 @@
 
 .product-poster__lead {
   font-family: var(--font-display);
-  font-variation-settings: 'wght' 300, 'wdth' 110;
   font-size: clamp(19px, 2.3vw, 25px);
   line-height: 1.5;
   color: var(--ink);

@@ -15,6 +15,8 @@ const TAB_TITLE = 'Kalvia Woods | Ahşap & PVC Lazer Kesim';
 const DESCRIPTION =
   'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim makinesiyle işleyen bir üretim atölyesidir. Dekoratif panolar, PVC tabelalar, ahşap kutular ve özel ölçü kesim ürünleri.';
 
+const TICKER_WORDS = ['Ahşap', 'PVC', 'Lazer kesim', 'Dekor pano', 'Tabela', 'Ahşap kutu', 'Özel kesim', 'Milimetrik hassasiyet'];
+
 // Same placeholder handles ContactSection.jsx renders on the page.
 const SOCIAL_LINKS = [contactSection.instagramHref, contactSection.facebookHref];
 
@@ -136,6 +138,18 @@ export default function HomePage() {
 
       <main id="main-content">
         <HeroSlider />
+        {/* Decorative ticker band — purely visual, hidden from assistive tech. */}
+        <div className="ticker" aria-hidden="true">
+          <div className="ticker__track">
+            {[0, 1].map((copy) => (
+              <ul className="ticker__list" key={copy}>
+                {TICKER_WORDS.map((word) => (
+                  <li key={word}>{word}</li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
         <CategorySlider />
         <AboutKalvia />
         <CustomOrderBanner />

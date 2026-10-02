@@ -1,40 +1,39 @@
-// Kalvia Woods design tokens — the single source of truth for colour, motion, spacing and
-// layout. "Atölye" (open workshop): a light, warm-ivory page body with the dark walnut
-// appearing ONLY as the header and footer bars that frame it. Flat shapes, one small
-// radius, soft light shadows. No light/dark toggle, no gradient system, no glass /
-// backdrop-blur system, no clip-path shape tricks. Do not add any of them back.
+// Kalvia Woods design tokens — the single source of truth. "Atölye Defteri" (workshop
+// ledger): a kraft/cream page framed by a deep bottle-green header and footer with oak-gold
+// accents, terracotta for calls to action. Typewriter + soft serif, small radius, warm
+// tinted shadows. No toggle, no glass/backdrop-blur, no UI gradients.
 
 :root {
   // ─── Colour (the ONLY colour tokens — every component consumes these) ─────────────
-  --bg: #f7f3ec; // page background — warm ivory / pale wood
-  --surface: #ffffff; // cards / panels on top of --bg
-  --surface-alt: #f1eae0; // subtle alternate section tint
-  --ink: #241a12; // primary text — near-black warm brown
-  --ink-muted: #7c6b5a; // secondary / meta text
-  --border: #e3d8c8; // hairline borders / dividers
-  --wood: #1e1611; // dark walnut — header, footer, and their own content only
-  --wood-ink: #f2e8dc; // text / icons ON the wood bars
-  --accent: #a15a2e; // terracotta — links, icons, text accents, primary CTA fill (4.7:1 on --bg)
-  --accent-fill: #b07a45; // honey — badges / selected chips carrying a dark (--ink) label
-  --accent-hover: #8b4a24; // darker terracotta for hover / active in both roles
+  --bg: #f1e8d8; // page — kraft / cream
+  --surface: #faf5eb; // cards / panels on --bg
+  --surface-alt: #e8dbc5; // alternate section tint, image wells
+  --ink: #2b1e14; // primary text (13.3:1 on --bg)
+  --ink-muted: #6b5a46; // secondary text (5.4:1 on --bg, 4.8:1 on --surface-alt)
+  --border: #d6c4a8; // hairlines
+  --frame: #14342a; // deep bottle green — header, footer, hero backdrop ONLY
+  --frame-ink: #f3ead7; // text / icons ON the frame (11.3:1) and the CTA label
+  --accent: #a24c22; // terracotta — links, marks, CTA fill (4.8:1 on --bg, 4.9:1 with --frame-ink label)
+  --accent-fill: #d9a15b; // oak gold — badges / selected chips with a dark --ink label (7.1:1)
+  --accent-hover: #843f1b; // hover / active (6.4:1 on --bg)
 
-  // Derived mixes for content that sits ON the wood bars (Header.scss / Footer.scss scope
-  // the generic tokens to these, so every child component recolours without knowing).
-  --wood-muted: color-mix(in srgb, var(--wood-ink) 66%, var(--wood));
-  --wood-raised: color-mix(in srgb, var(--wood) 90%, var(--wood-ink));
-  --wood-line: color-mix(in srgb, var(--wood-ink) 16%, var(--wood));
-  --wood-accent: var(--accent-fill); // honey reads 4.5:1 on walnut; terracotta would not
-  --wood-accent-hover: color-mix(in srgb, var(--accent-fill) 72%, var(--wood-ink));
-  // Light accent wash for hover backgrounds on the ivory page.
+  // Derived mixes for content that sits ON the frame (Header.scss scopes the generic
+  // tokens to these so every child recolours without knowing it is on green).
+  --frame-muted: color-mix(in srgb, var(--frame-ink) 68%, var(--frame));
+  --frame-raised: color-mix(in srgb, var(--frame) 88%, var(--frame-ink));
+  --frame-deep: color-mix(in srgb, var(--frame) 78%, black);
+  --frame-line: color-mix(in srgb, var(--accent-fill) 34%, var(--frame));
+  --frame-accent: var(--accent-fill); // oak gold on green (5.9:1)
+  --frame-accent-hover: color-mix(in srgb, var(--accent-fill) 70%, var(--frame-ink));
   --accent-wash: color-mix(in srgb, var(--accent) 8%, var(--surface));
 
   // ─── Motion ───────────────────────────────────────────────────────────────────────
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 2.2);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  // ─── Shape — flat and crisp: ONE soft radius, used everywhere (not a pill) ────────
-  --radius: 8px;
-  // Registration mark (the site's one signature detail — see _marks.scss).
+  // ─── Shape — cut paper: ONE small radius ──────────────────────────────────────────
+  --radius: 4px;
+  // Registration mark (the site's signature detail — see _marks.scss).
   --mark-size: 12px;
 
   // ─── Spacing scale (4/8pt rhythm) ─────────────────────────────────────────────────
@@ -51,12 +50,12 @@
   // ─── Layout ───────────────────────────────────────────────────────────────────────
   --container-max: 1440px;
   --container-pad: clamp(20px, 5vw, 64px);
-  --header-height: 80px;
+  --header-height: 92px;
 
-  // ─── Elevation — soft, low, warm-neutral (a light theme wants lift, not drama) ─────
-  --shadow-surface: 0 1px 2px rgba(36, 26, 18, 0.06), 0 6px 16px rgba(36, 26, 18, 0.05);
-  --shadow-raised: 0 2px 4px rgba(36, 26, 18, 0.06), 0 14px 32px rgba(36, 26, 18, 0.09);
-  --shadow-bar: 0 2px 14px rgba(36, 26, 18, 0.16); // the fixed header once content scrolls under
+  // ─── Elevation — warm, low, tinted to the page hue ────────────────────────────────
+  --shadow-surface: 0 1px 2px rgba(43, 30, 20, 0.07), 0 6px 14px rgba(43, 30, 20, 0.06);
+  --shadow-raised: 0 2px 4px rgba(43, 30, 20, 0.08), 0 14px 30px rgba(43, 30, 20, 0.12);
+  --shadow-bar: 0 3px 18px rgba(8, 24, 18, 0.35); // the fixed header once content scrolls under
 
   // ─── z-index scale ────────────────────────────────────────────────────────────────
   --z-base: 0;
@@ -67,16 +66,12 @@
   --z-modal: 100;
 }
 
-// Typography fallback stacks. --font-archivo/--font-hanken/--font-plex-mono are injected by
-// next/font/google as CSS vars scoped to the .font-root wrapper div (see _app.jsx), NOT to
-// :root — so --font-display/--font-body/--font-mono must be declared on that same element.
-// Custom properties substitute var() at the element where they're DECLARED, then inherit
-// the already-resolved value — declaring `--font-display: var(--font-archivo), …` at :root
-// would resolve --font-archivo before it exists there, permanently invalidating
-// --font-display (and silently falling back every consumer to the browser's default serif).
+// Typography. --font-courier / --font-fraunces are injected by next/font/google onto the
+// .font-root wrapper (see _app.jsx), NOT :root, so the aliases must be declared on that
+// same element (var() resolves where it is declared, then inherits the resolved value).
+// Exactly two families: Courier Prime (typewriter) + Fraunces (soft serif).
 .font-root {
-  --font-display: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
-  --font-body: var(--font-hanken), 'Helvetica Neue', Arial, sans-serif;
-  // Utility face for data-like labels only (see the mono-label mixin in _marks.scss).
-  --font-mono: var(--font-plex-mono), ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-display: var(--font-courier), 'Courier New', Courier, monospace;
+  --font-mono: var(--font-courier), 'Courier New', Courier, monospace;
+  --font-body: var(--font-fraunces), Georgia, 'Times New Roman', serif;
 }

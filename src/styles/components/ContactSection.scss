@@ -1,6 +1,7 @@
 @use '../marks' as *;
 
-// Sits on the alternate tint so the white map / form panels read as objects on a worktop.
+// Sits on the alternate tint (full-bleed) so the map and the form read as objects on a
+// worktop. The form is a ruled order sheet; the info row is a ledger line.
 .contact-section {
   padding-block: var(--space-8);
   background: var(--surface-alt);
@@ -13,31 +14,41 @@
   }
 }
 
+.contact-section__head {
+  margin-bottom: var(--space-7);
+}
+
 .contact-section__title {
-  font-size: clamp(24px, 3.2vw, 36px);
-  margin-bottom: var(--space-6);
+  font-size: clamp(30px, 4.4vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
 }
 
 .contact-section__grid {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-7);
 
   @media (min-width: 900px) {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-7);
+    grid-template-columns: 5fr 6fr;
+    gap: var(--space-8);
+    align-items: start;
   }
 }
 
 // Embedded map — the whole frame is one big link out to Google Maps.
 .contact-section__map {
   position: relative;
-  min-height: 280px;
+  min-height: 320px;
   height: 100%;
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-surface);
+
+  @media (min-width: 900px) {
+    min-height: 480px;
+  }
 }
 
 .contact-section__map-frame {
@@ -46,8 +57,23 @@
   width: 100%;
   height: 100%;
   border: 0;
-  // Slightly desaturated so the default Google palette sits quietly on the ivory page.
-  filter: saturate(0.75) contrast(0.95);
+  // Muted and warmed so the default Google palette sits quietly on the kraft page.
+  filter: sepia(0.35) saturate(0.7) contrast(0.95);
+}
+
+.contact-section__map-tag {
+  @include mono-label(700);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 7px 12px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--frame);
+  color: var(--frame-accent);
+  pointer-events: none;
 }
 
 .contact-section__map-overlay {
@@ -59,36 +85,44 @@
 
   &:hover,
   &:focus-visible {
-    background: rgba(161, 90, 46, 0.08);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
   }
 }
 
+// The order sheet: paper with registration marks outside its corners.
+
 .contact-section__form-content {
-  padding: var(--space-6);
+  padding: var(--space-6) var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-3);
+
+  @media (min-width: 768px) {
+    padding: var(--space-7);
+  }
 }
 
 .contact-section__field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
 
   label {
     @include eyebrow;
-    color: var(--ink);
+    color: var(--ink-muted);
   }
 
-  // Flat fields: ivory well, hairline border, terracotta ring on focus.
+  // Ruled fields: no box, just a typewritten line to write on. Focus thickens the rule
+  // (box-shadow, so nothing shifts) and warms it to terracotta.
   input,
   textarea {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg);
-    padding: 13px 14px;
+    border: 0;
+    border-bottom: 1px solid var(--ink-muted);
+    border-radius: 0;
+    background: transparent;
+    padding: 8px 0;
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 17px;
     color: var(--ink);
     resize: vertical;
     transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
@@ -98,21 +132,40 @@
     }
 
     &:hover {
-      border-color: var(--ink-muted);
+      border-bottom-color: var(--ink);
     }
 
-    // Accent-toned error state instead of the browser's default red outline — validation
-    // is fully custom (form has noValidate), driven by aria-invalid so it only lights up
-    // after a real submit attempt. Kept BEFORE :focus-visible so the focus ring wins.
+    // Accent-toned error state, driven by aria-invalid so it only lights up after a real
+    // submit attempt. Kept BEFORE :focus-visible so the focus ring wins.
     &[aria-invalid='true'] {
-      border-color: var(--accent);
+      border-bottom-color: var(--accent);
       background: var(--accent-wash);
     }
 
     &:focus-visible {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-wash), inset 0 0 0 1px var(--accent);
+      border-bottom-color: var(--accent);
+      box-shadow: 0 1px 0 0 var(--accent);
+    }
+  }
+
+  // Notebook rules for the message: one hairline per line of text.
+  textarea {
+    line-height: 32px;
+    padding: 0;
+    min-height: 128px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      var(--border) 31px,
+      var(--border) 32px
+    );
+    background-attachment: local;
+    border-bottom: 1px solid var(--border);
+
+    &[aria-invalid='true'] {
+      background-color: var(--accent-wash);
     }
   }
 }
@@ -149,20 +202,24 @@
 
 .contact-section__submit-content {
   display: block;
-  padding: 13px 28px;
+  padding: 15px 32px;
   font-size: 15px;
 }
 
-// Single row of contact info: 2x2 on mobile, one row of four from 480px up.
+// Contact ledger: a heavy rule on top, four entries — 2x2 on mobile, one row from 480px.
 .contact-section__info-row {
-  margin-top: var(--space-7);
+  margin-top: var(--space-8);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-4) var(--space-3);
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--border);
+  padding-top: var(--space-5);
+  border-top: 2px solid var(--ink);
 
-  @media (min-width: 480px) {
+  @media (min-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 1100px) {
     grid-template-columns: repeat(4, auto);
     align-items: center;
     justify-content: space-between;
@@ -193,7 +250,12 @@
 
     .contact-section__info-icon {
       border-color: var(--accent);
+      background: var(--accent-wash);
     }
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 
   &:focus-visible {
@@ -204,16 +266,16 @@
 
 .contact-section__info-icon {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--accent);
   background: var(--surface);
-  border: 1px solid var(--border);
-  transition: border-color 0.3s var(--ease-out);
+  border: 1px solid var(--ink-muted);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
 
   &--whatsapp {
     color: #25d366;
@@ -228,7 +290,8 @@
 }
 
 .contact-section__info-value {
-  font-size: 14px;
+  @include mono-label(700);
+  font-size: 15px;
   color: var(--ink);
   transition: color 0.3s var(--ease-out);
 }
@@ -236,4 +299,50 @@
 .contact-section__info-label {
   @include eyebrow;
   font-size: 11px;
+}
+
+// Location card under the iframe (visible only until/unless the embed paints).
+.contact-section__map-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--accent);
+  background-color: var(--surface);
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.contact-section__map-fallback-address {
+  @include mono-label(700);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  padding: 6px 10px;
+}
+
+.contact-section__map-overlay {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.contact-section__map-cta {
+  @include mono-label(700);
+  margin: var(--space-3);
+  padding: 10px 14px;
+  font-size: 13px;
+  background: var(--frame);
+  color: var(--frame-ink);
+  border-radius: var(--radius);
 }

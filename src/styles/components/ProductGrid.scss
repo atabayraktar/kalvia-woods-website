@@ -1,3 +1,5 @@
+@use '../marks' as *;
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -11,4 +13,50 @@
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-6) var(--space-5);
   }
+}
+
+// Custom-order closer: a dashed-free, flat ruled card that fills the empty grid slot.
+.product-grid__custom {
+  @include reg-marks(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  min-height: 240px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    background: var(--accent-wash);
+  }
+}
+
+.product-grid__custom-eyebrow {
+  @include eyebrow;
+  color: var(--accent-hover);
+}
+
+.product-grid__custom-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.product-grid__custom-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.product-grid__custom-cta {
+  @include mono-label(700);
+  font-size: 13px;
+  color: var(--accent-hover);
 }

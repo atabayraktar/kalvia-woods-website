@@ -11,6 +11,9 @@ button.scroll-top-fab {
   z-index: var(--z-fab);
   width: 48px;
   height: 48px;
+  background: var(--frame);
+  border-color: var(--frame-line);
+  color: var(--frame-accent);
   // Entrance/exit: opacity + scale + the footer-avoidance translateY lift, combined into
   // one transform so the lift math isn't fought by a second transform declaration. Hidden
   // state disables pointer events — a real show/hide, not just a visual fade.
@@ -29,6 +32,9 @@ button.scroll-top-fab {
     &:hover,
     &:focus-visible {
       transform: translateY(calc(var(--fab-lift, 0px) * -1)) scale(1);
+      background: var(--frame-deep);
+      border-color: var(--accent-fill);
+      color: var(--frame-ink);
     }
 
     &:active {

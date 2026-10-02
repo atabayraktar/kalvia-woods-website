@@ -5,7 +5,7 @@ import ProductInfo from '@/components/ProductInfo';
 import ProductPoster from '@/components/ProductPoster';
 import RelatedProducts from '@/components/RelatedProducts';
 import { useLanguage } from '@/context/LanguageContext';
-import { products, PRODUCT_CATEGORIES } from '@/data/products';
+import { products, PRODUCT_CATEGORIES, PRODUCT_SUBCATEGORIES } from '@/data/products';
 import useScrollReveal from '@/hooks/useScrollReveal';
 
 const SITE_URL = 'https://kalviawoods.example';
@@ -29,28 +29,38 @@ export async function getStaticProps({ params }) {
   );
   // Everything else from the same category, for the "more from this category" rail.
   const siblingIds = new Set(siblings.map((p) => p.id));
-  const related = products.filter(
-    (p) => p.id !== product.id && p.category === product.category && !siblingIds.has(p.id)
-  );
+  // Same subcategory first, then the rest of the category; one variant per colour family so
+  // the rail doesn't fill up with five colours of the same piece. Capped for payload size.
+  const seenFamilies = new Set();
+  const related = products
+    .filter((p) => p.id !== product.id && p.category === product.category && !siblingIds.has(p.id))
+    .sort((a, b) => Number(b.subcategory === product.subcategory) - Number(a.subcategory === product.subcategory))
+    .filter((p) => {
+      const family = `${p.category}|${p.name.tr}`;
+      if (seenFamilies.has(family)) return false;
+      seenFamilies.add(family);
+      return true;
+    })
+    .slice(0, 8);
   // Both lists only ever feed VariantPicker/ProductCard — trim to what those read.
-  const leanProduct = ({ id, name, tagline, category, color, size, isNew, inStock, image, price }) => ({
-    id, name, tagline, category, color, size, isNew, inStock, image, price: price ?? null,
+  const leanProduct = ({ id, name, tagline, category, subcategory, color, size, isNew, inStock, image }) => ({
+    id, name, tagline, category, subcategory, color, size, isNew, inStock, image,
   });
   return {
     props: {
       product,
       siblings: siblings.map(leanProduct),
       related: related.map(leanProduct),
-      categories: PRODUCT_CATEGORIES,
+      category: PRODUCT_CATEGORIES.find((c) => c.slug === product.category) ?? null,
+      subcategory: PRODUCT_SUBCATEGORIES.find((s) => s.slug === product.subcategory) ?? null,
     },
   };
 }
 
-export default function ProductDetailPage({ product, siblings, related, categories }) {
+export default function ProductDetailPage({ product, siblings, related, category, subcategory }) {
   useScrollReveal();
   const { t } = useLanguage();
   const router = useRouter();
-  const category = categories.find((c) => c.slug === product.category);
 
   // router.back() replays the actual browser history entry, which restores /urunler's
   // filtered list (it syncs filters into the URL) and scroll position. Only safe when the
@@ -79,26 +89,28 @@ export default function ProductDetailPage({ product, siblings, related, categori
     brand: { '@type': 'Brand', name: 'Kalvia Woods' },
     // Kalvia Woods manufactures its own products.
     manufacturer: { '@type': 'Organization', name: 'Kalvia Woods' },
-    category: category ? t(category.label) : undefined,
+    // schema.org wants a "Parent > Child" path for category.
+    category: category ? [t(category.label), subcategory && t(subcategory.label)].filter(Boolean).join(' > ') : undefined,
+    color: product.color ? t(product.color) : undefined,
     inLanguage: 'tr',
-    offers: {
-      '@type': 'Offer',
-      availability: product.inStock === false ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
-      // No cart/checkout on this site (WhatsApp is the sales channel) — url points at the
-      // page itself; price is included only when the data actually has one.
-      url,
-      ...(typeof product.price === 'number' ? { price: product.price, priceCurrency: 'TRY' } : {}),
-    },
   };
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Anasayfa', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Ürünler', item: `${SITE_URL}/urunler` },
-      { '@type': 'ListItem', position: 3, name, item: url },
-    ],
+      { '@type': 'ListItem', name: 'Anasayfa', item: SITE_URL },
+      { '@type': 'ListItem', name: 'Ürünler', item: `${SITE_URL}/urunler` },
+      category && { '@type': 'ListItem', name: t(category.label), item: `${SITE_URL}/urunler?kategori=${category.slug}` },
+      category && subcategory && {
+        '@type': 'ListItem',
+        name: t(subcategory.label),
+        item: `${SITE_URL}/urunler?kategori=${category.slug}&altkategori=${subcategory.slug}`,
+      },
+      { '@type': 'ListItem', name, item: url },
+    ]
+      .filter(Boolean)
+      .map((item, i) => ({ ...item, position: i + 1 })),
   };
 
   return (
@@ -142,7 +154,7 @@ export default function ProductDetailPage({ product, siblings, related, categori
 
           <div className="product-detail__gallery-info" data-reveal>
             <ProductGallery images={product.gallery} thumbs={product.galleryThumbs} video={product.video} alt={name} />
-            <ProductInfo product={product} siblings={siblings} />
+            <ProductInfo product={product} siblings={siblings} category={category} subcategory={subcategory} />
           </div>
 
           {/* Poster images/description come from src/data/products.js; ProductPoster only

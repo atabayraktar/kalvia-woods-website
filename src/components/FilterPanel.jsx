@@ -10,15 +10,30 @@ const TEXT = {
   close: { tr: 'Kapat', en: 'Close', de: 'Schließen' },
 };
 
-export default function FilterPanel({ categories, active, onSelect, className = '' }) {
+// `subcategories` = PRODUCT_SUBCATEGORIES rows ({ slug, category, label }). They render
+// nested under their main category only while that category is active — picking a main
+// category clears any subcategory; picking the active subcategory again deselects it.
+export default function FilterPanel({
+  categories,
+  subcategories = [],
+  active,
+  activeSub = null,
+  onSelect,
+  onSelectSub = () => {},
+  className = '',
+}) {
   const { t } = useLanguage();
+  const selectCategory = (slug) => {
+    onSelectSub(null);
+    onSelect(slug);
+  };
 
   return (
     <div className={`filter-panel ${className}`}>
       <div className="filter-panel__head">
         <h2 className="filter-panel__title">{t(TEXT.categories)}</h2>
         {active && (
-          <button type="button" className="filter-panel__reset" onClick={() => onSelect(null)}>
+          <button type="button" className="filter-panel__reset" onClick={() => selectCategory(null)}>
             {t(TEXT.reset)}
           </button>
         )}
@@ -29,22 +44,46 @@ export default function FilterPanel({ categories, active, onSelect, className = 
           <button
             type="button"
             className={`filter-panel__item${!active ? ' filter-panel__item--active' : ''}`}
-            onClick={() => onSelect(null)}
+            onClick={() => selectCategory(null)}
           >
             {t(TEXT.all)}
           </button>
         </li>
-        {categories.map((cat) => (
-          <li key={cat.slug}>
-            <button
-              type="button"
-              className={`filter-panel__item${active === cat.slug ? ' filter-panel__item--active' : ''}`}
-              onClick={() => onSelect(cat.slug)}
-            >
-              {t(cat.label)}
-            </button>
-          </li>
-        ))}
+        {categories.map((cat) => {
+          const subs = subcategories.filter((s) => s.category === cat.slug);
+          const isActive = active === cat.slug;
+          return (
+            <li key={cat.slug}>
+              <button
+                type="button"
+                className={`filter-panel__item${isActive ? ' filter-panel__item--active' : ''}`}
+                aria-expanded={subs.length > 0 ? isActive : undefined}
+                onClick={() => selectCategory(cat.slug)}
+              >
+                {t(cat.label)}
+              </button>
+              {isActive && subs.length > 0 && (
+                <ul className="filter-panel__sublist">
+                  {subs.map((sub) => {
+                    const subActive = activeSub === sub.slug;
+                    return (
+                      <li key={sub.slug}>
+                        <button
+                          type="button"
+                          className={`filter-panel__item filter-panel__item--sub${subActive ? ' filter-panel__item--active' : ''}`}
+                          aria-pressed={subActive}
+                          onClick={() => onSelectSub(subActive ? null : sub.slug)}
+                        >
+                          {t(sub.label)}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -55,11 +94,15 @@ export default function FilterPanel({ categories, active, onSelect, className = 
 // immediately (like a native dropdown). Always mounted, shown/hidden via the Surface --veil
 // opacity transition; closed it's inert + aria-hidden + pointer-events:none. React 18
 // doesn't forward a boolean `inert`, hence the empty-string form.
-export function FilterPanelSheet({ open, onClose, onSelect, ...props }) {
+export function FilterPanelSheet({ open, onClose, onSelect, onSelectSub = () => {}, ...props }) {
   const { t } = useLanguage();
   useBodyScrollLock(open);
   const handleSelect = (value) => {
     onSelect(value);
+    onClose();
+  };
+  const handleSelectSub = (value) => {
+    onSelectSub(value);
     onClose();
   };
   return (
@@ -82,7 +125,7 @@ export function FilterPanelSheet({ open, onClose, onSelect, ...props }) {
             </svg>
           </button>
         </div>
-        <FilterPanel {...props} onSelect={handleSelect} />
+        <FilterPanel {...props} onSelect={handleSelect} onSelectSub={handleSelectSub} />
       </Surface>
     </div>
   );

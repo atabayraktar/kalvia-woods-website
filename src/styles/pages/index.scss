@@ -1,3 +1,58 @@
+@use '../marks' as *;
+
 #main-content {
   display: block;
+}
+
+// Ticker strip under the hero: oak-gold band, ink typewriter caps, slow drift. Decorative
+// (aria-hidden); the two identical halves make the -50% loop seamless.
+.ticker {
+  overflow: hidden;
+  background: var(--surface-alt);
+  color: var(--ink);
+  border-block: 1px solid var(--border);
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker-drift 42s linear infinite;
+}
+
+.ticker__list {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-block: 12px;
+
+  li {
+    @include mono-label(700);
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      margin-inline: 28px;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+  }
+}
+
+@keyframes ticker-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track {
+    animation: none;
+  }
 }

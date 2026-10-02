@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { aboutKalvia } from '@/data/homepageContent';
-import Surface from './Surface';
 
 // Line icons in the site's 1.6-stroke language, one per "why Kalvia" box. Placeholder
 // set — swap for real brand icons when supplied.
@@ -48,12 +48,15 @@ const ICONS = {
 export default function AboutKalvia() {
   const { t } = useLanguage();
   const { title, paragraph, image, boxes } = aboutKalvia;
+  const [open, setOpen] = useState(0);
 
   return (
     <section className="about-kw container" id="hakkimizda">
       <div className="about-kw__top" data-reveal>
-        <div className="about-kw__image-wrap">
-          <Image src={image} alt="Kalvia Woods atölyesi (yer tutucu görsel)" fill sizes="(max-width: 900px) 100vw, 45vw" style={{ objectFit: 'cover' }} />
+        <div className="about-kw__figure">
+          <div className="about-kw__image-wrap">
+            <Image src={image} alt="Kalvia Woods atölyesi (yer tutucu görsel)" fill sizes="(max-width: 900px) 100vw, 55vw" style={{ objectFit: 'cover' }} />
+          </div>
         </div>
         <div className="about-kw__copy">
           <h2 className="about-kw__title">{t(title)}</h2>
@@ -61,24 +64,40 @@ export default function AboutKalvia() {
         </div>
       </div>
 
-      <div className="about-kw__boxes">
-        {boxes.map((box) => (
-          <Surface
-            as="div"
-            className="about-kw__box surface--calm"
-            contentClassName="about-kw__box-content"
-            key={box.icon}
-            data-reveal
-          >
-            <div className="about-kw__box-head">
-              <span className="about-kw__stat accent-hover">{t(box.eyebrow)}</span>
-              <span className="about-kw__box-icon" aria-hidden="true">
-                {ICONS[box.icon]}
-              </span>
+      <div className="about-kw__acc" data-reveal>
+        {boxes.map((box, i) => {
+          const isOpen = open === i;
+          return (
+            <div className={`about-kw__item${isOpen ? ' is-open' : ''}`} key={box.icon}>
+              <h3 className="about-kw__item-head">
+                <button
+                  type="button"
+                  className="about-kw__trigger"
+                  id={`about-acc-btn-${i}`}
+                  aria-expanded={isOpen}
+                  aria-controls={`about-acc-panel-${i}`}
+                  onClick={() => setOpen(isOpen ? -1 : i)}
+                >
+                  <span className="about-kw__box-icon" aria-hidden="true">
+                    {ICONS[box.icon]}
+                  </span>
+                  <span className="about-kw__stat">{t(box.eyebrow)}</span>
+                  <span className="about-kw__chevron" aria-hidden="true" />
+                </button>
+              </h3>
+              <div
+                className="about-kw__panel"
+                id={`about-acc-panel-${i}`}
+                role="region"
+                aria-labelledby={`about-acc-btn-${i}`}
+              >
+                <div className="about-kw__panel-inner">
+                  <p className="about-kw__box-info">{t(box.info)}</p>
+                </div>
+              </div>
             </div>
-            <p className="about-kw__box-info">{t(box.info)}</p>
-          </Surface>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

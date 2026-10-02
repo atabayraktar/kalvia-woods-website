@@ -15,6 +15,8 @@
 }
 
 .filter-panel__reset {
+  min-height: 44px;
+  padding-inline: 4px;
   font-size: 13px;
   color: var(--ink-muted);
   transition: color 0.25s var(--ease-out);
@@ -35,7 +37,10 @@
 .filter-panel__item {
   width: 100%;
   text-align: left;
-  padding: 10px 12px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
   border-radius: var(--radius);
   font-size: 14.5px;
   color: var(--ink-muted);
@@ -49,13 +54,29 @@
 
   &--active {
     background: var(--accent-wash);
-    color: var(--accent);
-    font-variation-settings: 'wght' 500, 'wdth' 95;
+    color: var(--accent-hover);
+    font-weight: 700;
     text-decoration: underline;
-    text-decoration-color: var(--accent);
+    text-decoration-color: var(--accent-hover);
+    font-weight: 700;
     text-decoration-thickness: 2px;
     text-underline-offset: 3px;
   }
+}
+
+// Subcategories: indented rows under the active main category, tied to it by a hairline.
+.filter-panel__sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 2px 0 var(--space-2) var(--space-4);
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--border);
+}
+
+.filter-panel__item--sub {
+  min-height: 40px;
+  font-size: 13.5px;
 }
 
 // Mobile full-screen filter sheet. Always in the DOM (see FilterPanel.jsx); the scrim
@@ -130,13 +151,12 @@
 
 .filter-sheet__heading {
   font-family: var(--font-display);
-  font-variation-settings: 'wght' 300, 'wdth' 118;
   font-size: 20px;
 }
 
 .filter-sheet__close {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--surface);
@@ -150,6 +170,6 @@
   &:focus-visible {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--wood-ink);
+    color: var(--frame-ink);
   }
 }

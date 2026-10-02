@@ -51,7 +51,7 @@
   &:focus-visible {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--wood-ink);
+    color: var(--frame-ink);
   }
 }
 
@@ -84,6 +84,6 @@
   bottom: var(--space-4);
   left: 50%;
   transform: translateX(-50%);
-  color: var(--wood-ink);
+  color: var(--frame-ink);
   font-size: 13px;
 }

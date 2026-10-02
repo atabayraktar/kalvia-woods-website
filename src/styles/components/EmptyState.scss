@@ -12,7 +12,6 @@
 
 .empty-state__title {
   font-family: var(--font-display);
-  font-variation-settings: 'wght' 300, 'wdth' 118;
   font-size: 20px;
   color: var(--ink);
   margin-top: var(--space-5);
@@ -28,7 +27,6 @@
 .empty-state__reset {
   margin-top: var(--space-5);
   font-size: 14px;
-  font-variation-settings: 'wght' 450, 'wdth' 95;
   color: var(--accent);
   padding: 10px 20px;
   border-radius: var(--radius);

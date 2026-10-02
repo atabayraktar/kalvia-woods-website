@@ -1,9 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { contactSection } from '@/data/homepageContent';
-import Surface from './Surface';
 
-// Fixed corner WhatsApp button: a rounded-square wood surface housing the circular green
-// WhatsApp badge (SVG, not an emoji — renders identically across platforms).
+// Fixed corner WhatsApp button: just the green WhatsApp badge, no frame around it (SVG, not an emoji — renders identically across platforms).
 export default function WhatsAppFab() {
   const fabRef = useRef(null);
 
@@ -38,11 +36,9 @@ export default function WhatsAppFab() {
   }, []);
 
   return (
-    <Surface
-      as="a"
+    <a
       ref={fabRef}
       className="whatsapp-fab"
-      contentClassName="whatsapp-fab__content"
       href={`${contactSection.whatsappHref}?text=${encodeURIComponent('Merhaba, Kalvia Woods ürünleri hakkında bilgi almak istiyorum.')}`}
       target="_blank"
       rel="noopener noreferrer"
@@ -60,6 +56,6 @@ export default function WhatsAppFab() {
           />
         </svg>
       </span>
-    </Surface>
+    </a>
   );
 }

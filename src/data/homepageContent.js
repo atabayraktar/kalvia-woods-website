@@ -55,8 +55,8 @@ export const heroSlides = [
       en: 'We pair the warmth of wood with the clean lines of laser cutting. Every piece takes shape in our own workshop, from design to production.',
       de: 'Wir verbinden die Wärme des Holzes mit den klaren Linien des Laserschnitts. Jedes Stück entsteht in unserer eigenen Werkstatt.',
     },
-    cta: { tr: 'Ahşap dekorlar', en: 'Wood décor', de: 'Holzdekor' },
-    href: '/urunler?kategori=ahsap-dekor',
+    cta: { tr: 'Duvar dekorları', en: 'Wall décor', de: 'Wanddekor' },
+    href: '/urunler?kategori=duvar-dekoru',
   },
   {
     id: 'hero-3',
@@ -80,8 +80,8 @@ export const heroSlides = [
       en: 'Durable, legible PVC signs made to the exact size you need — for indoor and outdoor use.',
       de: 'Langlebige, gut lesbare PVC-Schilder in genau Ihrem Maß – für innen und außen.',
     },
-    cta: { tr: 'PVC tabelalar', en: 'PVC signage', de: 'PVC-Schilder' },
-    href: '/urunler?kategori=pvc-tabela',
+    cta: { tr: 'Tüm ürünler', en: 'All products', de: 'Alle Produkte' },
+    href: '/urunler',
   },
 ];
 
@@ -91,28 +91,40 @@ export const categorySection = {
     en: ['Laser-cut products', 'for every need.'],
     de: ['Lasergeschnittene Produkte', 'für jeden Bedarf.'],
   },
-  // Slugs must match PRODUCT_CATEGORIES in src/data/products.js — every card deep-links to
-  // /urunler with that filter pre-applied.
+  // Four equal cards (the section's grid is 4-up from 960px). `slug` is a main category from
+  // PRODUCT_CATEGORIES in src/data/products.js and `sub` an optional PRODUCT_SUBCATEGORIES
+  // slug — each card deep-links to /urunler with those filters pre-applied. Only two main
+  // categories have products so far, so the cards are their four populated subcategories
+  // (the parent category shows as the card's eyebrow). Swap in main categories here once the
+  // other ones from the sheet get products.
   categories: [
     {
-      slug: 'ahsap-dekor',
+      slug: 'organizer-workstation',
+      sub: 'hobi-boya-istasyonu',
       image: '/images/placeholder-category-1.webp',
-      title: { tr: 'Ahşap Dekor', en: 'Wood Décor', de: 'Holzdekor' },
+      eyebrow: { tr: 'Organizer & Workstation', en: 'Organizers & Workstations', de: 'Organizer & Workstations' },
+      title: { tr: 'Hobi / Boya İstasyonu', en: 'Hobby / Paint Stations', de: 'Hobby / Farbstationen' },
     },
     {
-      slug: 'pvc-tabela',
+      slug: 'organizer-workstation',
+      sub: 'makeup-organizer',
       image: '/images/placeholder-category-2.webp',
-      title: { tr: 'PVC Tabela', en: 'PVC Signage', de: 'PVC-Schilder' },
+      eyebrow: { tr: 'Organizer & Workstation', en: 'Organizers & Workstations', de: 'Organizer & Workstations' },
+      title: { tr: 'Makeup Organizer', en: 'Makeup Organizers', de: 'Make-up-Organizer' },
     },
     {
-      slug: 'ahsap-kutu',
+      slug: 'duvar-dekoru',
+      sub: 'aynalar',
       image: '/images/placeholder-category-3.webp',
-      title: { tr: 'Ahşap Kutu', en: 'Wooden Boxes', de: 'Holzboxen' },
+      eyebrow: { tr: 'Duvar Dekoru', en: 'Wall Décor', de: 'Wanddekor' },
+      title: { tr: 'Aynalar', en: 'Mirrors', de: 'Spiegel' },
     },
     {
-      slug: 'ozel-kesim',
+      slug: 'duvar-dekoru',
+      sub: 'tablolar',
       image: '/images/placeholder-category-4.webp',
-      title: { tr: 'Özel Kesim', en: 'Custom Cutting', de: 'Sonderanfertigung' },
+      eyebrow: { tr: 'Duvar Dekoru', en: 'Wall Décor', de: 'Wanddekor' },
+      title: { tr: 'Tablolar', en: 'Wall Art', de: 'Wandbilder' },
     },
   ],
 };
@@ -178,15 +190,14 @@ export const customOrderBanner = {
   image: '/images/placeholder-banner.webp',
   // Portrait crop for mobile, swapped via a CSS breakpoint — see CustomOrderBanner.jsx.
   mobileImage: '/images/placeholder-banner-mobile.webp',
-  title: {
-    tr: 'Size uygun ürünü birlikte bulalım.',
-    en: "Let's find the right product for you.",
-    de: 'Finden wir gemeinsam das passende Produkt.',
-  },
+  // The one product this banner promotes (id from src/data/products.js). The banner links to
+  // /urunler/<featuredProductId>; the headline is the product's own name.
+  featuredProductId: 'kw-dd-002', // Elora Mandala Ayna
+  tag: { tr: 'Öne çıkan ürün', en: 'Featured product', de: 'Produkt im Fokus' },
   cta: {
-    tr: 'Ürün seçim anketi',
-    en: 'Product finder quiz',
-    de: 'Produktfinder',
+    tr: 'Ürünü incele',
+    en: 'View the product',
+    de: 'Produkt ansehen',
   },
 };
 
