@@ -23,18 +23,6 @@ export default function Footer() {
 
       <ul className="site-footer__icons">
         <li>
-          <a href={`tel:${contactSection.phone.replace(/\s/g, '')}`} aria-label="Telefon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-        </li>
-        <li>
           <a href={contactSection.whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
             <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path
@@ -54,6 +42,18 @@ export default function Footer() {
               <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" strokeWidth="1.6" />
               <circle cx="12" cy="12" r="3.6" stroke="currentColor" strokeWidth="1.6" />
               <circle cx="16.6" cy="7.4" r="1" fill="currentColor" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href={`tel:${contactSection.phone.replace(/\s/g, '')}`} aria-label="Telefon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
         </li>

@@ -7,16 +7,11 @@ import ProductCard from './ProductCard';
 // ProductCard never opted any card into eager loading.
 const EAGER_COUNT = 4;
 
-// A short catalogue leaves the row half empty: close it with a custom-order card.
-const FILLER_BELOW = 4;
-
+// The custom-order card is always the first item of every page of results.
 export default function ProductGrid({ products }) {
   return (
     <div className="product-grid">
-      {products.map((product, i) => (
-        <ProductCard key={product.id} product={product} priority={i < EAGER_COUNT} />
-      ))}
-      {products.length > 0 && products.length < FILLER_BELOW && (
+      {products.length > 0 && (
         <Link href="/#iletisim" className="product-grid__custom">
           <span className="product-grid__custom-eyebrow">Özel sipariş</span>
           <span className="product-grid__custom-title">Aradığınızı bulamadınız mı?</span>
@@ -26,6 +21,9 @@ export default function ProductGrid({ products }) {
           <span className="product-grid__custom-cta">Bize yazın →</span>
         </Link>
       )}
+      {products.map((product, i) => (
+        <ProductCard key={product.id} product={product} priority={i < EAGER_COUNT} />
+      ))}
     </div>
   );
 }

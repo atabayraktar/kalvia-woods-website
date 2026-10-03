@@ -15,7 +15,7 @@
   }
 }
 
-// Custom-order closer: a dashed-free, flat ruled card that fills the empty grid slot.
+// Custom-order card: flat ruled card, always the first grid item.
 .product-grid__custom {
   @include reg-marks(10px);
   display: flex;
