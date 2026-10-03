@@ -37,14 +37,22 @@ const BREADCRUMB_JSON_LD = {
 // explicit. Trimmed to only the fields the grid/search/sort/filter/card actually read so
 // the page's serialized data stays small.
 export async function getStaticProps() {
-  const listProducts = products.map(({ id, name, tagline, category, subcategory, color, size, isNew, inStock, image }) => ({
+  // Colour/size variants share name + category: the listing shows ONE card per family (the
+  // first in-stock variant, else the first) and the detail page's VariantPicker switches between them.
+  const families = new Map();
+  products.forEach((p) => {
+    const key = `${p.category}|${p.name.tr}`;
+    const kept = families.get(key);
+    if (!kept || (kept.inStock === false && p.inStock !== false)) families.set(key, p);
+  });
+  const listProducts = [...families.values()].map(({ id, name, tagline, category, subcategory, isNew, inStock, image }) => ({
     id,
     name,
     tagline,
     category,
     subcategory,
-    color,
-    size,
+    color: null,
+    size: null,
     isNew,
     inStock,
     image,
