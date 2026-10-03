@@ -50,7 +50,7 @@ export async function getStaticProps({ params }) {
     props: {
       product,
       siblings: siblings.map(leanProduct),
-      related: related.map(leanProduct),
+      related: related.map((p) => ({ ...leanProduct(p), color: null, size: null })),
       category: PRODUCT_CATEGORIES.find((c) => c.slug === product.category) ?? null,
       subcategory: PRODUCT_SUBCATEGORIES.find((s) => s.slug === product.subcategory) ?? null,
     },

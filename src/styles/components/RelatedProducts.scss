@@ -83,3 +83,15 @@
     max-width: none;
   }
 }
+
+// Every slot is as tall as the tallest card in the rail (flex stretch), and the card fills
+// its slot, so one-line and two/three-line titles still give equal-height cards with the
+// button on the same baseline (the card body already pushes it to the bottom).
+.related-products__card {
+  display: flex;
+
+  .product-card {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
