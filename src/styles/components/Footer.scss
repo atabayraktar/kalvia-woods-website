@@ -8,6 +8,11 @@
   }
 }
 
+// The home page ends on the tinted contact section — no paper-coloured strip before the bar.
+.page-transition:has(.contact-section) + .site-footer {
+  margin-top: 0;
+}
+
 .site-footer__content {
   display: grid;
   grid-template-columns: 1fr;

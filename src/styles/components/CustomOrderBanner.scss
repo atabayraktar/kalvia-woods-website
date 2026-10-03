@@ -1,8 +1,9 @@
+// No bottom padding: the tinted contact section starts right under the banner.
 .order-banner {
-  padding-block: var(--space-8);
+  padding-block: var(--space-8) 0;
 
   @media (min-width: 768px) {
-    padding-block: var(--space-9);
+    padding-block: var(--space-9) 0;
   }
 }
 

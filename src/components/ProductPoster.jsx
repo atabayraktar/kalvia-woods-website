@@ -16,7 +16,7 @@ import Lightbox from './Lightbox';
 //     3 landscape → mosaic (one tall, two stacked); 3 portrait → three side by side.
 //   - Video gets its own desktop split: clip on the left, lead beside it on the right.
 //   Media is optional — a product with only a written description still renders the text.
-const EYEBROW = { tr: 'Detaylı Bilgi', en: 'Product Details', de: 'Produktdetails' };
+const EYEBROW = { tr: 'Detaylı Bilgi' };
 
 // Product ids whose three poster frames are portrait (3:4) designed posters that must show
 // whole (no landscape crop) in a row rather than the tall/stacked mosaic. Empty in the
@@ -24,11 +24,11 @@ const EYEBROW = { tr: 'Detaylı Bilgi', en: 'Product Details', de: 'Produktdetai
 const PORTRAIT_POSTER_SKUS = new Set([]);
 
 const SWIPER_TEXT = {
-  prev: { tr: 'Önceki görsel', en: 'Previous image', de: 'Vorheriges Bild' },
-  next: { tr: 'Sonraki görsel', en: 'Next image', de: 'Nächstes Bild' },
+  prev: { tr: 'Önceki görsel' },
+  next: { tr: 'Sonraki görsel' },
 };
 
-const ZOOM_TEXT = { open: { tr: 'Görseli tam ekran aç', en: 'Open image fullscreen', de: 'Bild im Vollbild öffnen' } };
+const ZOOM_TEXT = { open: { tr: 'Görseli tam ekran aç' } };
 
 // Same zoom-hint affordance as ProductGallery's main image, reused as-is so poster photos
 // read as zoomable the same way the gallery's already do.

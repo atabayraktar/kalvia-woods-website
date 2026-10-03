@@ -58,17 +58,6 @@ export default function Footer() {
           </a>
         </li>
         <li>
-          <a href={contactSection.facebookHref} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-              <path
-                d="M13.6 8.6h1.5V6.2h-1.9c-1.8 0-2.9 1.1-2.9 3v1.6H8.6v2.3h1.7V18h2.4v-4.9h1.8l.3-2.3h-2.1v-1.3c0-.6.2-.9.9-.9Z"
-                fill="currentColor"
-              />
-            </svg>
-          </a>
-        </li>
-        <li>
           <a href={contactSection.mapHref} target="_blank" rel="noopener noreferrer" aria-label="Konum">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21z" stroke="currentColor" strokeWidth="1.6" />

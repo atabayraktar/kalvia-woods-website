@@ -5,11 +5,9 @@ import ProductCard from './ProductCard';
 
 const TITLE = {
   tr: 'Bu kategoriden diğer ürünler',
-  en: 'More from this category',
-  de: 'Mehr aus dieser Kategorie',
 };
-const PREV_LABEL = { tr: 'Önceki ürünler', en: 'Previous products', de: 'Vorherige Produkte' };
-const NEXT_LABEL = { tr: 'Sonraki ürünler', en: 'Next products', de: 'Nächste Produkte' };
+const PREV_LABEL = { tr: 'Önceki ürünler' };
+const NEXT_LABEL = { tr: 'Sonraki ürünler' };
 
 // Same-category products shown as a horizontally swipeable row at the bottom of every
 // product detail page — plain scroll-snap + drag (no autoplay/infinite-loop like

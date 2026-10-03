@@ -1,7 +1,7 @@
 import { useLanguage } from '@/context/LanguageContext';
 import Surface from './Surface';
 
-const PLACEHOLDER = { tr: 'Ürün ara...', en: 'Search products...', de: 'Produkt suchen...' };
+const PLACEHOLDER = { tr: 'Ürün ara...' };
 
 export default function SearchBar({ value, onChange }) {
   const { t } = useLanguage();

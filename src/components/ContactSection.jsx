@@ -101,16 +101,13 @@ export default function ContactSection() {
           <iframe
             className="contact-section__map-frame"
             src={`https://www.google.com/maps?q=${contactSection.mapCoords}&z=14&output=embed`}
-            title="Kalvia Woods konum haritası (yer tutucu konum)"
+            title="Kalvia Woods konum haritası"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
           {/* Transparent overlay spanning the whole frame — an iframe is its own browsing
               context, so clicks land inside the embedded map instead of bubbling to a
               wrapping link; this catches them and sends the whole map to Google Maps. */}
-          <span className="contact-section__map-tag" aria-hidden="true">
-            Atölye konumu
-          </span>
           <a
             className="contact-section__map-overlay"
             href={contactSection.mapHref}

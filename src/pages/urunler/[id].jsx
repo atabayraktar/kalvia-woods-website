@@ -9,7 +9,7 @@ import { products, PRODUCT_CATEGORIES, PRODUCT_SUBCATEGORIES } from '@/data/prod
 import useScrollReveal from '@/hooks/useScrollReveal';
 
 const SITE_URL = 'https://kalviawoods.example';
-const BACK_LABEL = { tr: 'Ürünlere geri dön', en: 'Back to products', de: 'Zurück zu den Produkten' };
+const BACK_LABEL = { tr: 'Ürünlere geri dön' };
 
 // Static export: every product must be known at build time (no on-demand rendering for an
 // unknown id under `output: 'export'`).
@@ -122,8 +122,6 @@ export default function ProductDetailPage({ product, siblings, related, category
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={url} />
         <link rel="alternate" hrefLang="tr" href={url} />
-        <link rel="alternate" hrefLang="en" href={url} />
-        <link rel="alternate" hrefLang="de" href={url} />
         <link rel="alternate" hrefLang="x-default" href={url} />
 
         <meta property="og:type" content="product" />

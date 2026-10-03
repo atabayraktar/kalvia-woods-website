@@ -182,11 +182,12 @@ a.category-slider__card .category-slider__card-title {
   left: 0;
   bottom: 0;
   z-index: 1;
-  max-width: 88%;
+  max-width: 100%;
   padding: 12px 16px 12px 14px;
+  white-space: nowrap;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(16px, 1.7vw, 22px);
+  font-size: clamp(15px, 1.5vw, 19px);
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--ink);

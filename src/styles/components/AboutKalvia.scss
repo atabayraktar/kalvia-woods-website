@@ -162,6 +162,10 @@
   color: var(--surface);
 }
 
+.about-kw__thumb {
+  display: none;
+}
+
 .about-kw__stat {
   flex: 1;
   font-family: var(--font-display);
@@ -216,16 +220,60 @@
   min-height: 0;
 }
 
-.about-kw__box-info {
+.about-kw__panel-text {
   padding: 0 var(--space-5) var(--space-5) calc(var(--space-5) + 52px + var(--space-4));
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink-muted);
-  max-width: 62ch;
 
   @media (max-width: 560px) {
     padding-left: var(--space-5);
   }
+}
+
+// Related photo: full-width strip under the copy on mobile, a side panel on desktop.
+.about-kw__box-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  margin: 0 var(--space-5) var(--space-5);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-alt);
+
+  img {
+    border-radius: var(--radius);
+  }
+}
+
+.about-kw__points {
+  margin-top: var(--space-3);
+  display: grid;
+  gap: 6px;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 0.55em;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.about-kw__box-info {
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  max-width: 62ch;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -238,12 +286,12 @@
 
 // ─── Desktop: five expanding strips ────────────────────────────────────────────────────
 // One strip is wide (green, with its text), the other four stand as narrow tall tabs with
-// their title set vertically. Below 900px the stacked accordion above is used instead.
-@media (min-width: 900px) {
+// their title set vertically. Below 1100px the stacked accordion above is used instead.
+@media (min-width: 1100px) {
   .about-kw__acc {
     display: flex;
     gap: var(--space-3);
-    height: 360px;
+    height: 440px;
     max-width: none;
     margin-inline: 0;
   }
@@ -258,7 +306,7 @@
       border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
 
     &.is-open {
-      flex-grow: 5;
+      flex-grow: 6;
       background: var(--frame);
       border-color: var(--frame);
       color: var(--frame-ink);
@@ -292,8 +340,28 @@
     white-space: nowrap;
   }
 
-  // Closed strips: title reads bottom-to-top along the tab.
-  .about-kw__item:not(.is-open) .about-kw__stat {
+  // Nothing open: five equal strips, photo preview + horizontal title.
+  .about-kw__acc:not([data-has-open]) .about-kw__item .about-kw__stat {
+    font-size: clamp(16px, 1.6vw, 22px);
+  }
+
+  .about-kw__acc:not([data-has-open]) .about-kw__thumb {
+    display: block;
+    position: relative;
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface-alt);
+
+    img {
+      border-radius: var(--radius);
+    }
+  }
+
+  // One open: the rest squeeze into narrow tabs — photo gone, title reads bottom-to-top.
+  .about-kw__acc[data-has-open] .about-kw__item:not(.is-open) .about-kw__stat {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     font-size: 20px;
@@ -328,10 +396,10 @@
     flex: 0 0 auto;
   }
 
-  .about-kw__box-info {
-    width: min(46ch, 100%);
+  // The open strip's panel spans the strip: copy on the left; the photo is positioned against the strip itself.
+  .about-kw__panel-text {
+    width: 56%;
     padding: 0 var(--space-5) var(--space-5);
-    color: var(--frame-muted);
     opacity: 0;
     transition: opacity 0.3s var(--ease-out);
 
@@ -339,5 +407,40 @@
       opacity: 1;
       transition-delay: 0.25s;
     }
+  }
+
+  .about-kw__box-info {
+    color: var(--frame-muted);
+  }
+
+  .about-kw__points li {
+    color: var(--frame-ink);
+
+    &::before {
+      background: var(--frame-accent);
+    }
+  }
+
+  .about-kw__box-image {
+    display: none;
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+    width: calc(40% - var(--space-4));
+    margin: 0;
+    aspect-ratio: auto;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+
+    .is-open & {
+      display: block;
+      opacity: 1;
+      transition-delay: 0.25s;
+    }
+  }
+
+  .about-kw__item.is-open .about-kw__chevron {
+    display: none;
   }
 }

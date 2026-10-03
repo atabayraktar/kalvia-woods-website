@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Courier_Prime, Fraunces } from 'next/font/google';
+import { Courier_Prime, IBM_Plex_Sans } from 'next/font/google';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import '@/styles/main.scss';
@@ -12,8 +12,8 @@ import ScrollTopButton from '@/components/ScrollTopButton';
 
 // Self-hosted via next/font (built at compile time, no external request at runtime).
 // Exactly two families. latin-ext is required for Turkish (ş ğ İ ı).
-// Courier Prime = typewriter voice (headings, nav, labels, prices, codes); Fraunces = soft
-// warm serif for reading copy.
+// Courier Prime = typewriter voice (headings, nav, labels, prices, codes); IBM Plex Sans =
+// clean, typewriter-lineage sans for reading copy.
 const courierPrime = Courier_Prime({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '700'],
@@ -22,10 +22,10 @@ const courierPrime = Courier_Prime({
   display: 'swap',
 });
 
-const fraunces = Fraunces({
+const plexSans = IBM_Plex_Sans({
   subsets: ['latin', 'latin-ext'],
-  axes: ['opsz', 'SOFT'],
-  variable: '--font-fraunces',
+  weight: ['400', '500', '600'],
+  variable: '--font-plex',
   display: 'swap',
 });
 
@@ -161,7 +161,7 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <div className={`${courierPrime.variable} ${fraunces.variable} font-root`}>
+    <div className={`${courierPrime.variable} ${plexSans.variable} font-root`}>
       <LanguageProvider>
         <a href="#main-content" className="skip-link">
           Ana içeriğe geç

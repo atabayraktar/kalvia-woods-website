@@ -38,47 +38,42 @@ const COL = { mainCategory: 0, name: 2, drive: 3, size: 4, description: 5, featu
 
 // ---------- translations (tr label from the sheet → en/de). Unknown labels fall back to tr. ----------
 const CATEGORY_I18N = {
-  'Organizer & Workstation': { en: 'Organizers & Workstations', de: 'Organizer & Workstations' },
-  'Duvar Dekoru': { en: 'Wall Décor', de: 'Wanddekor' },
-  'Masaüstü Dekor': { en: 'Desk Décor', de: 'Schreibtischdekor' },
-  'Çocuk Odası / Eğitici Ürünler': { en: 'Kids Room / Educational', de: 'Kinderzimmer / Lernprodukte' },
-  'Tabela & İsimlik': { en: 'Signs & Nameplates', de: 'Schilder & Namensschilder' },
-  'Aydınlatma': { en: 'Lighting', de: 'Beleuchtung' },
-  'Hediyelik / Kişiselleştirilebilir Ürünler': { en: 'Gifts / Personalised', de: 'Geschenke / Personalisierbar' },
-  'Hobi & Oyun': { en: 'Hobby & Games', de: 'Hobby & Spiele' },
-  'İşletme / Ofis Ürünleri': { en: 'Business / Office', de: 'Gewerbe / Büro' },
-  'Diğer': { en: 'Other', de: 'Sonstiges' },
+  'Organizer & Workstation': {  },
+  'Duvar Dekoru': {  },
+  'Masaüstü Dekor': {  },
+  'Çocuk Odası / Eğitici Ürünler': {  },
+  'Tabela & İsimlik': {  },
+  'Aydınlatma': {  },
+  'Hediyelik / Kişiselleştirilebilir Ürünler': {  },
+  'Hobi & Oyun': {  },
+  'İşletme / Ofis Ürünleri': {  },
+  'Diğer': {  },
 };
 
 const SUBCATEGORY_I18N = {
   'Hobi / Boya İstasyonu': {
-    en: 'Hobby / Paint Stations', de: 'Hobby / Farbstationen',
-    tagline: { tr: 'Hobi ve minyatür boyama için organizer', en: 'Organizer for hobby and miniature painting', de: 'Organizer für Hobby- und Miniaturmalerei' },
+     tagline: { tr: 'Hobi ve minyatür boyama için organizer',  },
   },
   'Makeup Organizer': {
-    en: 'Makeup Organizers', de: 'Make-up-Organizer',
-    tagline: { tr: 'Masaüstü makyaj düzenleyici', en: 'Desktop makeup organizer', de: 'Make-up-Organizer für den Schreibtisch' },
+     tagline: { tr: 'Masaüstü makyaj düzenleyici',  },
   },
   'Aynalar': {
-    en: 'Mirrors', de: 'Spiegel',
-    tagline: { tr: 'Katmanlı dekoratif ayna', en: 'Layered decorative mirror', de: 'Mehrschichtiger Dekospiegel' },
+     tagline: { tr: 'Katmanlı dekoratif ayna',  },
   },
   'Duvar Saati': {
-    en: 'Wall Clocks', de: 'Wanduhren',
-    tagline: { tr: 'Dekoratif duvar saati', en: 'Decorative wall clock', de: 'Dekorative Wanduhr' },
+     tagline: { tr: 'Dekoratif duvar saati',  },
   },
   'Tablolar': {
-    en: 'Wall Art', de: 'Wandbilder',
-    tagline: { tr: 'Katmanlı 3D duvar tablosu', en: 'Layered 3D wall art', de: 'Mehrschichtiges 3D-Wandbild' },
+     tagline: { tr: 'Katmanlı 3D duvar tablosu',  },
   },
 };
 
 const COLOR_I18N = {
-  'Antik Ceviz': { en: 'Antique Walnut', de: 'Antik-Nussbaum' },
-  'Doğal Meşe': { en: 'Natural Oak', de: 'Natureiche' },
-  'Siyah & Ceviz': { en: 'Black & Walnut', de: 'Schwarz & Nussbaum' },
-  'Eskitme Kahve': { en: 'Distressed Coffee', de: 'Kaffeebraun antik' },
-  'Antrasit & Doğal Ahşap': { en: 'Anthracite & Natural Wood', de: 'Anthrazit & Naturholz' },
+  'Antik Ceviz': {  },
+  'Doğal Meşe': {  },
+  'Siyah & Ceviz': {  },
+  'Eskitme Kahve': {  },
+  'Antrasit & Doğal Ahşap': {  },
 };
 
 // Placeholder sets from scripts/generate-placeholders.mjs (set 1 = oak lattice, set 2 = green
@@ -109,8 +104,8 @@ const nullable = (v) => {
   return s === '' || /^[-–—]+$/.test(s) ? null : s;
 };
 const capitalizeTr = (s) => (s ? s.charAt(0).toLocaleUpperCase('tr') + s.slice(1) : s);
-const i18n = (tr) => ({ tr, en: tr, de: tr });
-const labelOf = (tr, table) => ({ tr, en: table[tr]?.en ?? tr, de: table[tr]?.de ?? tr });
+const i18n = (tr) => ({ tr });
+const labelOf = (tr) => ({ tr });
 // Category code for ids: initials of the slug words ("organizer-workstation" → "ow").
 const abbrev = (slug) => slug.split('-').map((w) => w[0]).join('');
 

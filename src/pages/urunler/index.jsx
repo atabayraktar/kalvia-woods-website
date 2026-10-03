@@ -18,13 +18,11 @@ const DESCRIPTION =
   'Kalvia Woods lazer kesim ürün kataloğu: hobi ve boya istasyonları, makyaj organizerleri, katmanlı dekoratif aynalar ve 3D duvar tabloları. Kategori ve alt kategoriye göre filtreleyin.';
 const PAGE_SIZE = 12;
 
-const PAGE_TITLE = { tr: 'Ürünler', en: 'Products', de: 'Produkte' };
+const PAGE_TITLE = { tr: 'Ürünler' };
 const PAGE_INTRO = {
-  tr: 'Kalvia Woods atölyesinde lazerle kesilen ahşap ve PVC ürünleri keşfedin; özel ölçü ve tasarım için WhatsApp üzerinden ulaşın.',
-  en: 'Explore the wood and PVC products laser-cut in the Kalvia Woods workshop; reach us on WhatsApp for custom sizes and designs.',
-  de: 'Entdecken Sie die in der Kalvia-Woods-Werkstatt lasergeschnittenen Holz- und PVC-Produkte; für Sondermaße und Designs erreichen Sie uns über WhatsApp.',
+  tr: 'Kalvia Woods atölyesinde lazerle kesilen ürünleri keşfedin; özel ölçü ve tasarım için WhatsApp üzerinden ulaşın.',
 };
-const FILTER_LABEL = { tr: 'Filtrele', en: 'Filter', de: 'Filtern' };
+const FILTER_LABEL = { tr: 'Filtrele' };
 
 const BREADCRUMB_JSON_LD = {
   '@context': 'https://schema.org',
@@ -185,8 +183,6 @@ export default function ProductsPage({ products: allProducts, categories, subcat
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`${SITE_URL}/urunler`} />
         <link rel="alternate" hrefLang="tr" href={`${SITE_URL}/urunler`} />
-        <link rel="alternate" hrefLang="en" href={`${SITE_URL}/urunler`} />
-        <link rel="alternate" hrefLang="de" href={`${SITE_URL}/urunler`} />
         <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}/urunler`} />
 
         <meta property="og:type" content="website" />

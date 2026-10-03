@@ -6,11 +6,11 @@ import Surface from './Surface';
 // Separate from SortMenu on purpose — stock availability is a filter (narrows the list),
 // not a sort order, so it gets its own small dropdown next to "İsim A-Z".
 export const STOCK_OPTIONS = [
-  { value: null, label: { tr: 'Tümü', en: 'All', de: 'Alle' } },
-  { value: 'in', label: { tr: 'Stokta Var', en: 'In Stock', de: 'Auf Lager' } },
-  { value: 'out', label: { tr: 'Stokta Yok', en: 'Out of Stock', de: 'Nicht auf Lager' } },
+  { value: null, label: { tr: 'Tümü' } },
+  { value: 'in', label: { tr: 'Stokta Var' } },
+  { value: 'out', label: { tr: 'Stokta Yok' } },
 ];
-const STOCK_ARIA_LABEL = { tr: 'Stok durumu', en: 'Stock status', de: 'Lagerstatus' };
+const STOCK_ARIA_LABEL = { tr: 'Stok durumu' };
 
 export default function StockFilter({ value, onChange }) {
   const { t } = useLanguage();

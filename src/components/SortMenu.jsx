@@ -6,10 +6,10 @@ import Surface from './Surface';
 // Stock availability is its own filter (see StockFilter.jsx, next to this menu in the
 // toolbar) rather than a sort order.
 export const SORT_OPTIONS = [
-  { value: 'name-asc', label: { tr: 'İsim A-Z', en: 'Name A-Z', de: 'Name A-Z' } },
-  { value: 'name-desc', label: { tr: 'İsim Z-A', en: 'Name Z-A', de: 'Name Z-A' } },
+  { value: 'name-asc', label: { tr: 'İsim A-Z' } },
+  { value: 'name-desc', label: { tr: 'İsim Z-A' } },
 ];
-const SORT_ARIA_LABEL = { tr: 'Sıralama', en: 'Sort', de: 'Sortierung' };
+const SORT_ARIA_LABEL = { tr: 'Sıralama' };
 
 export default function SortMenu({ value, onChange }) {
   const { t } = useLanguage();

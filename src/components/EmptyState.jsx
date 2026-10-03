@@ -1,13 +1,11 @@
 import { useLanguage } from '@/context/LanguageContext';
 
 const TEXT = {
-  title: { tr: 'Sonuç bulunamadı', en: 'No results found', de: 'Keine Ergebnisse gefunden' },
+  title: { tr: 'Sonuç bulunamadı' },
   info: {
     tr: 'Bu filtrelerle eşleşen ürün yok. Aramayı veya kategori seçimini değiştirmeyi deneyin.',
-    en: 'No products match these filters. Try changing your search or category selection.',
-    de: 'Keine Produkte entsprechen diesen Filtern. Versuchen Sie, die Suche oder Kategorie zu ändern.',
   },
-  reset: { tr: 'Filtreleri değiştir', en: 'Change filters', de: 'Filter ändern' },
+  reset: { tr: 'Filtreleri değiştir' },
 };
 
 export default function EmptyState({ onReset }) {

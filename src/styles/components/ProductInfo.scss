@@ -33,32 +33,91 @@
   color: var(--border);
 }
 
-// Dimensions are data: mono label, newline-separated size lines kept as lines.
+// Dimensions are data: a spec-sheet card — header strip with a ruler mark, then one ledger
+// row per size (label ..... value, optional muted note).
 .product-info__dimensions {
-  @include mono-label(400);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-2) var(--space-3);
   width: 100%;
   margin-bottom: var(--space-5);
-  padding: var(--space-3) var(--space-4);
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--ink);
-  background: var(--surface-alt);
+  background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
+  box-shadow: var(--shadow-surface);
+  overflow: hidden;
 }
 
 .product-info__dimensions-label {
   @include eyebrow;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px var(--space-4);
   font-size: 11px;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+
+  svg {
+    color: var(--accent);
+  }
 }
 
-.product-info__dimensions-value {
-  white-space: pre-line;
-  flex: 1 1 200px;
+.product-info__dimensions-list {
+  padding: var(--space-2) var(--space-4);
+}
+
+.product-info__dimension {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-2);
+  padding: 9px 0;
+  line-height: 1.4;
+
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+
+  &--text {
+    display: block;
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+}
+
+.product-info__dimension-name {
+  @include eyebrow;
+  font-size: 11.5px;
+  color: var(--ink);
+}
+
+// Dotted leader fills the gap between label and value, like a ledger line.
+.product-info__dimension-leader {
+  flex: 1 1 16px;
+  min-width: 16px;
+  align-self: flex-end;
+  margin-bottom: 5px;
+  border-bottom: 2px dotted var(--border);
+}
+
+.product-info__dimension-value {
+  @include mono-label(700);
+  font-size: 18px;
+  color: var(--ink);
+  white-space: nowrap;
+
+  .has-label & {
+    font-size: 16px;
+  }
+}
+
+.product-info__dimension-note {
+  font-size: 13px;
+  color: var(--ink-muted);
+
+  .has-label & {
+    flex-basis: 100%;
+    text-align: right;
+  }
 }
 
 .product-info__name {

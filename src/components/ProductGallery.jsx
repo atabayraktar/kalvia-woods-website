@@ -5,11 +5,11 @@ import Surface from './Surface';
 import Lightbox from './Lightbox';
 
 const TEXT = {
-  openFullscreen: { tr: 'Görseli tam ekran aç', en: 'Open image fullscreen', de: 'Bild im Vollbild öffnen' },
-  prevImage: { tr: 'Önceki görsel', en: 'Previous image', de: 'Vorheriges Bild' },
-  nextImage: { tr: 'Sonraki görsel', en: 'Next image', de: 'Nächstes Bild' },
-  imageN: { tr: (i) => `${i}. görsel`, en: (i) => `Image ${i}`, de: (i) => `Bild ${i}` },
-  video: { tr: 'Video', en: 'Video', de: 'Video' },
+  openFullscreen: { tr: 'Görseli tam ekran aç' },
+  prevImage: { tr: 'Önceki görsel' },
+  nextImage: { tr: 'Sonraki görsel' },
+  imageN: { tr: (i) => `${i}. görsel` },
+  video: { tr: 'Video' },
 };
 
 // `thumbs` (optional): pre-generated small copies of `images`, same order — the thumbnail

@@ -10,10 +10,10 @@ const categoryLabel = (slug) => PRODUCT_CATEGORIES.find((c) => c.slug === slug)?
 const subcategoryLabel = (slug) => PRODUCT_SUBCATEGORIES.find((s) => s.slug === slug)?.label;
 
 const TEXT = {
-  new: { tr: 'Yeni', en: 'New', de: 'Neu' },
-  outOfStock: { tr: 'Stokta Yok', en: 'Out of Stock', de: 'Nicht auf Lager' },
-  unavailable: { tr: 'Şu an temin edilemiyor', en: 'Currently unavailable', de: 'Derzeit nicht verfügbar' },
-  view: { tr: 'İncele', en: 'View', de: 'Ansehen' },
+  new: { tr: 'Yeni' },
+  outOfStock: { tr: 'Stokta Yok' },
+  unavailable: { tr: 'Şu an temin edilemiyor' },
+  view: { tr: 'İncele' },
 };
 
 export default function ProductCard({ product, priority = false }) {
@@ -42,17 +42,17 @@ export default function ProductCard({ product, priority = false }) {
         {!inStock && <span className="product-card__badge product-card__badge--stock">{t(TEXT.outOfStock)}</span>}
       </span>
       <span className="product-card__body">
+        <span className="product-card__name">{t(product.name)}</span>
+        {/* Sibling variants share a name and differ only by colour/size — show which. */}
+        {(product.color || product.size) && (
+          <span className="product-card__variant">{product.color ? t(product.color) : product.size}</span>
+        )}
         {/* Where the product sits in the catalog: "Duvar Dekoru › Aynalar". */}
         {catLabel && (
           <span className="product-card__category">
             {t(catLabel)}
             {subLabel && <> › {t(subLabel)}</>}
           </span>
-        )}
-        <span className="product-card__name">{t(product.name)}</span>
-        {/* Sibling variants share a name and differ only by colour/size — show which. */}
-        {(product.color || product.size) && (
-          <span className="product-card__variant">{product.color ? t(product.color) : product.size}</span>
         )}
         {inStock ? (
           <>

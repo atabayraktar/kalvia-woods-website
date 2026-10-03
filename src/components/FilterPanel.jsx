@@ -3,11 +3,11 @@ import useBodyScrollLock from '@/hooks/useBodyScrollLock';
 import Surface from './Surface';
 
 const TEXT = {
-  categories: { tr: 'Kategoriler', en: 'Categories', de: 'Kategorien' },
-  reset: { tr: 'Sıfırla', en: 'Reset', de: 'Zurücksetzen' },
-  all: { tr: 'Tümü', en: 'All', de: 'Alle' },
-  filter: { tr: 'Filtrele', en: 'Filter', de: 'Filtern' },
-  close: { tr: 'Kapat', en: 'Close', de: 'Schließen' },
+  categories: { tr: 'Kategoriler' },
+  reset: { tr: 'Sıfırla' },
+  all: { tr: 'Tümü' },
+  filter: { tr: 'Filtrele' },
+  close: { tr: 'Kapat' },
 };
 
 // `subcategories` = PRODUCT_SUBCATEGORIES rows ({ slug, category, label }). They render

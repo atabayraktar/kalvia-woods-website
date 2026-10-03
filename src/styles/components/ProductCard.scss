@@ -83,7 +83,10 @@ a.product-card:focus-visible {
   }
 }
 
+// Grows to fill the card so the button (margin-top: auto) lands on the same line in every
+// card of a row, whatever the title length.
 .product-card__body {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -91,12 +94,14 @@ a.product-card:focus-visible {
   padding: var(--space-4);
 }
 
-// Catalog position eyebrow ("Duvar Dekoru › Aynalar") above the name.
+// Catalog position ("Duvar Dekoru › Aynalar"), small, under the name.
 .product-card__category {
-  @include eyebrow;
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  margin-bottom: 4px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--ink-muted);
+  margin-top: 4px;
   overflow-wrap: anywhere;
 }
 
@@ -132,6 +137,12 @@ a.product-card:focus-visible {
 
 .product-card__cta {
   align-self: flex-start;
+  margin-top: auto;
+}
+
+// Breathing room between the text block and the button.
+.product-card__body > :nth-last-child(2) {
+  margin-bottom: var(--space-3);
 }
 
 .product-card__cta-content {

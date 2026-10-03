@@ -133,7 +133,8 @@ export default function CategorySlider() {
                 <span className="category-slider__card-title accent-hover">
                   {/* Subcategory cards name their parent category on a small eyebrow line. */}
                   {cat.eyebrow && <span className="category-slider__card-eyebrow">{t(cat.eyebrow)}</span>}
-                  {t(cat.title)}
+                  {/* Monospace gives each space a full character cell, so " / " reads as a gap — tighten it. */}
+                  {t(cat.title).replace(/\s*\/\s*/g, '/')}
                 </span>
               </span>
             </Link>

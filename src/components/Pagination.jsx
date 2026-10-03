@@ -1,9 +1,9 @@
 import { useLanguage } from '@/context/LanguageContext';
 
 const TEXT = {
-  nav: { tr: 'Sayfalama', en: 'Pagination', de: 'Seitennummerierung' },
-  prev: { tr: 'Önceki sayfa', en: 'Previous page', de: 'Vorherige Seite' },
-  next: { tr: 'Sonraki sayfa', en: 'Next page', de: 'Nächste Seite' },
+  nav: { tr: 'Sayfalama' },
+  prev: { tr: 'Önceki sayfa' },
+  next: { tr: 'Sonraki sayfa' },
 };
 
 export default function Pagination({ page, totalPages, onChange }) {

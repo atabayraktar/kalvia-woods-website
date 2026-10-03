@@ -22,11 +22,11 @@ const ICONS = {
       <path d="m13.5 7.3 3.2 3.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   ),
-  material: (
-    // two stacked sheets (wood + PVC)
+  shield: (
+    // shield with check
     <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
-      <path d="m12 4 8 4.5-8 4.5-8-4.5L12 4Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="m4 13.5 8 4.5 8-4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 3.5 5 6v5.5c0 4.2 2.8 7.5 7 9 4.2-1.5 7-4.8 7-9V6l-7-2.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="m8.8 12 2.2 2.2 4.2-4.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   speed: (
@@ -36,11 +36,11 @@ const ICONS = {
       <path d="M12 9.5v4l2.6 1.6M10 3.5h4M12 3.5v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   ),
-  workshop: (
-    // workshop roof + door
+  sparkle: (
+    // four-point sparkle
     <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
-      <path d="M3.5 10.5 12 4l8.5 6.5V20h-17v-9.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M9.5 20v-6h5v6" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M12 3.5c.6 4.2 2.3 5.9 6.5 6.5-4.2.6-5.9 2.3-6.5 6.5-.6-4.2-2.3-5.9-6.5-6.5 4.2-.6 5.9-2.3 6.5-6.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M18.5 15.5v4M16.5 17.5h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   ),
 };
@@ -48,7 +48,7 @@ const ICONS = {
 export default function AboutKalvia() {
   const { t } = useLanguage();
   const { title, paragraph, image, boxes } = aboutKalvia;
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(-1);
 
   return (
     <section className="about-kw container" id="hakkimizda">
@@ -64,7 +64,7 @@ export default function AboutKalvia() {
         </div>
       </div>
 
-      <div className="about-kw__acc" data-reveal>
+      <div className="about-kw__acc" data-has-open={open >= 0 ? "" : undefined} data-reveal>
         {boxes.map((box, i) => {
           const isOpen = open === i;
           return (
@@ -81,6 +81,10 @@ export default function AboutKalvia() {
                   <span className="about-kw__box-icon" aria-hidden="true">
                     {ICONS[box.icon]}
                   </span>
+                  {/* Desktop only, while no strip is open: photo preview above the title. */}
+                  <span className="about-kw__thumb" aria-hidden="true">
+                    <Image src={box.image} alt="" fill sizes="240px" style={{ objectFit: 'cover' }} />
+                  </span>
                   <span className="about-kw__stat">{t(box.eyebrow)}</span>
                   <span className="about-kw__chevron" aria-hidden="true" />
                 </button>
@@ -92,7 +96,17 @@ export default function AboutKalvia() {
                 aria-labelledby={`about-acc-btn-${i}`}
               >
                 <div className="about-kw__panel-inner">
-                  <p className="about-kw__box-info">{t(box.info)}</p>
+                  <div className="about-kw__panel-text">
+                    <p className="about-kw__box-info">{t(box.info)}</p>
+                    <ul className="about-kw__points">
+                      {box.points.map((point, k) => (
+                        <li key={k}>{t(point)}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <span className="about-kw__box-image" aria-hidden="true">
+                    <Image src={box.image} alt="" fill sizes="(max-width: 900px) 90vw, 30vw" style={{ objectFit: 'cover' }} />
+                  </span>
                 </div>
               </div>
             </div>

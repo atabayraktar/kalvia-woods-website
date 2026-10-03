@@ -18,7 +18,7 @@ const DESCRIPTION =
 const TICKER_WORDS = ['Ahşap', 'PVC', 'Lazer kesim', 'Dekor pano', 'Tabela', 'Ahşap kutu', 'Özel kesim', 'Milimetrik hassasiyet'];
 
 // Same placeholder handles ContactSection.jsx renders on the page.
-const SOCIAL_LINKS = [contactSection.instagramHref, contactSection.facebookHref];
+const SOCIAL_LINKS = [contactSection.instagramHref];
 
 // Kalvia Woods is its own manufacturer — plain Organization/LocalBusiness, no parent or
 // distributor relationship.
@@ -40,11 +40,10 @@ const LOCAL_BUSINESS_JSON_LD = {
   telephone: contactSection.phone,
   url: SITE_URL,
   image: `${SITE_URL}/images/placeholder-og.png`,
-  // Placeholder address/map — replace with the real studio location.
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Örnek Mah. Örnek Cad. No:1',
-    addressLocality: 'İstanbul',
+    streetAddress: 'Barbaros Mah. Kıbrıs Sk. No: 21 D:1',
+    addressLocality: 'Çanakkale',
     addressCountry: 'TR',
   },
   hasMap: contactSection.mapHref,
@@ -110,8 +109,6 @@ export default function HomePage() {
         {/* The first slide's poster is the LCP candidate for a <video> — preload it. */}
         <link rel="preload" as="image" href="/images/placeholder-hero-1.webp" fetchpriority="high" />
         <link rel="alternate" hrefLang="tr" href={SITE_URL} />
-        <link rel="alternate" hrefLang="en" href={SITE_URL} />
-        <link rel="alternate" hrefLang="de" href={SITE_URL} />
         <link rel="alternate" hrefLang="x-default" href={SITE_URL} />
 
         <meta property="og:type" content="website" />
@@ -141,7 +138,7 @@ export default function HomePage() {
         {/* Decorative ticker band — purely visual, hidden from assistive tech. */}
         <div className="ticker" aria-hidden="true">
           <div className="ticker__track">
-            {[0, 1].map((copy) => (
+            {[0, 1, 2, 3].map((copy) => (
               <ul className="ticker__list" key={copy}>
                 {TICKER_WORDS.map((word) => (
                   <li key={word}>{word}</li>

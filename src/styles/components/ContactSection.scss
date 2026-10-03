@@ -61,21 +61,6 @@
   filter: sepia(0.35) saturate(0.7) contrast(0.95);
 }
 
-.contact-section__map-tag {
-  @include mono-label(700);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  padding: 7px 12px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  background: var(--frame);
-  color: var(--frame-accent);
-  pointer-events: none;
-}
-
 .contact-section__map-overlay {
   position: absolute;
   inset: 0;

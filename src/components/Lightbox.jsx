@@ -5,9 +5,9 @@ import usePresence from '@/hooks/usePresence';
 import { useLanguage } from '@/context/LanguageContext';
 
 const TEXT = {
-  prevImage: { tr: 'Önceki görsel', en: 'Previous image', de: 'Vorheriges Bild' },
-  nextImage: { tr: 'Sonraki görsel', en: 'Next image', de: 'Nächstes Bild' },
-  close: { tr: 'Kapat', en: 'Close', de: 'Schließen' },
+  prevImage: { tr: 'Önceki görsel' },
+  nextImage: { tr: 'Sonraki görsel' },
+  close: { tr: 'Kapat' },
 };
 
 // Full-screen image zoom, shared by every image grid on the site (ProductGallery's main

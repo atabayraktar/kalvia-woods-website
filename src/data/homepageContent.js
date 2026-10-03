@@ -6,9 +6,9 @@
 
 export const header = {
   nav: [
-    { href: '/urunler', label: { tr: 'Ürünler', en: 'Products', de: 'Produkte' } },
-    { href: '#hakkimizda', label: { tr: 'Hakkımızda', en: 'About', de: 'Über uns' } },
-    { href: '#iletisim', label: { tr: 'İletişim', en: 'Contact', de: 'Kontakt' } },
+    { href: '/urunler', label: { tr: 'Ürünler' } },
+    { href: '#hakkimizda', label: { tr: 'Hakkımızda' } },
+    { href: '#iletisim', label: { tr: 'İletişim' } },
   ],
 };
 
@@ -25,15 +25,11 @@ export const heroSlides = [
     },
     title: {
       tr: 'Lazerle şekillenen ahşap ve PVC.',
-      en: 'Wood and PVC, shaped by laser.',
-      de: 'Holz und PVC, per Laser geformt.',
     },
     info: {
       tr: 'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim makinesiyle milimetrik hassasiyette işler; dekor, tabela, kutu ve özel tasarım ürünler üretir.',
-      en: 'Kalvia Woods laser-cuts wood and PVC to millimetre precision — décor pieces, signage, boxes and fully custom designs.',
-      de: 'Kalvia Woods schneidet Holz und PVC millimetergenau per Laser – Dekor, Beschilderung, Boxen und individuelle Designs.',
     },
-    cta: { tr: 'Ürünleri keşfedin', en: 'Explore products', de: 'Produkte entdecken' },
+    cta: { tr: 'Ürünleri keşfedin' },
     href: '/urunler',
   },
   {
@@ -47,15 +43,11 @@ export const heroSlides = [
     },
     title: {
       tr: 'Hassas kesim, doğal doku.',
-      en: 'Precise cuts, natural texture.',
-      de: 'Präziser Schnitt, natürliche Textur.',
     },
     info: {
       tr: 'Ahşabın sıcaklığını lazer kesimin temiz hatlarıyla buluşturuyoruz. Her parça, tasarımdan üretime kendi atölyemizde şekilleniyor.',
-      en: 'We pair the warmth of wood with the clean lines of laser cutting. Every piece takes shape in our own workshop, from design to production.',
-      de: 'Wir verbinden die Wärme des Holzes mit den klaren Linien des Laserschnitts. Jedes Stück entsteht in unserer eigenen Werkstatt.',
     },
-    cta: { tr: 'Duvar dekorları', en: 'Wall décor', de: 'Wanddekor' },
+    cta: { tr: 'Duvar dekorları' },
     href: '/urunler?kategori=duvar-dekoru',
   },
   {
@@ -66,21 +58,15 @@ export const heroSlides = [
       mobileSrc: '/images/placeholder-hero-3-mobile.webp',
       alt: {
         tr: 'Lazer kesim PVC tabela örnekleri (yer tutucu görsel)',
-        en: 'Laser-cut PVC signage samples (placeholder image)',
-        de: 'Lasergeschnittene PVC-Schilder (Platzhalterbild)',
       },
     },
     title: {
       tr: 'PVC tabela ve işaretler.',
-      en: 'PVC signage and markers.',
-      de: 'PVC-Schilder und Markierungen.',
     },
     info: {
       tr: 'İşletmeniz için dayanıklı, net okunan ve istediğiniz ölçüde üretilen PVC tabelalar — iç ve dış mekân için.',
-      en: 'Durable, legible PVC signs made to the exact size you need — for indoor and outdoor use.',
-      de: 'Langlebige, gut lesbare PVC-Schilder in genau Ihrem Maß – für innen und außen.',
     },
-    cta: { tr: 'Tüm ürünler', en: 'All products', de: 'Alle Produkte' },
+    cta: { tr: 'Tüm ürünler' },
     href: '/urunler',
   },
 ];
@@ -88,8 +74,6 @@ export const heroSlides = [
 export const categorySection = {
   title: {
     tr: ['Her ihtiyaç için', 'lazer kesim ürünler.'],
-    en: ['Laser-cut products', 'for every need.'],
-    de: ['Lasergeschnittene Produkte', 'für jeden Bedarf.'],
   },
   // Four equal cards (the section's grid is 4-up from 960px). `slug` is a main category from
   // PRODUCT_CATEGORIES in src/data/products.js and `sub` an optional PRODUCT_SUBCATEGORIES
@@ -102,86 +86,94 @@ export const categorySection = {
       slug: 'organizer-workstation',
       sub: 'hobi-boya-istasyonu',
       image: '/images/placeholder-category-1.webp',
-      eyebrow: { tr: 'Organizer & Workstation', en: 'Organizers & Workstations', de: 'Organizer & Workstations' },
-      title: { tr: 'Hobi / Boya İstasyonu', en: 'Hobby / Paint Stations', de: 'Hobby / Farbstationen' },
+      eyebrow: { tr: 'Organizer & Workstation' },
+      title: { tr: 'Hobi / Boya İstasyonu' },
     },
     {
       slug: 'organizer-workstation',
       sub: 'makeup-organizer',
       image: '/images/placeholder-category-2.webp',
-      eyebrow: { tr: 'Organizer & Workstation', en: 'Organizers & Workstations', de: 'Organizer & Workstations' },
-      title: { tr: 'Makeup Organizer', en: 'Makeup Organizers', de: 'Make-up-Organizer' },
+      eyebrow: { tr: 'Organizer & Workstation' },
+      title: { tr: 'Makeup Organizer' },
     },
     {
       slug: 'duvar-dekoru',
       sub: 'aynalar',
       image: '/images/placeholder-category-3.webp',
-      eyebrow: { tr: 'Duvar Dekoru', en: 'Wall Décor', de: 'Wanddekor' },
-      title: { tr: 'Aynalar', en: 'Mirrors', de: 'Spiegel' },
+      eyebrow: { tr: 'Duvar Dekoru' },
+      title: { tr: 'Aynalar' },
     },
     {
       slug: 'duvar-dekoru',
       sub: 'tablolar',
       image: '/images/placeholder-category-4.webp',
-      eyebrow: { tr: 'Duvar Dekoru', en: 'Wall Décor', de: 'Wanddekor' },
-      title: { tr: 'Tablolar', en: 'Wall Art', de: 'Wandbilder' },
+      eyebrow: { tr: 'Duvar Dekoru' },
+      title: { tr: 'Tablolar' },
     },
   ],
 };
 
 export const aboutKalvia = {
-  title: { tr: 'Kalvia Woods Hakkında', en: 'About Kalvia Woods', de: 'Über Kalvia Woods' },
+  title: { tr: 'Kalvia Woods Hakkında' },
   paragraph: {
     tr: 'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim teknolojisiyle işleyen bir üretim atölyesidir. Dekoratif duvar panolarından tabelalara, hediyelik kutulardan özel ölçü parçalara kadar her ürün, tasarım dosyasından son rötuşa kadar kendi atölyemizde şekillenir. Hassas kesim, temiz kenarlar ve doğal malzeme dokusu; işimizin merkezinde yer alır.',
-    en: 'Kalvia Woods is a production workshop that shapes wood and PVC with laser-cutting technology. From decorative wall panels to signage, gift boxes to made-to-measure parts, every product takes form in our own workshop — from design file to final finish. Precise cuts, clean edges and the natural texture of the material sit at the centre of what we do.',
-    de: 'Kalvia Woods ist eine Produktionswerkstatt, die Holz und PVC mit Laserschneidtechnik bearbeitet. Von dekorativen Wandpaneelen über Beschilderung bis hin zu Geschenkboxen und Maßanfertigungen entsteht jedes Produkt in unserer eigenen Werkstatt – von der Designdatei bis zum letzten Schliff. Präzise Schnitte, saubere Kanten und die natürliche Textur des Materials stehen im Mittelpunkt unserer Arbeit.',
   },
   image: '/images/placeholder-about.webp',
   boxes: [
     {
       icon: 'laser',
-      eyebrow: { tr: 'Hassas', en: 'Precise', de: 'Präzise' },
-      info: {
-        tr: 'Hassas lazer kesim: milimetrik ölçü, temiz kenar.',
-        en: 'Precision laser cutting: millimetre accuracy, clean edges.',
-        de: 'Präziser Laserschnitt: millimetergenau, saubere Kanten.',
-      },
+      image: '/images/products/asterion-led-mandala-duvar-tablosu/1.webp',
+      eyebrow: { tr: "Hassas Kesim" },
+      info: { tr: "Her ürün lazerle milimetrik hassasiyette kesilir. İnce desenler, keskin köşeler ve temiz kenarlar ilk üretimde elde edilir; parçalar birbirine tam oturur." },
+      points: [
+        { tr: "Milimetrik ölçü toleransı" },
+        { tr: "Pürüzsüz, temiz kenarlar" },
+        { tr: "Karmaşık desenlerde net detay" },
+      ],
     },
     {
       icon: 'design',
-      eyebrow: { tr: 'Özel', en: 'Custom', de: 'Individuell' },
-      info: {
-        tr: 'Özel tasarım: kendi çiziminiz ya da bizim tasarımımız.',
-        en: 'Custom design: your own drawing or one of ours.',
-        de: 'Individuelles Design: Ihre Zeichnung oder unser Entwurf.',
-      },
+      image: '/images/products/elara-makeup-organizer/1.webp',
+      eyebrow: { tr: "Kişiye Özel" },
+      info: { tr: "Ürünleri ölçünüze, renginize ve ihtiyacınıza göre uyarlıyoruz. Kendi fikrinizi anlatın ya da hazır modellerimizden birini kişiselleştirin." },
+      points: [
+        { tr: "İsteğe göre ölçü ve renk" },
+        { tr: "İsim ve yazı uygulaması" },
+        { tr: "Üretim öncesi onay" },
+      ],
     },
     {
-      icon: 'material',
-      eyebrow: { tr: '2 Malzeme', en: '2 Materials', de: '2 Materialien' },
-      info: {
-        tr: 'Ahşap ve PVC: her kullanım için doğru malzeme.',
-        en: 'Wood and PVC: the right material for every use.',
-        de: 'Holz und PVC: das richtige Material für jeden Zweck.',
-      },
+      icon: 'shield',
+      image: '/images/products/xl-tasinabilir-boya-hobi-istasyonu-cekmeceli-ahsap-boyama-cantasi/1.webp',
+      eyebrow: { tr: "Sağlam" },
+      info: { tr: "Günlük kullanıma dayanacak şekilde tasarlanır ve üretilir. Geçmeli yapılar ve doğru malzeme kalınlığı sayesinde ürünler yıllarca formunu korur." },
+      points: [
+        { tr: "Geçmeli, sağlam birleşimler" },
+        { tr: "Doğru malzeme kalınlığı" },
+        { tr: "Uzun ömürlü kullanım" },
+      ],
     },
     {
       icon: 'speed',
-      eyebrow: { tr: 'Hızlı', en: 'Fast', de: 'Schnell' },
-      info: {
-        tr: 'Hızlı üretim: onaydan teslimata kısa süre.',
-        en: 'Fast production: short lead time from approval to delivery.',
-        de: 'Schnelle Produktion: kurze Zeit von Freigabe bis Lieferung.',
-      },
+      image: '/images/products/colordock-26-boya-sisesi-firca-organizeri/1.webp',
+      eyebrow: { tr: "Hızlı Üretim" },
+      info: { tr: "Tasarım onaylandığında lazer kesim hemen başlar. Onaydan teslimata kısa bir süre geçer; hazır modellerde teslimat daha da hızlıdır." },
+      points: [
+        { tr: "Onaydan sonra hemen üretim" },
+        { tr: "Hazır modellerde kısa teslim" },
+        { tr: "WhatsApp ile hızlı iletişim" },
+      ],
     },
     {
-      icon: 'workshop',
-      eyebrow: { tr: 'Atölye', en: 'Workshop', de: 'Werkstatt' },
-      info: {
-        tr: 'Kendi atölyemizde, kendi ellerimizle üretim.',
-        en: 'Made in our own workshop, by our own hands.',
-        de: 'In unserer eigenen Werkstatt, von eigener Hand gefertigt.',
-      },
+      icon: 'sparkle',
+      image: '/images/products/aurelia-mandala-aynali-duvar-saati/1.webp',
+      eyebrow: { tr: "Şık Tasarım" },
+      info: { tr: "Dekoratif ve işlevsel: ürünlerimiz evinizde, atölyenizde ya da iş yerinizde hem düzen hem de görsel zenginlik katar." },
+      points: [
+        { tr: "Özgün, katmanlı desenler" },
+        { tr: "Dekor ve düzen bir arada" },
+        { tr: "Hediye olarak da ideal" },
+      ],
     },
   ],
 };
@@ -193,52 +185,47 @@ export const customOrderBanner = {
   // The one product this banner promotes (id from src/data/products.js). The banner links to
   // /urunler/<featuredProductId>; the headline is the product's own name.
   featuredProductId: 'kw-dd-002', // Elora Mandala Ayna
-  tag: { tr: 'Öne çıkan ürün', en: 'Featured product', de: 'Produkt im Fokus' },
+  tag: { tr: 'Öne çıkan ürün' },
   cta: {
     tr: 'Ürünü incele',
-    en: 'View the product',
-    de: 'Produkt ansehen',
   },
 };
 
 export const contactSection = {
-  title: { tr: 'İletişim', en: 'Contact', de: 'Kontakt' },
+  title: { tr: 'İletişim' },
   // All contact details below are obvious placeholders — replace with real values.
-  mapHref: 'https://maps.google.com/?q=%C3%96rnek+Mah.+%C3%96rnek+Cad.+No:1+%C4%B0stanbul',
-  mapCoords: '41.0082,28.9784',
-  address: 'Örnek Mah. Örnek Cad. No:1, İstanbul',
-  phone: '+90 5xx xxx xx xx',
-  phoneDisplay: '0 5xx xxx xx xx',
-  whatsappHref: 'https://wa.me/905000000000',
-  instagramHref: 'https://www.instagram.com/kalviawoods.placeholder',
-  facebookHref: 'https://www.facebook.com/kalviawoods.placeholder',
-  instagramHandle: '@kalviawoods.placeholder',
+  mapHref: 'https://maps.app.goo.gl/XQXQxq1o7Q8qX9Qv6',
+  mapCoords: '40.1405278,26.4069977',
+  address: 'Barbaros Mah. Kıbrıs Sk. No: 21 D:1, Çanakkale',
+  phone: '+90 552 473 35 45',
+  phoneDisplay: '0552 473 3545',
+  whatsappHref: 'https://wa.me/905524733545',
+  instagramHref: 'https://www.instagram.com/kalviawoods/',
+  instagramHandle: '@kalviawoods',
   // No backend — this form composes a WhatsApp message and hands off to wa.me
   // (see ContactSection.jsx), matching the rest of the site's WhatsApp-first contact model.
   form: {
-    nameLabel: { tr: 'Ad Soyad', en: 'Full name', de: 'Name' },
-    phoneLabel: { tr: 'Telefon', en: 'Phone', de: 'Telefon' },
-    messageLabel: { tr: 'Mesajınız', en: 'Message', de: 'Nachricht' },
-    submit: { tr: "WhatsApp'tan Gönder", en: 'Send via WhatsApp', de: 'Über WhatsApp senden' },
+    nameLabel: { tr: 'Ad Soyad' },
+    phoneLabel: { tr: 'Telefon' },
+    messageLabel: { tr: 'Mesajınız' },
+    submit: { tr: "WhatsApp'tan Gönder" },
     errors: {
-      nameRequired: { tr: 'Lütfen adınızı girin.', en: 'Please enter your name.', de: 'Bitte geben Sie Ihren Namen ein.' },
-      phoneRequired: { tr: 'Lütfen telefon numaranızı girin.', en: 'Please enter your phone number.', de: 'Bitte geben Sie Ihre Telefonnummer ein.' },
-      phoneInvalid: { tr: 'Lütfen geçerli bir telefon numarası girin.', en: 'Please enter a valid phone number.', de: 'Bitte geben Sie eine gültige Telefonnummer ein.' },
-      messageRequired: { tr: 'Lütfen mesajınızı girin.', en: 'Please enter your message.', de: 'Bitte geben Sie Ihre Nachricht ein.' },
+      nameRequired: { tr: 'Lütfen adınızı girin.' },
+      phoneRequired: { tr: 'Lütfen telefon numaranızı girin.' },
+      phoneInvalid: { tr: 'Lütfen geçerli bir telefon numarası girin.' },
+      messageRequired: { tr: 'Lütfen mesajınızı girin.' },
     },
   },
   labels: {
-    address: { tr: 'Adres', en: 'Address', de: 'Adresse' },
-    addressCta: { tr: 'Haritada görüntüle', en: 'View on map', de: 'Auf der Karte ansehen' },
-    phone: { tr: 'Telefon', en: 'Phone', de: 'Telefon' },
-    instagram: { tr: 'Instagram', en: 'Instagram', de: 'Instagram' },
+    address: { tr: 'Adres' },
+    addressCta: { tr: 'Haritada görüntüle' },
+    phone: { tr: 'Telefon' },
+    instagram: { tr: 'Instagram' },
   },
 };
 
 export const footer = {
   rights: {
     tr: 'Tüm hakları saklıdır.',
-    en: 'All rights reserved.',
-    de: 'Alle Rechte vorbehalten.',
   },
 };

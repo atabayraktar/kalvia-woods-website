@@ -5,7 +5,7 @@
 }
 
 // Ticker strip under the hero: oak-gold band, ink typewriter caps, slow drift. Decorative
-// (aria-hidden); the two identical halves make the -50% loop seamless.
+// (aria-hidden); four identical copies make the -25% loop seamless even on ultra-wide screens.
 .ticker {
   overflow: hidden;
   background: var(--surface-alt);
@@ -17,6 +17,7 @@
   display: flex;
   width: max-content;
   animation: ticker-drift 42s linear infinite;
+  will-change: transform;
 }
 
 .ticker__list {
@@ -47,7 +48,7 @@
 
 @keyframes ticker-drift {
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
