@@ -49,21 +49,21 @@ Sitemap: ${SITE_URL}/sitemap.xml
 function writeLlmsTxt() {
   const content = `# Kalvia Woods
 
-> Kalvia Woods is a Turkish manufacturing workshop that produces laser-cut wood and PVC
-> products: decorative wall panels, PVC signage, wooden boxes and made-to-measure custom
-> cuts. Every piece is designed and cut in-house on a laser-cutting machine.
+> Kalvia Woods is a Turkish manufacturing workshop that produces custom laser-cut products:
+> hobby and paint stations, makeup organizers, decorative mirrors, wall art and
+> made-to-order pieces. Every piece is designed and cut in-house on a laser-cutting machine.
 
 ## Key facts
 
 - Entity: Kalvia Woods is the manufacturer of its own products (not a distributor or reseller).
-- Materials: wood (e.g. birch plywood) and PVC foam board, cut with a CO2 laser.
+- Customisation: size, colour and lettering can be tailored on request.
 - Sales channel: WhatsApp (${contactSection.phone}) — there is no online cart/checkout on this site.
 - Contact: Instagram ${contactSection.instagramHandle}, WhatsApp ${contactSection.whatsappHref}
 - Note: contact details and product data on this site are placeholders pending real content.
 
 ## Pages
 
-- [Homepage](${SITE_URL}/): hero, product categories, about Kalvia Woods, product-finder quiz, contact.
+- [Homepage](${SITE_URL}/): hero, product categories, about Kalvia Woods, contact.
 - [Products](${SITE_URL}/urunler): laser-cut product catalog, filterable by category.
 
 ## Sitemap

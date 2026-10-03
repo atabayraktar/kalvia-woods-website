@@ -11,11 +11,11 @@ import { contactSection } from '@/data/homepageContent';
 // scripts/generate-seo-files.mjs and the other two page files).
 const SITE_URL = 'https://kalviawoods.example';
 const TITLE = 'Kalvia Woods';
-const TAB_TITLE = 'Kalvia Woods | Ahşap & PVC Lazer Kesim';
+const TAB_TITLE = 'Kalvia Woods | Kişiye Özel Lazer Kesim';
 const DESCRIPTION =
-  'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim makinesiyle işleyen bir üretim atölyesidir. Dekoratif panolar, PVC tabelalar, ahşap kutular ve özel ölçü kesim ürünleri.';
+  'Kalvia Woods, kişiye özel lazer kesim ürünler üreten bir atölyedir. Hobi ve boya istasyonları, makyaj organizerleri, dekoratif aynalar ve duvar tabloları; isteğe göre ölçü, renk ve yazı.';
 
-const TICKER_WORDS = ['Ahşap', 'PVC', 'Lazer kesim', 'Dekor pano', 'Tabela', 'Ahşap kutu', 'Özel kesim', 'Milimetrik hassasiyet'];
+const TICKER_WORDS = ['Lazer kesim', 'Kişiye özel', 'Organizer', 'Ayna', 'Duvar tablosu', 'Hobi & boya', 'Hediyelik', 'Milimetrik hassasiyet'];
 
 // Same placeholder handles ContactSection.jsx renders on the page.
 const SOCIAL_LINKS = [contactSection.instagramHref];
@@ -30,7 +30,7 @@ const ORGANIZATION_JSON_LD = {
   logo: `${SITE_URL}/apple-touch-icon.png`,
   sameAs: [...SOCIAL_LINKS, contactSection.whatsappHref],
   areaServed: 'TR',
-  description: 'Kalvia Woods, ahşap ve PVC lazer kesim ürünleri üreten bir atölyedir.',
+  description: 'Kalvia Woods, kişiye özel lazer kesim ürünler üreten bir atölyedir.',
 };
 
 const LOCAL_BUSINESS_JSON_LD = {
@@ -73,7 +73,7 @@ const FAQ_JSON_LD = {
       name: 'Kalvia Woods nedir?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim teknolojisiyle işleyen bir üretim atölyesidir; dekoratif panolar, tabelalar, kutular ve özel ölçü kesim ürünleri üretir.',
+        text: 'Kalvia Woods, lazer kesim teknolojisiyle kişiye özel ürünler üreten bir atölyedir; organizerlar, aynalar, duvar tabloları ve isteğe göre ölçü, renk ve yazı uygulanmış özel işler üretir.',
       },
     },
     {
@@ -82,14 +82,6 @@ const FAQ_JSON_LD = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: `Ürün sayfalarındaki "WhatsApp ile Bilgi Al" butonu üzerinden veya ${contactSection.phone} numarasından Kalvia Woods ekibiyle doğrudan iletişime geçebilirsiniz.`,
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Size uygun ürünü nasıl seçebilirim?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Anasayfadaki 'Ürün seçim anketi' ile malzeme, kullanım alanı ve ölçü tercihinize göre uygun bir ahşap veya PVC lazer kesim ürün önerisi alabilirsiniz.",
       },
     },
   ],

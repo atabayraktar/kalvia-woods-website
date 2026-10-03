@@ -24,10 +24,10 @@ export const heroSlides = [
       mobilePoster: '/images/placeholder-hero-1-mobile.webp',
     },
     title: {
-      tr: 'Lazerle şekillenen ahşap ve PVC.',
+      tr: 'Lazerle şekillenen ürünler.',
     },
     info: {
-      tr: 'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim makinesiyle milimetrik hassasiyette işler; dekor, tabela, kutu ve özel tasarım ürünler üretir.',
+      tr: 'Kalvia Woods, kişiye özel lazer kesim ürünler üretir; organizerlar, aynalar, duvar tabloları ve çok daha fazlası milimetrik hassasiyetle kendi atölyemizde şekillenir.',
     },
     cta: { tr: 'Ürünleri keşfedin' },
     href: '/urunler',
@@ -42,10 +42,10 @@ export const heroSlides = [
       mobilePoster: '/images/placeholder-hero-2-mobile.webp',
     },
     title: {
-      tr: 'Hassas kesim, doğal doku.',
+      tr: 'Hassas kesim, ince detay.',
     },
     info: {
-      tr: 'Ahşabın sıcaklığını lazer kesimin temiz hatlarıyla buluşturuyoruz. Her parça, tasarımdan üretime kendi atölyemizde şekilleniyor.',
+      tr: 'Lazer kesimin temiz hatları her üründe ince bir işçilik bırakır. Her parça, tasarımdan üretime kendi atölyemizde şekilleniyor.',
     },
     cta: { tr: 'Duvar dekorları' },
     href: '/urunler?kategori=duvar-dekoru',
@@ -57,14 +57,14 @@ export const heroSlides = [
       src: '/images/placeholder-hero-3.webp',
       mobileSrc: '/images/placeholder-hero-3-mobile.webp',
       alt: {
-        tr: 'Lazer kesim PVC tabela örnekleri (yer tutucu görsel)',
+        tr: 'Kişiye özel lazer kesim ürün örnekleri (yer tutucu görsel)',
       },
     },
     title: {
-      tr: 'PVC tabela ve işaretler.',
+      tr: 'Size özel, istediğiniz gibi.',
     },
     info: {
-      tr: 'İşletmeniz için dayanıklı, net okunan ve istediğiniz ölçüde üretilen PVC tabelalar — iç ve dış mekân için.',
+      tr: 'Ölçüyü, rengi ve yazıyı siz seçin; fikrinizi birlikte tasarlayıp lazerle kesilmiş ürüne dönüştürelim.',
     },
     cta: { tr: 'Tüm ürünler' },
     href: '/urunler',
@@ -116,7 +116,7 @@ export const categorySection = {
 export const aboutKalvia = {
   title: { tr: 'Kalvia Woods Hakkında' },
   paragraph: {
-    tr: 'Kalvia Woods, ahşap ve PVC malzemeleri lazer kesim teknolojisiyle işleyen bir üretim atölyesidir. Dekoratif duvar panolarından tabelalara, hediyelik kutulardan özel ölçü parçalara kadar her ürün, tasarım dosyasından son rötuşa kadar kendi atölyemizde şekillenir. Hassas kesim, temiz kenarlar ve doğal malzeme dokusu; işimizin merkezinde yer alır.',
+    tr: 'Kalvia Woods, lazer kesim teknolojisiyle kişiye özel ürünler üreten bir atölyedir. Organizerlardan aynalara, duvar tablolarından hediyelik parçalara kadar her ürün, tasarım dosyasından son rötuşa kadar kendi atölyemizde şekillenir. Hassas kesim, temiz kenarlar ve istediğiniz gibi üretim; işimizin merkezinde yer alır.',
   },
   image: '/images/placeholder-about.webp',
   boxes: [
