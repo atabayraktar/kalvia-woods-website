@@ -76,39 +76,29 @@ export const categorySection = {
     tr: ['Her ihtiyaç için', 'lazer kesim ürünler.'],
   },
   // Four equal cards (the section's grid is 4-up from 960px). `slug` is a main category from
-  // PRODUCT_CATEGORIES in src/data/products.js and `sub` an optional PRODUCT_SUBCATEGORIES
-  // slug — each card deep-links to /urunler with those filters pre-applied. Only two main
-  // categories have products so far, so the cards are their four populated subcategories
-  // (the parent category shows as the card's eyebrow). Swap in main categories here once the
-  // other ones from the sheet get products.
+  // PRODUCT_CATEGORIES in src/data/products.js (optional `sub` = PRODUCT_SUBCATEGORIES slug);
+  // each card deep-links to /urunler with those filters pre-applied. The photos carry no
+  // captions — the title is rendered by the card itself.
   categories: [
     {
       slug: 'organizer-workstation',
-      sub: 'hobi-boya-istasyonu',
       image: '/images/placeholder-category-1.webp',
-      eyebrow: { tr: 'Organizer & Workstation' },
-      title: { tr: 'Hobi / Boya İstasyonu' },
+      title: { tr: 'Organizer & Standlar' },
     },
     {
-      slug: 'organizer-workstation',
-      sub: 'makeup-organizer',
+      slug: 'masaustu-dekor',
       image: '/images/placeholder-category-2.webp',
-      eyebrow: { tr: 'Organizer & Workstation' },
-      title: { tr: 'Makeup Organizer' },
+      title: { tr: 'Aksesuarlar' },
     },
     {
       slug: 'duvar-dekoru',
-      sub: 'aynalar',
       image: '/images/placeholder-category-3.webp',
-      eyebrow: { tr: 'Duvar Dekoru' },
-      title: { tr: 'Aynalar' },
+      title: { tr: 'Aynalar & Tablolar' },
     },
     {
-      slug: 'duvar-dekoru',
-      sub: 'tablolar',
+      slug: 'aydinlatma',
       image: '/images/placeholder-category-4.webp',
-      eyebrow: { tr: 'Duvar Dekoru' },
-      title: { tr: 'Tablolar' },
+      title: { tr: 'Avize & Aplikler' },
     },
   ],
 };

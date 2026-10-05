@@ -12,7 +12,7 @@ export default function Footer() {
     <Surface as="footer" className="site-footer surface--flush surface--calm" contentClassName="site-footer__content">
       {/* next/link (not a plain <a>) so this stays a client-side navigation. */}
       <Link href="/" className="site-footer__logo" aria-label="Kalvia Woods — anasayfa">
-        <Image src="/images/logo-icon.webp" alt="Kalvia Woods" width={215} height={160} className="site-footer__logotype" />
+        <Image src="/images/logo-icon.webp" alt="Kalvia Woods" width={174} height={160} className="site-footer__logotype" />
       </Link>
 
       <div className="site-footer__center">
