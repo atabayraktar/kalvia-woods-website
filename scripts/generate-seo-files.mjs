@@ -22,6 +22,7 @@ const { contactSection } = await import(contentModuleUrl);
 const STATIC_PAGES = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
   { path: '/urunler', priority: '0.9', changefreq: 'weekly' },
+  { path: '/kalvia-works', priority: '0.7', changefreq: 'monthly' },
   ...products.map((p) => ({ path: `/urunler/${p.id}`, priority: '0.7', changefreq: 'monthly' })),
 ];
 
@@ -65,6 +66,7 @@ function writeLlmsTxt() {
 
 - [Homepage](${SITE_URL}/): hero, product categories, about Kalvia Woods, contact.
 - [Products](${SITE_URL}/urunler): laser-cut product catalog, filterable by category.
+- [Kalvia Works](${SITE_URL}/kalvia-works): sister brand — wall panels, lambri and façade cladding for home decoration.
 
 ## Sitemap
 

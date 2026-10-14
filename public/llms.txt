@@ -16,6 +16,7 @@
 
 - [Homepage](https://kalviawoods.example/): hero, product categories, about Kalvia Woods, contact.
 - [Products](https://kalviawoods.example/urunler): laser-cut product catalog, filterable by category.
+- [Kalvia Works](https://kalviawoods.example/kalvia-works): sister brand — wall panels, lambri and façade cladding for home decoration.
 
 ## Sitemap
 

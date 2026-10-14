@@ -9,12 +9,15 @@ export const header = {
     { href: '/urunler', label: { tr: 'Ürünler' } },
     { href: '#hakkimizda', label: { tr: 'Hakkımızda' } },
     { href: '#iletisim', label: { tr: 'İletişim' } },
+    { href: '/kalvia-works', label: { tr: 'Kalvia Works' } },
   ],
 };
 
 export const heroSlides = [
   {
     id: 'hero-1',
+    // Desktop only: the ship fills the lower-left, so the copy sits in the calm upper-left instead.
+    copyAlign: 'top',
     media: {
       type: 'image',
       src: '/images/hero-gemi.webp',

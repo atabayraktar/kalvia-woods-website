@@ -16,7 +16,9 @@ const SITE_URL = 'https://kalviawoods.example';
 const TITLE = 'Ürünler | Kalvia Woods';
 const DESCRIPTION =
   'Kalvia Woods lazer kesim ürün kataloğu: hobi ve boya istasyonları, makyaj organizerleri, katmanlı dekoratif aynalar ve 3D duvar tabloları. Kategori ve alt kategoriye göre filtreleyin.';
-const PAGE_SIZE = 12;
+// 11 products + the always-first custom-order card = 12 tiles per page, which fills whole rows
+// in the 2-, 3- and 4-column layouts (13 left a 3-tile gap at the bottom of the 4-col grid).
+const PAGE_SIZE = 11;
 
 const PAGE_TITLE = { tr: 'Ürünler' };
 const PAGE_INTRO = {
@@ -86,6 +88,17 @@ export default function ProductsPage({ products: allProducts, categories, subcat
   const [sort, setSort] = useState(SORT_OPTIONS[0].value);
   const [stock, setStock] = useState(null);
   const [page, setPage] = useState(1);
+  const layoutRef = useRef(null);
+  // Pagination: switch page, then bring the top of the product list back into view.
+  const goToPage = (next) => {
+    setPage(next);
+    requestAnimationFrame(() => {
+      const el = layoutRef.current;
+      if (!el) return;
+      if (window.__lenis) window.__lenis.scrollTo(el, { duration: 0.8 });
+      else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
 
   // Static export: router.query is empty on the very first render — hydrate from it only
@@ -230,7 +243,7 @@ export default function ProductsPage({ products: allProducts, categories, subcat
             </div>
           </div>
 
-          <div className="products-page__layout">
+          <div className="products-page__layout" ref={layoutRef}>
             <FilterPanel
               categories={categories}
               subcategories={subcategories}
@@ -245,7 +258,7 @@ export default function ProductsPage({ products: allProducts, categories, subcat
               {view.pageItems.length > 0 ? (
                 <>
                   <ProductGrid products={view.pageItems} />
-                  <Pagination page={view.page} totalPages={view.totalPages} onChange={setPage} />
+                  <Pagination page={view.page} totalPages={view.totalPages} onChange={goToPage} />
                 </>
               ) : (
                 <EmptyState onReset={resetFilters} />

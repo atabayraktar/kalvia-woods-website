@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Courier_Prime, IBM_Plex_Sans } from 'next/font/google';
+import { Fraunces, IBM_Plex_Sans } from 'next/font/google';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import '@/styles/main.scss';
@@ -13,19 +13,19 @@ import CustomOrderModal from '@/components/CustomOrderModal';
 
 // Self-hosted via next/font (built at compile time, no external request at runtime).
 // Exactly two families. latin-ext is required for Turkish (ş ğ İ ı).
-// Courier Prime = typewriter voice (headings, nav, labels, prices, codes); IBM Plex Sans =
-// clean, typewriter-lineage sans for reading copy.
-const courierPrime = Courier_Prime({
+// Fraunces = warm, characterful serif for headings and names; IBM Plex Sans = body copy and the
+// small uppercase UI voice (nav, buttons, labels).
+const fraunces = Fraunces({
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-courier',
+  axes: ['opsz'],
+  variable: '--font-fraunces',
   display: 'swap',
 });
 
 const plexSans = IBM_Plex_Sans({
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-plex',
   display: 'swap',
 });
@@ -155,14 +155,17 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     const lenis = new Lenis({ anchors: true, autoRaf: true });
     lenisRef.current = lenis;
+    // Exposed so in-page jumps (e.g. /urunler pagination) go through Lenis instead of fighting it.
+    window.__lenis = lenis;
     return () => {
       lenisRef.current = null;
+      window.__lenis = null;
       lenis.destroy();
     };
   }, []);
 
   return (
-    <div className={`${courierPrime.variable} ${plexSans.variable} font-root`}>
+    <div className={`${fraunces.variable} ${plexSans.variable} font-root`}>
       <LanguageProvider>
         <a href="#main-content" className="skip-link">
           Ana içeriğe geç

@@ -66,12 +66,12 @@
   --z-modal: 100;
 }
 
-// Typography. --font-courier / --font-plex are injected by next/font/google onto the
+// Typography. --font-fraunces / --font-plex are injected by next/font/google onto the
 // .font-root wrapper (see _app.jsx), NOT :root, so the aliases must be declared on that
 // same element (var() resolves where it is declared, then inherits the resolved value).
-// Exactly two families: Courier Prime (typewriter) + IBM Plex Sans (body).
+// Exactly two families: Fraunces (headings / names) + IBM Plex Sans (body and small UI labels).
 .font-root {
-  --font-display: var(--font-courier), 'Courier New', Courier, monospace;
-  --font-mono: var(--font-courier), 'Courier New', Courier, monospace;
+  --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  --font-mono: var(--font-plex), system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: var(--font-plex), 'Helvetica Neue', Arial, sans-serif;
 }

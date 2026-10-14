@@ -6,13 +6,9 @@ import { heroSlides } from '@/data/homepageContent';
 import { openCustomOrder } from '@/lib/customOrder';
 import Surface from './Surface';
 
-// Slow, unhurried autoplay — pauses the moment someone touches the slider (hover, focus,
-// drag) and never fights a manual nav. Video slides get longer so a clip shows itself.
-const AUTOPLAY_MS = 8000;
-const VIDEO_AUTOPLAY_MS = 12000;
-
-const autoplayDurationFor = (slide) =>
-  slide.media.type === 'video' ? VIDEO_AUTOPLAY_MS : AUTOPLAY_MS;
+// Steady 5s autoplay that loops forever — pauses while someone hovers, keyboard-focuses or
+// drags the slider, and never runs under prefers-reduced-motion.
+const AUTOPLAY_MS = 5000;
 
 export default function HeroSlider() {
   const { t } = useLanguage();
@@ -41,7 +37,7 @@ export default function HeroSlider() {
     const timer = setInterval(() => {
       if (pausedRef.current) return;
       setIndex((i) => (i + 1) % total);
-    }, autoplayDurationFor(heroSlides[index]));
+    }, AUTOPLAY_MS);
 
     return () => clearInterval(timer);
   }, [index, total]);
@@ -94,7 +90,11 @@ export default function HeroSlider() {
       aria-label="Öne çıkan ürünler"
       onMouseEnter={pause}
       onMouseLeave={resume}
-      onFocus={pause}
+      onFocus={(event) => {
+        // Only keyboard focus pauses; a mouse click on a dot/CTA leaves focus behind and must not
+        // freeze the loop.
+        if (event.target.matches(':focus-visible')) pause();
+      }}
       onBlur={resume}
     >
       <div
@@ -107,7 +107,7 @@ export default function HeroSlider() {
         <div className="hero-slider__track" style={{ transform: `translateX(-${index * 100}%)` }}>
           {heroSlides.map((slide, i) => (
             <div
-              className="hero-slider__slide"
+              className={`hero-slider__slide${slide.copyAlign === 'top' ? ' hero-slider__slide--copy-top' : ''}`}
               key={slide.id}
               aria-hidden={i !== index}
               role="group"

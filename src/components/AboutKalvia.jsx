@@ -7,12 +7,12 @@ import { aboutKalvia } from '@/data/homepageContent';
 // set — swap for real brand icons when supplied.
 const ICONS = {
   laser: (
-    // laser beam hitting a sheet
+    // precision crosshair over a measuring rule
     <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
-      <path d="M12 3v9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M8.5 6.5 12 12l3.5-5.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M4 15.5h16M4 19.5h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="12" cy="12.5" r="1.4" fill="currentColor" />
+      <circle cx="12" cy="10" r="5.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 2.5v4M12 13.5v4M4.5 10h4M15.5 10h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="12" cy="10" r="1" fill="currentColor" />
+      <path d="M3.5 21h17M3.5 19.2v3.6M8 20v2M12 19.2v3.6M16 20v2M20.5 19.2v3.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   ),
   design: (
@@ -68,7 +68,13 @@ export default function AboutKalvia() {
         {boxes.map((box, i) => {
           const isOpen = open === i;
           return (
-            <div className={`about-kw__item${isOpen ? ' is-open' : ''}`} key={box.icon}>
+            <div
+              className={`about-kw__item${isOpen ? ' is-open' : ''}`}
+              key={box.icon}
+              // Open card: a click anywhere on it (photo, text, empty space) closes it again —
+              // unless the visitor is selecting text.
+              onClick={isOpen ? () => !window.getSelection()?.toString() && setOpen(-1) : undefined}
+            >
               <h3 className="about-kw__item-head">
                 <button
                   type="button"

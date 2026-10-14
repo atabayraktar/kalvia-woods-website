@@ -1,0 +1,773 @@
+@use '../marks' as *;
+
+// /kalvia-works — the sister brand, told in this site's own "workshop ledger" voice:
+// typewriter display type, ruled hairlines, prints on kraft with registration marks.
+// Plain content page; the hero clears the fixed header with its own top padding.
+
+// Ends on the tinted contact band — no paper strip between it and the footer bar.
+.page-transition:has(.kw-contact) + .site-footer {
+  margin-top: 0;
+}
+
+dd {
+  margin: 0;
+}
+
+// ── Shared bits ─────────────────────────────────────────────────────────────────────
+.kw-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 15px 20px 15px 26px;
+  font-size: 15px;
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.35s var(--ease-spring);
+  }
+
+  .surface:hover & svg {
+    transform: translateX(3px);
+  }
+}
+
+.kw-link {
+  @include mono-label(700);
+  font-size: 14px;
+  color: var(--accent-hover);
+  border-bottom: 1px solid currentColor;
+  padding-block: 2px;
+  transition: color 0.25s var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--ink);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+}
+
+// ── Opening spread ──────────────────────────────────────────────────────────────────
+.kw-hero {
+  padding-top: calc(var(--header-height) + var(--space-7));
+  padding-bottom: var(--space-8);
+
+  @media (min-width: 900px) {
+    display: flex;
+    align-items: center;
+    min-height: 100svh;
+    padding-bottom: var(--space-7);
+  }
+}
+
+.kw-hero__inner {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+  width: 100%;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-7);
+  }
+}
+
+.kw-hero__stamp {
+  @include stamp;
+  margin-bottom: var(--space-6);
+}
+
+.kw-hero__title {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(64px, 11.5vw, 164px);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  margin-bottom: var(--space-6);
+
+  // "Works" steps in under "Kalvia" — a typewriter carriage return.
+  .kw-hero__title-indent {
+    margin-left: 0.55em;
+    color: var(--accent-hover);
+  }
+}
+
+.kw-hero__lead {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(19px, 2vw, 26px);
+  line-height: 1.3;
+  max-width: 26ch;
+  margin-bottom: var(--space-3);
+}
+
+.kw-hero__text {
+  color: var(--ink-muted);
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: 46ch;
+  margin-bottom: var(--space-6);
+}
+
+.kw-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+// Two prints, the smaller one overlapping the lower-left of the larger.
+.kw-hero__prints {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 10 / 11;
+  justify-self: center;
+
+  @media (min-width: 900px) {
+    justify-self: end;
+  }
+}
+
+.kw-hero__print {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface-alt);
+  box-shadow: var(--shadow-raised);
+  aspect-ratio: 3 / 4;
+
+  &--main {
+    top: 0;
+    right: 0;
+    width: 66%;
+  }
+
+  &--second {
+    left: 0;
+    bottom: 0;
+    width: 46%;
+    border: 6px solid var(--bg);
+    z-index: 1;
+  }
+}
+
+.kw-hero__caption {
+  @include mono-label;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 48%;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--ink-muted);
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+// ── Pull quote ──────────────────────────────────────────────────────────────────────
+.kw-statement {
+  background: var(--surface-alt);
+  border-block: 1px solid var(--border);
+  padding-block: var(--space-8);
+
+  @media (min-width: 900px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.kw-statement__inner {
+  display: grid;
+  gap: var(--space-6);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: var(--space-9);
+    align-items: end;
+  }
+}
+
+.kw-statement__quote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 5.6vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin-bottom: var(--space-5);
+    background: var(--accent);
+  }
+}
+
+.kw-statement__side {
+  display: grid;
+  gap: var(--space-4);
+  color: var(--ink-muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.kw-statement__motto {
+  @include mono-label(700);
+  justify-self: start;
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--ink);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+// ── Services: ruled index ───────────────────────────────────────────────────────────
+.kw-services {
+  display: grid;
+  gap: var(--space-7);
+  padding-block: var(--space-8);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-9);
+    padding-block: var(--space-9);
+    align-items: start;
+  }
+}
+
+.kw-services__head {
+  @media (min-width: 900px) {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+
+  h2 {
+    font-size: clamp(30px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-3);
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 30ch;
+  }
+}
+
+.kw-services__list {
+  border-top: 2px solid var(--ink);
+}
+
+.kw-services__row {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+
+  @media (min-width: 700px) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+    gap: var(--space-6);
+    align-items: baseline;
+  }
+
+  h3 {
+    font-size: clamp(22px, 2.6vw, 34px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    transition: transform 0.4s var(--ease-out), color 0.3s var(--ease-out);
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 15px;
+    line-height: 1.6;
+    transition: color 0.3s var(--ease-out);
+  }
+
+  &:hover h3 {
+    transform: translateX(10px);
+    color: var(--accent-hover);
+  }
+
+  &:hover p {
+    color: var(--ink);
+  }
+}
+
+// ── Projects: contact sheet ─────────────────────────────────────────────────────────
+.kw-projects {
+  padding-block: var(--space-8) var(--space-9);
+
+  @media (min-width: 900px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.kw-projects__head {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--ink);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: var(--space-9);
+    align-items: end;
+    margin-bottom: var(--space-9);
+  }
+
+  h2 {
+    font-size: clamp(30px, 4.4vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+.kw-projects__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+
+  @media (min-width: 900px) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--space-5);
+    row-gap: var(--space-9);
+    align-items: start;
+  }
+}
+
+.kw-project {
+  margin: 0;
+  width: 84%;
+
+  @media (min-width: 560px) {
+    width: 62%;
+  }
+
+  @media (min-width: 900px) {
+    width: auto;
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--space-1);
+    padding-top: var(--space-3);
+  }
+
+  h3 {
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 38ch;
+  }
+
+  // Phones/tablets: prints alternate left and right so the column zig-zags.
+  &:nth-child(even) {
+    align-self: flex-end;
+  }
+
+  &--b,
+  &--f {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  // Desktop placement: a hand-laid sheet, not a grid of equals.
+  @media (min-width: 900px) {
+    &:nth-child(even),
+    &--b,
+    &--f {
+      align-self: start;
+    }
+
+    &--a { grid-column: 1 / 5; grid-row: 1; }
+    &--b { grid-column: 6 / 13; grid-row: 1; align-self: end; }
+    &--c { grid-column: 1 / 4; grid-row: 2; }
+    &--d { grid-column: 5 / 9; grid-row: 2; margin-top: var(--space-9); }
+    &--e { grid-column: 10 / 13; grid-row: 2; margin-top: var(--space-7); }
+    &--f { grid-column: 1 / 8; grid-row: 3; }
+    &--g { grid-column: 9 / 13; grid-row: 3; margin-top: var(--space-8); }
+  }
+}
+
+.kw-project__photo {
+  @include reg-marks(10px, var(--mark-size), var(--frame-ink));
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface-alt);
+  box-shadow: var(--shadow-surface);
+  line-height: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  &:hover img {
+    transform: scale(1.035);
+  }
+}
+
+.kw-project__tag {
+  @include stamp(var(--accent-hover), -1.5deg);
+  justify-self: start;
+  margin-bottom: var(--space-2);
+}
+
+// ── Work order strip ────────────────────────────────────────────────────────────────
+.kw-process {
+  padding-block: var(--space-8);
+
+  @media (min-width: 900px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.kw-process__title {
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-8);
+}
+
+.kw-process__strip {
+  display: grid;
+  gap: var(--space-6);
+  border-left: 2px solid var(--ink);
+  padding-left: var(--space-5);
+
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-5);
+    border-left: 0;
+    border-top: 2px solid var(--ink);
+    padding-left: 0;
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+
+    @media (min-width: 800px) {
+      padding-top: var(--space-5);
+    }
+
+    // Tick on the rule: where each stop meets the line.
+    &::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: calc(-1 * var(--space-5) - 6px);
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+
+      @media (min-width: 800px) {
+        top: -6px;
+        left: 0;
+      }
+    }
+  }
+
+  h3 {
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 30ch;
+  }
+}
+
+// ── FAQ ─────────────────────────────────────────────────────────────────────────────
+.kw-faq {
+  display: grid;
+  gap: var(--space-6);
+  padding-bottom: var(--space-9);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-9);
+    align-items: start;
+  }
+}
+
+.kw-faq__title {
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+
+  @media (min-width: 900px) {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}
+
+.kw-faq__list {
+  border-top: 2px solid var(--ink);
+}
+
+.kw-faq__item {
+  border-bottom: 1px solid var(--border);
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 60px;
+    padding: var(--space-3) 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.3;
+    transition: color 0.25s var(--ease-out);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--accent-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: 62ch;
+    padding-bottom: var(--space-4);
+  }
+}
+
+.kw-faq__chevron {
+  position: relative;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 2px;
+    margin-top: -1px;
+    background: currentColor;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+}
+
+.kw-faq__item[open] .kw-faq__chevron::after {
+  transform: rotate(0deg);
+}
+
+// ── Contact ─────────────────────────────────────────────────────────────────────────
+.kw-contact {
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border);
+  padding-block: var(--space-8);
+
+  @media (min-width: 768px) {
+    padding-block: var(--space-9);
+  }
+}
+
+.kw-contact__head {
+  display: grid;
+  gap: var(--space-4);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-9);
+    align-items: end;
+  }
+
+  h2 {
+    font-size: clamp(34px, 5.2vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+
+    @media (min-width: 900px) {
+      align-self: end;
+    }
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 40ch;
+  }
+}
+
+.kw-contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.kw-contact__side {
+  display: grid;
+  align-self: end;
+}
+
+// Contact ledger: heavy rule on top, four entries — 2x2 from 560px, one row from 1100px.
+.kw-contact__ledger {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4) var(--space-4);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 2px solid var(--ink);
+
+  @media (min-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+  }
+}
+
+.kw-contact__entry {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-areas:
+    'icon label'
+    'icon value'
+    '. note';
+  column-gap: var(--space-3);
+  align-items: center;
+  min-width: 0;
+  color: inherit;
+  border-radius: var(--radius);
+  transition: transform 0.3s var(--ease-spring);
+
+  a#{&} {
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+
+      .kw-contact__value {
+        color: var(--accent-hover);
+      }
+
+      .kw-contact__icon {
+        border-color: var(--accent);
+        background: var(--accent-wash);
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+  }
+}
+
+.kw-contact__icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--accent-hover);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+
+.kw-contact__label {
+  @include eyebrow;
+  grid-area: label;
+}
+
+.kw-contact__value {
+  grid-area: value;
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  transition: color 0.25s var(--ease-out);
+}
+
+.kw-contact__note {
+  grid-area: note;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kw-services__row h3,
+  .kw-project__photo img,
+  .kw-btn svg {
+    transition: none;
+  }
+
+  .kw-services__row:hover h3,
+  .kw-project__photo:hover img {
+    transform: none;
+  }
+}

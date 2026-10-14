@@ -38,7 +38,7 @@
   }
 }
 
-// Typewriter data label (Courier Prime): prices, codes, spec lines, counters, numbering.
+// Data label (IBM Plex Sans): prices, codes, spec lines, counters, numbering.
 @mixin mono-label($weight: 400) {
   font-family: var(--font-mono);
   font-weight: $weight;
@@ -48,7 +48,7 @@
 
 // Small uppercase typewriter eyebrow / meta label (e.g. "Nº 01 — ATÖLYE").
 @mixin eyebrow {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;

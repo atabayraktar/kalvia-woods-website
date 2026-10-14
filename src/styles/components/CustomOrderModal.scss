@@ -95,3 +95,15 @@
   align-self: flex-start;
   margin-top: var(--space-2);
 }
+
+// The hint text clears as soon as the field is focused.
+.order-modal textarea,
+.order-modal input {
+  &::placeholder {
+    transition: opacity 0.2s var(--ease-out);
+  }
+
+  &:focus::placeholder {
+    opacity: 0;
+  }
+}

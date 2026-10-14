@@ -1,10 +1,17 @@
 @use '../marks' as *;
 
 .hero-slider {
+  // Extra height the slide grows beyond the viewport on screens wider than the 2:1 art; the copy
+  // and dots are lifted by this much so they stay inside the first screenful.
+  --hero-extra: 0px;
   position: relative;
   width: 100%;
   overflow: hidden;
   background: var(--frame);
+
+  @media (min-width: 641px) and (min-height: 481px) {
+    --hero-extra: max(0px, calc(50vw + var(--header-height) - 100svh));
+  }
 }
 
 .hero-slider__viewport {
@@ -39,6 +46,18 @@
     height: 100svh;
     min-height: 380px;
   }
+
+  // Wider than the 2:1 art: grow the slide to the photo's height (header + width/2) so nothing
+  // is cropped top or bottom. Still never shorter than the viewport.
+  @media (min-width: 641px) and (min-height: 481px) {
+    height: max(100svh, calc(50vw + var(--header-height)));
+    padding-bottom: var(--hero-extra);
+
+    &--copy-top {
+      align-items: flex-start;
+      padding-top: calc(var(--header-height) + var(--space-9));
+    }
+  }
 }
 
 .hero-slider__media {
@@ -52,6 +71,19 @@
     height: 100%;
     object-fit: cover;
   }
+
+  // Desktop: the fixed header sits on top of the hero, so start the artwork underneath it —
+  // otherwise the top strip of every photo is hidden behind the bar. The 2:1 art then only
+  // loses a sliver at the sides (never top/bottom); on screens wider than 2:1 the slide grows
+  // (see .hero-slider__slide) so the whole photo still fits.
+  @media (min-width: 641px) and (min-height: 481px) {
+    top: var(--header-height);
+
+    img {
+      object-position: center !important;
+    }
+  }
+
 }
 
 // Art-directed mobile/desktop image pair (see HeroSlider.jsx) — same 640px cutoff as the
@@ -70,38 +102,60 @@
   }
 }
 
-// Plain dark-to-transparent scrim (legibility only, no brand colour).
+// Plain dark-to-transparent scrims (legibility only, neutral black, no brand colour): one
+// rising from the bottom for the copy, one from the left so the headline never sits on the
+// bright parts of a photo. Phones are bottom-weighted — the copy sits under the artwork.
 .hero-slider__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.2) 45%,
-    transparent 75%
-  );
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.74) 0%, rgba(0, 0, 0, 0.4) 36%, transparent 68%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.26) 42%, transparent 72%);
+
+  @media (max-width: 640px) {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.64) 38%,
+      rgba(0, 0, 0, 0.18) 68%,
+      transparent 100%
+    );
+  }
 }
 
-// Copy block: left-aligned to the page grid, framed by honey registration marks, with a
-// rubber stamp pressed on its top edge. Asymmetric on purpose — the right half of the hero
-// stays open for the footage.
+// Copy block: left-aligned to the page grid, anchored to the bottom, headed by a short
+// oak-gold ledger rule. No frame — the scrim carries legibility, the type carries the voice.
 .hero-slider__copy {
-  @include reg-marks(0, 22px, var(--accent-fill));
   z-index: var(--z-content);
   color: var(--frame-ink);
-  margin: 0 var(--container-pad) var(--space-9);
+  margin: 0 var(--container-pad) var(--space-8);
   margin-left: max(var(--container-pad), calc((100% - var(--container-max)) / 2 + var(--container-pad)));
-  padding: var(--space-7) var(--space-7) var(--space-6);
-  width: min(780px, calc(100% - 2 * var(--container-pad)));
+  width: min(640px, calc(100% - 2 * var(--container-pad)));
+
+  &::before {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin-bottom: var(--space-5);
+    background: var(--accent-fill);
+  }
 
   @media (max-width: 768px) {
-    margin-bottom: var(--space-8);
-    padding: var(--space-6) var(--space-4) var(--space-5);
+    margin-bottom: 76px;
+
+    &::before {
+      width: 40px;
+      margin-bottom: var(--space-4);
+    }
   }
 
   @media (max-height: 480px) {
     margin-bottom: var(--space-7);
-    padding: var(--space-5) var(--space-5) var(--space-4);
+
+    &::before {
+      display: none;
+    }
   }
 }
 
@@ -117,12 +171,18 @@
 
 .hero-slider__title {
   color: var(--frame-ink);
-  font-size: clamp(28px, 5vw, 52px);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: var(--space-5);
+  font-size: clamp(32px, 3.8vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--space-4);
   text-wrap: balance;
-  max-width: 20ch;
+  max-width: 19ch;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35);
+
+  @media (max-width: 768px) {
+    font-size: clamp(28px, 8.2vw, 38px);
+    max-width: 14ch;
+  }
 
   @media (max-height: 480px) {
     font-size: clamp(24px, 4.6vw, 36px);
@@ -133,12 +193,16 @@
 
 .hero-slider__info {
   color: var(--frame-ink);
-  opacity: 0.88;
-  font-style: italic;
-  font-size: clamp(14px, 1.6vw, 17px);
-  line-height: 1.55;
-  max-width: 50ch;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.6;
+  max-width: 46ch;
   margin-bottom: var(--space-6);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    margin-bottom: var(--space-5);
+  }
 
   @media (max-height: 480px) {
     display: none;
@@ -152,9 +216,11 @@
   &-content {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: 16px 18px 16px 28px;
+    gap: var(--space-3);
+    min-height: 52px;
+    padding: 0 20px 0 28px;
     font-size: 15px;
+    letter-spacing: 0.02em;
 
     svg {
       flex-shrink: 0;
@@ -167,25 +233,25 @@
   }
 }
 
+// Dots sit at the right edge of the container, lifted just above the fixed WhatsApp button
+// in the bottom-right corner (56px + gap) so the two never overlap.
 .hero-slider__dots {
   position: absolute;
-  bottom: var(--space-4);
-  right: var(--container-pad);
+  bottom: calc(var(--space-4) + 56px + var(--space-1) + var(--hero-extra));
+  right: max(
+    calc(var(--container-pad) - 8px),
+    calc((100% - var(--container-max)) / 2 + var(--container-pad) - 8px)
+  );
   z-index: var(--z-content);
   display: flex;
   align-items: center;
   gap: var(--space-1);
 
-  // Clear the fixed WhatsApp button in the bottom-right corner.
-  // Small screens: dots go bottom-left so the WhatsApp button owns the bottom-right.
+  // Phones: line the dots up beside the WhatsApp button (to its left) instead of above it, so
+  // they never sit on the CTA.
   @media (max-width: 767px) {
-    right: auto;
-    left: calc(var(--container-pad) - 8px);
-    bottom: var(--space-2);
-  }
-
-  @media (min-width: 1440px) {
-    right: calc((100% - var(--container-max)) / 2 + var(--container-pad));
+    bottom: calc(var(--space-4) + 6px);
+    right: calc(var(--space-4) + 56px + var(--space-1));
   }
 }
 

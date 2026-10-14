@@ -58,7 +58,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   margin: 0;
   line-height: 1.12;
   letter-spacing: -0.02em;
@@ -142,7 +142,7 @@ button:focus-visible .accent-hover,
 .btn__label {
   display: inline-block;
   color: inherit;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
