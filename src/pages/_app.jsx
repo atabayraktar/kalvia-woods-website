@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFab from '@/components/WhatsAppFab';
 import ScrollTopButton from '@/components/ScrollTopButton';
+import CustomOrderModal from '@/components/CustomOrderModal';
 
 // Self-hosted via next/font (built at compile time, no external request at runtime).
 // Exactly two families. latin-ext is required for Turkish (ş ğ İ ı).
@@ -178,6 +179,7 @@ export default function App({ Component, pageProps }) {
         <Footer />
         <WhatsAppFab />
         <ScrollTopButton />
+        <CustomOrderModal />
       </LanguageProvider>
     </div>
   );

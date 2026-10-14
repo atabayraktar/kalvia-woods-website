@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { openCustomOrder } from '@/lib/customOrder';
 import ProductCard from './ProductCard';
 
 // First row's worth of cards (the desktop layout's own column count — see ProductGrid.scss)
@@ -12,14 +12,14 @@ export default function ProductGrid({ products }) {
   return (
     <div className="product-grid">
       {products.length > 0 && (
-        <Link href="/#iletisim" className="product-grid__custom">
+        <button type="button" className="product-grid__custom" onClick={openCustomOrder}>
           <span className="product-grid__custom-eyebrow">Özel sipariş</span>
           <span className="product-grid__custom-title">Aradığınızı bulamadınız mı?</span>
           <span className="product-grid__custom-text">
             Ölçü ve tasarımınızı iletin, atölyemizde sizin için kesilsin.
           </span>
           <span className="product-grid__custom-cta">Bize yazın →</span>
-        </Link>
+        </button>
       )}
       {products.map((product, i) => (
         <ProductCard key={product.id} product={product} priority={i < EAGER_COUNT} />

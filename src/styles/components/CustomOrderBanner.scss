@@ -11,7 +11,12 @@
 .order-banner__frame {
   position: relative;
   display: flex;
-  color: inherit;
+  width: 100%;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: var(--frame-ink);
   overflow: hidden;
   // Mobile banner placeholder is 851x1452 (tall portrait); a shorter crop keeps it compact.
   aspect-ratio: 4 / 5;
@@ -95,6 +100,13 @@
   letter-spacing: -0.03em;
   max-width: 20ch;
   text-wrap: balance;
+}
+
+.order-banner__text {
+  max-width: 44ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--frame-ink);
 }
 
 .order-banner__cta-content {

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { heroSlides } from '@/data/homepageContent';
+import { openCustomOrder } from '@/lib/customOrder';
 import Surface from './Surface';
 
 // Slow, unhurried autoplay — pauses the moment someone touches the slider (hover, focus,
@@ -159,7 +160,7 @@ export default function HeroSlider() {
                       priority={i === 0}
                       sizes="100vw"
                       className={slide.media.mobileSrc ? 'hero-slider__media-desktop' : undefined}
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: 'cover', objectPosition: slide.media.position || 'center' }}
                     />
                   </>
                 )}
@@ -176,8 +177,8 @@ export default function HeroSlider() {
                 )}
                 <p className="hero-slider__info">{t(slide.info)}</p>
                 <Surface
-                  as={Link}
-                  href={slide.href}
+                  as={slide.action ? 'button' : Link}
+                  {...(slide.action ? { type: 'button', onClick: openCustomOrder } : { href: slide.href })}
                   className="hero-slider__cta surface--cta"
                   contentClassName="hero-slider__cta-content"
                 >

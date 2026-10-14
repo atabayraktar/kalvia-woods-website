@@ -91,7 +91,7 @@ export default function Header() {
     >
       <div className="site-header__brand">
         <Link href="/" className="site-header__logo-link" aria-label="Kalvia Woods — anasayfa" onClick={onLogoClick}>
-          <Image src="/images/logo-with-text.webp" alt="Kalvia Woods" width={219} height={240} priority className="site-header__logo" />
+          <Image src="/images/logo-mark.webp" alt="Kalvia Woods" width={219} height={220} priority className="site-header__logo" />
         </Link>
       </div>
 

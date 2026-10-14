@@ -18,6 +18,10 @@
 // Custom-order card: flat ruled card, always the first grid item.
 .product-grid__custom {
   @include reg-marks(10px);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
   display: flex;
   flex-direction: column;
   justify-content: center;

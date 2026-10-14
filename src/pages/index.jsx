@@ -99,7 +99,7 @@ export default function HomePage() {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={SITE_URL} />
         {/* The first slide's poster is the LCP candidate for a <video> — preload it. */}
-        <link rel="preload" as="image" href="/images/placeholder-hero-1.webp" fetchpriority="high" />
+        <link rel="preload" as="image" href="/images/hero-gemi.webp" fetchpriority="high" />
         <link rel="alternate" hrefLang="tr" href={SITE_URL} />
         <link rel="alternate" hrefLang="x-default" href={SITE_URL} />
 

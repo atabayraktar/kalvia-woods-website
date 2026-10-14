@@ -16,18 +16,14 @@ export const heroSlides = [
   {
     id: 'hero-1',
     media: {
-      type: 'video',
-      mp4: '/videos/placeholder-hero-1.mp4',
-      // Portrait crop for mobile — swapped in via a <source media> query in HeroSlider.jsx.
-      mobileMp4: '/videos/placeholder-hero-1-mobile.mp4',
-      poster: '/images/placeholder-hero-1.webp',
-      mobilePoster: '/images/placeholder-hero-1-mobile.webp',
+      type: 'image',
+      src: '/images/hero-gemi.webp',
+      mobileSrc: '/images/hero-gemi-mobile.webp',
+      alt: { tr: 'Lazer kesim parçalardan üretilmiş detaylı savaş gemisi maketi' },
     },
-    title: {
-      tr: 'Lazerle şekillenen ürünler.',
-    },
+    title: { tr: 'Lazerle şekillenen ürünler.' },
     info: {
-      tr: 'Kalvia Woods, kişiye özel lazer kesim ürünler üretir; organizerlar, aynalar, duvar tabloları ve çok daha fazlası milimetrik hassasiyetle kendi atölyemizde şekillenir.',
+      tr: 'Kalvia Woods, kişiye özel lazer kesim ürünler üretir; maketlerden organizerlara, aynalardan duvar tablolarına her parça milimetrik hassasiyetle kendi atölyemizde şekillenir.',
     },
     cta: { tr: 'Ürünleri keşfedin' },
     href: '/urunler',
@@ -35,39 +31,64 @@ export const heroSlides = [
   {
     id: 'hero-2',
     media: {
-      type: 'video',
-      mp4: '/videos/placeholder-hero-2.mp4',
-      mobileMp4: '/videos/placeholder-hero-2-mobile.mp4',
-      poster: '/images/placeholder-hero-2.webp',
-      mobilePoster: '/images/placeholder-hero-2-mobile.webp',
+      type: 'image',
+      src: '/images/hero-craftwall.webp',
+      position: 'center top',
+      mobileSrc: '/images/hero-craftwall-mobile.webp',
+      alt: { tr: 'Duvara monte modüler lazer kesim atölye organizeri' },
     },
-    title: {
-      tr: 'Hassas kesim, ince detay.',
-    },
+    title: { tr: 'Duvarınız da atölyeniz olsun.' },
     info: {
-      tr: 'Lazer kesimin temiz hatları her üründe ince bir işçilik bırakır. Her parça, tasarımdan üretime kendi atölyemizde şekilleniyor.',
+      tr: 'Modüler organizerlarla boyaları, kalemleri ve el aletlerini düzenli, ulaşılır ve göz önünde tutun.',
     },
-    cta: { tr: 'Duvar dekorları' },
-    href: '/urunler?kategori=duvar-dekoru',
+    cta: { tr: 'Organizerlar' },
+    href: '/urunler?kategori=organizer-workstation',
   },
   {
     id: 'hero-3',
     media: {
       type: 'image',
-      src: '/images/placeholder-hero-3.webp',
-      mobileSrc: '/images/placeholder-hero-3-mobile.webp',
-      alt: {
-        tr: 'Kişiye özel lazer kesim ürün örnekleri (yer tutucu görsel)',
-      },
+      src: '/images/hero-ayna.webp',
+      position: 'center top',
+      mobileSrc: '/images/hero-ayna-mobile.webp',
+      alt: { tr: 'Lazer kesim şeritlerden oluşan avize' },
     },
-    title: {
-      tr: 'Size özel, istediğiniz gibi.',
-    },
+    title: { tr: 'Işığın şekil aldığı yer.' },
     info: {
-      tr: 'Ölçüyü, rengi ve yazıyı siz seçin; fikrinizi birlikte tasarlayıp lazerle kesilmiş ürüne dönüştürelim.',
+      tr: 'Lazerle kesilmiş ince detaylar, mekâna sıcak bir desen ve yumuşak bir ışık katar.',
+    },
+    cta: { tr: 'Duvar dekorları' },
+    href: '/urunler?kategori=duvar-dekoru',
+  },
+  {
+    id: 'hero-4',
+    media: {
+      type: 'image',
+      src: '/images/hero-forgedesk.webp',
+      mobileSrc: '/images/hero-forgedesk-mobile.webp',
+      alt: { tr: 'Modüler lazer kesim hobi atölyesi masası' },
+    },
+    title: { tr: 'Hobiniz için ölçülü çözümler.' },
+    info: {
+      tr: 'Ölçüyü, düzeni ve ayrıntıyı siz seçin; fikrinizi birlikte tasarlayıp lazerle kesilmiş ürüne dönüştürelim.',
     },
     cta: { tr: 'Tüm ürünler' },
     href: '/urunler',
+  },
+  {
+    id: 'hero-5',
+    media: {
+      type: 'image',
+      src: '/images/hero-kartvizit.webp',
+      mobileSrc: '/images/hero-kartvizit-mobile.webp',
+      alt: { tr: 'Lazer kesim kartvizit örnekleri: delikli desenli, logolu ve isimli kartlar' },
+    },
+    title: { tr: 'Kartvizitiniz de lazerle şekillensin.' },
+    info: {
+      tr: 'Logonuzu, desenlerinizi ve ismi lazerle işletin; elden ele geçtiğinde akılda kalan, fark yaratan kartvizitler.',
+    },
+    cta: { tr: 'Kartvizit talebi' },
+    action: 'custom-order',
   },
 ];
 
@@ -112,7 +133,7 @@ export const aboutKalvia = {
   boxes: [
     {
       icon: 'laser',
-      image: '/images/products/asterion-led-mandala-duvar-tablosu/1.webp',
+      image: '/images/hero-gemi.webp',
       eyebrow: { tr: "Hassas Kesim" },
       info: { tr: "Her ürün lazerle milimetrik hassasiyette kesilir. İnce desenler, keskin köşeler ve temiz kenarlar ilk üretimde elde edilir; parçalar birbirine tam oturur." },
       points: [
@@ -123,7 +144,7 @@ export const aboutKalvia = {
     },
     {
       icon: 'design',
-      image: '/images/products/elara-makeup-organizer/1.webp',
+      image: '/images/hero-kartvizit.webp',
       eyebrow: { tr: "Kişiye Özel" },
       info: { tr: "Ürünleri ölçünüze, renginize ve ihtiyacınıza göre uyarlıyoruz. Kendi fikrinizi anlatın ya da hazır modellerimizden birini kişiselleştirin." },
       points: [
@@ -134,7 +155,7 @@ export const aboutKalvia = {
     },
     {
       icon: 'shield',
-      image: '/images/products/xl-tasinabilir-boya-hobi-istasyonu-cekmeceli-ahsap-boyama-cantasi/1.webp',
+      image: '/images/hero-craftwall.webp',
       eyebrow: { tr: "Sağlam" },
       info: { tr: "Günlük kullanıma dayanacak şekilde tasarlanır ve üretilir. Geçmeli yapılar ve doğru malzeme kalınlığı sayesinde ürünler yıllarca formunu korur." },
       points: [
@@ -145,7 +166,7 @@ export const aboutKalvia = {
     },
     {
       icon: 'speed',
-      image: '/images/products/colordock-26-boya-sisesi-firca-organizeri/1.webp',
+      image: '/images/hero-forgedesk.webp',
       eyebrow: { tr: "Hızlı Üretim" },
       info: { tr: "Tasarım onaylandığında lazer kesim hemen başlar. Onaydan teslimata kısa bir süre geçer; hazır modellerde teslimat daha da hızlıdır." },
       points: [
@@ -169,16 +190,28 @@ export const aboutKalvia = {
 };
 
 export const customOrderBanner = {
-  image: '/images/placeholder-banner.webp',
+  image: '/images/banner-fason.webp',
   // Portrait crop for mobile, swapped via a CSS breakpoint — see CustomOrderBanner.jsx.
-  mobileImage: '/images/placeholder-banner-mobile.webp',
-  // The one product this banner promotes (id from src/data/products.js). The banner links to
-  // /urunler/<featuredProductId>; the headline is the product's own name.
-  featuredProductId: 'kw-dd-002', // Elora Mandala Ayna
-  tag: { tr: 'Öne çıkan ürün' },
-  cta: {
-    tr: 'Ürünü incele',
+  mobileImage: '/images/banner-fason-mobile.webp',
+  tag: { tr: 'Fason & özel kesim' },
+  title: { tr: 'Siz anlatın, biz keselim.' },
+  text: {
+    tr: 'Kendi çiziminiz, tasarımınız ya da sadece bir fikriniz yeterli. Ölçünüze göre lazerle hassas kesim yapıyoruz.',
   },
+  cta: { tr: 'Talep oluştur' },
+};
+
+// Small request form opened by the banner above and the custom-order card on /urunler. It only
+// collects text and hands it to WhatsApp; photos/drawings are sent in the chat itself.
+export const customOrderModal = {
+  eyebrow: { tr: 'Özel sipariş' },
+  title: { tr: 'Ne kestirmek istiyorsunuz?' },
+  lead: { tr: 'Kısaca anlatın, WhatsApp üzerinden size dönelim.' },
+  messageLabel: { tr: 'Talebiniz' },
+  placeholder: { tr: 'Ürün, ölçü, adet, varsa istediğiniz yazı veya desen…' },
+  messageRequired: { tr: 'Lütfen talebinizi kısaca yazın.' },
+  note: { tr: 'Görsel veya çizim dosyalarınızı butona bastıktan sonra WhatsApp sohbetinden iletebilirsiniz.' },
+  close: { tr: 'Kapat' },
 };
 
 export const contactSection = {

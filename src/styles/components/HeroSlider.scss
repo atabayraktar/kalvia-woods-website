@@ -28,9 +28,10 @@
   position: relative;
   flex: 0 0 100%;
   min-width: 100%;
+  // Always fills the whole viewport so the next section never peeks in; the 2:1 photo is
+  // cover-fitted, which only trims a sliver off the sides on common 16:9 / 16:10 screens.
   height: 100svh;
   min-height: 600px;
-  max-height: 900px;
   display: flex;
   align-items: flex-end;
 
@@ -75,9 +76,9 @@
   inset: 0;
   background: linear-gradient(
     0deg,
-    color-mix(in srgb, var(--frame-deep) 80%, transparent) 0%,
-    color-mix(in srgb, var(--frame-deep) 40%, transparent) 55%,
-    transparent 100%
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.2) 45%,
+    transparent 75%
   );
 }
 
