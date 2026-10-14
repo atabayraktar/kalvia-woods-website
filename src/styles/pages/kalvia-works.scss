@@ -87,7 +87,7 @@ dd {
   width: 100%;
 
   @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
     gap: var(--space-7);
   }
 }
@@ -121,7 +121,6 @@ dd {
   letter-spacing: 0.26em;
   // The tracking adds trailing space; pull it back so the word centres on the emblem.
   margin-right: -0.26em;
-  text-transform: uppercase;
   color: var(--ink);
 }
 
@@ -153,7 +152,7 @@ dd {
 .kw-hero__prints {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 880px;
   aspect-ratio: 10 / 11;
   justify-self: center;
 
@@ -174,233 +173,41 @@ dd {
   &--main {
     top: 0;
     right: 0;
-    width: 66%;
+    width: 72%;
   }
 
   &--second {
     left: 0;
     bottom: 0;
-    width: 46%;
+    width: 50%;
     border: 6px solid var(--bg);
     z-index: 1;
   }
 }
 
-.kw-hero__caption {
-  @include mono-label;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 48%;
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--ink-muted);
-  font-size: 12px;
-  color: var(--ink-muted);
-}
-
-// ── Statement ───────────────────────────────────────────────────────────────────────
-.kw-statement {
-  background: var(--surface-alt);
-  border-block: 1px solid var(--border);
-  padding-block: var(--space-8);
-  overflow: hidden;
-
-  @media (min-width: 900px) {
-    padding-block: var(--space-9);
-  }
-}
-
-.kw-statement__inner {
-  display: grid;
-  gap: var(--space-7);
-
-  @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-    gap: var(--space-9);
-    align-items: center;
-  }
-}
-
-.kw-statement__print {
-  margin: 0 0 var(--space-3);
-  justify-self: start;
-  width: min(78%, 360px);
-
-  @media (min-width: 900px) {
-    width: 100%;
-    max-width: none;
-  }
-
-  figcaption {
-    @include mono-label;
-    margin-top: var(--space-5);
-    padding-top: var(--space-2);
-    border-top: 1px solid var(--ink-muted);
-    font-size: 12px;
-    color: var(--ink-muted);
-  }
-}
-
-.kw-statement__photo {
-  @include reg-marks(-12px);
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow-raised);
-
-  // reg-marks sit outside the box, so the image needs its own clipping layer.
-  img {
-    border-radius: var(--radius);
-  }
-}
-
-.kw-statement__body {
-  position: relative;
-}
-
-// Oversized opening quote, drawn in the display serif and tucked behind the first line.
-.kw-statement__mark {
-  position: absolute;
-  top: -0.28em;
-  left: -0.06em;
-  z-index: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(150px, 20vw, 300px);
-  line-height: 1;
-  color: var(--accent);
-  opacity: 0.22;
-  pointer-events: none;
-  user-select: none;
-}
-
-.kw-statement__quote {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  padding-top: var(--space-5);
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(34px, 5vw, 72px);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-  max-width: 16ch;
-}
-
-.kw-statement__attribution {
-  @include eyebrow;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
-  color: var(--accent-hover);
-
-  &::before {
-    content: '';
-    width: 40px;
-    height: 2px;
-    background: currentColor;
-  }
-}
-
-.kw-statement__text {
-  position: relative;
-  z-index: 1;
-  max-width: 54ch;
-  margin-top: var(--space-5);
-  color: var(--ink-muted);
-  font-size: 17px;
-  line-height: 1.7;
-}
-
-// The motto, three ruled cells instead of one stamped line.
-.kw-statement__pillars {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  margin-top: var(--space-7);
-  border-top: 2px solid var(--ink);
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  li {
-    display: grid;
-    gap: var(--space-1);
-    align-content: start;
-    padding: var(--space-4) var(--space-4) var(--space-4) 0;
-    border-bottom: 1px solid var(--border);
-
-    @media (min-width: 640px) {
-      border-bottom: 0;
-      border-left: 1px solid var(--border);
-      padding: var(--space-4);
-
-      &:first-child {
-        border-left: 0;
-        padding-left: 0;
-      }
-    }
-  }
-
-  strong {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(22px, 2.2vw, 30px);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-
-  span {
-    color: var(--ink-muted);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-}
 
 // ── Services: terms + a sticky print ────────────────────────────────────────────────
 .kw-services {
-  padding-block: var(--space-8);
+  padding-block: var(--space-7);
 
   @media (min-width: 900px) {
-    padding-block: var(--space-9);
+    padding-block: var(--space-8);
   }
 }
 
 .kw-services__head {
   display: grid;
   gap: var(--space-3);
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-6);
 
   @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-    gap: var(--space-9);
-    align-items: end;
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
   }
 
   h2 {
     font-size: clamp(40px, 6.4vw, 96px);
     line-height: 0.96;
     letter-spacing: -0.04em;
-  }
-
-  .kw-eyebrow {
-    grid-column: 1 / -1;
-    margin-bottom: 0;
-  }
-
-  p {
-    color: var(--ink-muted);
-    font-size: 17px;
-    line-height: 1.6;
-    max-width: 34ch;
   }
 }
 
@@ -409,14 +216,9 @@ dd {
   gap: var(--space-5);
 
   @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
     gap: var(--space-9);
-    align-items: start;
   }
-}
-
-.kw-services__list {
-  border-top: 2px solid var(--ink);
 }
 
 .kw-services__row {
@@ -449,12 +251,12 @@ dd {
   }
 
   @media (min-width: 900px) {
-    &.is-active h3 {
+    &[data-active] h3 {
       transform: translateX(10px);
       color: var(--accent-hover);
     }
 
-    &.is-active p {
+    &[data-active] p {
       color: var(--ink);
     }
   }
@@ -485,14 +287,14 @@ dd {
 
   @media (min-width: 900px) {
     display: block;
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-5));
   }
 }
 
+// The stage stretches the full height of the list; the frame sticks inside it.
 .kw-services__frame {
   @include reg-marks(-12px);
-  position: relative;
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-5));
   aspect-ratio: 4 / 5;
   border-radius: var(--radius);
   background: var(--surface-alt);
@@ -511,23 +313,23 @@ dd {
 
 // ── Projects: contact sheet ─────────────────────────────────────────────────────────
 .kw-projects {
-  padding-block: var(--space-8) var(--space-9);
+  padding-block: var(--space-7);
 
   @media (min-width: 900px) {
-    padding-block: var(--space-9);
+    padding-block: var(--space-8);
   }
 }
 
 .kw-projects__head {
   display: grid;
   gap: var(--space-5);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 
   @media (min-width: 900px) {
     grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
     gap: var(--space-9);
     align-items: end;
-    margin-bottom: var(--space-9);
+    margin-bottom: var(--space-6);
   }
 }
 
@@ -537,14 +339,6 @@ dd {
     font-size: clamp(40px, 6.4vw, 96px);
     line-height: 0.96;
     letter-spacing: -0.04em;
-
-    em {
-      font-style: italic;
-      font-weight: 500;
-      color: var(--accent-hover);
-      // Second line steps in, like the work-order carriage return.
-      margin-left: 0.5em;
-    }
   }
 }
 
@@ -644,16 +438,21 @@ dd {
   background: var(--surface-alt);
   box-shadow: var(--shadow-surface);
   line-height: 0;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  cursor: zoom-in;
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 
   img {
     display: block;
     width: 100%;
     height: auto;
-    transition: transform 0.7s var(--ease-out);
-  }
-
-  &:hover img {
-    transform: scale(1.035);
   }
 }
 
@@ -665,10 +464,10 @@ dd {
 
 // ── Work order strip ────────────────────────────────────────────────────────────────
 .kw-process {
-  padding-block: var(--space-8);
+  padding-block: var(--space-7);
 
   @media (min-width: 900px) {
-    padding-block: var(--space-9);
+    padding-block: var(--space-8);
   }
 }
 
@@ -676,7 +475,7 @@ dd {
   font-size: clamp(30px, 4vw, 52px);
   line-height: 1.05;
   letter-spacing: -0.03em;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .kw-process__strip {
@@ -738,12 +537,13 @@ dd {
 .kw-faq {
   display: grid;
   gap: var(--space-7);
-  padding-bottom: var(--space-9);
+  padding-block: var(--space-7);
 
   @media (min-width: 900px) {
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
     gap: var(--space-9);
     align-items: start;
+    padding-block: var(--space-8);
   }
 }
 
@@ -808,198 +608,51 @@ dd {
 }
 
 .kw-faq__list {
-  border-top: 2px solid var(--ink);
+  display: grid;
+  gap: var(--space-3);
 }
 
+// Each question is its own paper card; the open one gains an oak-gold edge and a washed fill.
 .kw-faq__item {
-  border-bottom: 1px solid var(--border);
-
-  summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    min-height: 60px;
-    padding: var(--space-3) 0;
-    cursor: pointer;
-    list-style: none;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 19px;
-    line-height: 1.3;
-    transition: color 0.25s var(--ease-out);
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &:hover,
-    &:focus-visible {
-      color: var(--accent-hover);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-  }
-
-  p {
-    color: var(--ink-muted);
-    font-size: 16px;
-    line-height: 1.65;
-    max-width: 62ch;
-    padding-bottom: var(--space-4);
-  }
-}
-
-.kw-faq__chevron {
-  position: relative;
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 50% 0 auto;
-    height: 2px;
-    margin-top: -1px;
-    background: currentColor;
-    transition: transform 0.3s var(--ease-out);
-  }
-
-  &::after {
-    transform: rotate(90deg);
-  }
-}
-
-.kw-faq__item[open] .kw-faq__chevron::after {
-  transform: rotate(0deg);
-}
-
-// ── Contact ─────────────────────────────────────────────────────────────────────────
-.kw-contact {
-  background: var(--surface-alt);
-  border-top: 1px solid var(--border);
-  padding-block: var(--space-8);
-
-  @media (min-width: 768px) {
-    padding-block: var(--space-9);
-  }
-}
-
-.kw-contact__inner {
-  display: grid;
-  gap: var(--space-8);
-
-  @media (min-width: 960px) {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: var(--space-9);
-    align-items: center;
-  }
-}
-
-.kw-contact__lead {
-  h2 {
-    @include eyebrow;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin-bottom: var(--space-5);
-    color: var(--accent-hover);
-
-    &::before {
-      content: '';
-      width: 32px;
-      height: 2px;
-      background: currentColor;
-    }
-  }
-}
-
-// The promise is the headline of this band: large, italic second line.
-.kw-contact__promise {
-  display: grid;
-  gap: 0.05em;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(30px, 4.6vw, 64px);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-  max-width: 17ch;
-
-  em {
-    font-style: italic;
-    font-weight: 500;
-    color: var(--accent-hover);
-  }
-}
-
-.kw-contact__note {
-  max-width: 44ch;
-  margin-top: var(--space-5);
-  color: var(--ink-muted);
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-.kw-contact__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-5);
-  margin-top: var(--space-6);
-}
-
-.kw-contact__wa-icon {
-  display: grid;
-  place-items: center;
-}
-
-// One paper card: channels on top, the atelier below, ruled between.
-.kw-contact__card {
-  @include reg-marks(8px);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-surface);
-}
+  transition: border-color 0.35s var(--ease-out), background-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
 
-.kw-contact__channels {
-  li + li {
-    border-top: 1px solid var(--border);
-  }
-}
-
-.kw-contact__channel {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  color: inherit;
-  transition: background-color 0.3s var(--ease-out);
-
-  @media (min-width: 480px) {
-    gap: var(--space-4);
-    padding: var(--space-4) var(--space-5);
-  }
-
-  &:hover,
-  &:focus-visible {
+  &[data-open] {
     background: var(--accent-wash);
+    box-shadow: var(--shadow-raised);
+  }
 
-    .kw-contact__value {
-      color: var(--accent-hover);
-    }
+  h3 {
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
 
-    .kw-contact__go {
-      transform: translateX(4px);
-      color: var(--accent-hover);
-    }
+.kw-faq__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 68px;
+  padding: var(--space-3) var(--space-5);
+  background: none;
+  border: 0;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.3;
+  transition: color 0.25s var(--ease-out);
+
+  &:hover {
+    color: var(--accent-hover);
   }
 
   &:focus-visible {
@@ -1008,82 +661,106 @@ dd {
   }
 }
 
-.kw-contact__channel-text {
+// Smooth open: the row track animates 0fr → 1fr, so the height needs no measuring.
+.kw-faq__panel {
   display: grid;
-  gap: 2px;
-  min-width: 0;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
 }
 
-.kw-contact__icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--accent-hover);
-  flex-shrink: 0;
-}
+.kw-faq__panel-inner {
+  overflow: hidden;
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.35s var(--ease-out), transform 0.45s var(--ease-out);
 
-.kw-contact__label {
-  @include eyebrow;
-}
-
-.kw-contact__value {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(16px, 4.6vw, 20px);
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-  transition: color 0.25s var(--ease-out);
-}
-
-.kw-contact__go {
-  display: grid;
-  color: var(--ink-muted);
-  transition: transform 0.3s var(--ease-spring), color 0.25s var(--ease-out);
-}
-
-.kw-contact__atelier {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr);
-  gap: var(--space-4);
-  align-items: start;
-  padding: var(--space-5);
-  border-top: 2px solid var(--ink);
-
-  > div {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-1);
+  p {
+    padding: 0 var(--space-5) var(--space-5);
+    max-width: 62ch;
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 1.7;
   }
 }
 
-.kw-contact__address {
-  font-style: normal;
-  font-size: 16px;
-  line-height: 1.5;
+.kw-faq__item[data-open] {
+  .kw-faq__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .kw-faq__panel-inner {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.kw-contact__hours {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ink-muted);
-  margin-bottom: var(--space-2);
+// Plus that turns into a minus inside a small square.
+.kw-faq__chevron {
+  position: relative;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--ink-muted);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: background-color 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 2px;
+    margin: -1px 0 0 -6px;
+    background: currentColor;
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+}
+
+.kw-faq__item[data-open] .kw-faq__chevron {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+
+  &::after {
+    transform: rotate(0deg);
+  }
+}
+
+// ── Contact ─────────────────────────────────────────────────────────────────────────
+.kw-contact {
+  padding-block: var(--space-7);
+
+  @media (min-width: 900px) {
+    padding-block: var(--space-8);
+  }
+
+  // Compact ledger line: no rule above it, no extra air around it.
+  .contact-section__info-row {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .kw-services__row h3,
   .kw-services__frame img,
-  .kw-project__photo img,
-  .kw-btn svg,
-  .kw-contact__go {
+  .kw-faq__item,
+  .kw-faq__panel,
+  .kw-faq__panel-inner,
+  .kw-btn svg {
     transition: none;
   }
 
-  .kw-services__row.is-active h3,
-  .kw-project__photo:hover img {
+  .kw-services__row[data-active] h3 {
     transform: none;
   }
 }

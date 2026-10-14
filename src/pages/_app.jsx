@@ -17,7 +17,6 @@ import CustomOrderModal from '@/components/CustomOrderModal';
 // small uppercase UI voice (nav, buttons, labels).
 const fraunces = Fraunces({
   subsets: ['latin', 'latin-ext'],
-  style: ['normal', 'italic'],
   axes: ['opsz'],
   variable: '--font-fraunces',
   display: 'swap',

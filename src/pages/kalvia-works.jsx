@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { kalviaWorks as kw } from '@/data/kalviaWorksContent';
 import Surface from '@/components/Surface';
 import KalviaEmblem from '@/components/KalviaEmblem';
+import Lightbox from '@/components/Lightbox';
 import useScrollReveal from '@/hooks/useScrollReveal';
 
 const SITE_URL = 'https://kalviawoods.example';
@@ -82,12 +83,15 @@ export default function KalviaWorksPage() {
   const { t } = useLanguage();
   useScrollReveal();
   const [activeService, setActiveService] = useState(0);
-  const { hero, statement, services, projects, process, faq, contact } = kw;
+  const [zoomIndex, setZoomIndex] = useState(null);
+  const [openFaq, setOpenFaq] = useState(0);
+  const { hero, services, projects, process, faq, contact } = kw;
 
   const channels = [
     { icon: 'phone', label: 'Telefon', value: kw.phoneDisplay, href: `tel:${kw.phone.replace(/\s/g, '')}` },
-    { icon: 'mail', label: 'E-posta', value: kw.email, href: `mailto:${kw.email}` },
-    { icon: 'instagram', label: 'Instagram', value: kw.instagramHandle, href: kw.instagramHref, external: true },
+    { icon: 'instagram', label: 'Instagram', value: kw.instagramHandle, href: kw.instagramHref },
+    { icon: 'pin', label: 'Adres', value: kw.address, href: contact.mapHref },
+    { icon: 'whatsapp', label: 'WhatsApp', value: kw.phoneDisplay, href: waLink(contact.whatsappMessage) },
   ];
 
   return (
@@ -151,34 +155,6 @@ export default function KalviaWorksPage() {
               <figure className="kw-hero__print kw-hero__print--second">
                 <Image src={hero.imageSecond} alt={t(hero.imageSecondAlt)} fill sizes="(max-width: 900px) 46vw, 20vw" style={{ objectFit: 'cover' }} />
               </figure>
-              <span className="kw-hero__caption">{t(hero.caption)}</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Statement: a print on the left, an editorial pull quote on the right. */}
-        <section className="kw-statement">
-          <div className="container kw-statement__inner">
-            <figure className="kw-statement__print" data-reveal>
-              <div className="kw-statement__photo">
-                <Image src={statement.image} alt={t(statement.imageAlt)} fill sizes="(max-width: 900px) 80vw, 30vw" style={{ objectFit: 'cover' }} />
-              </div>
-              <figcaption>{t(statement.imageCaption)}</figcaption>
-            </figure>
-
-            <div className="kw-statement__body" data-reveal>
-              <span className="kw-statement__mark" aria-hidden="true">“</span>
-              <blockquote className="kw-statement__quote">{t(statement.quote)}</blockquote>
-              <p className="kw-statement__attribution">{t(statement.attribution)}</p>
-              <p className="kw-statement__text">{t(statement.text)}</p>
-              <ul className="kw-statement__pillars">
-                {statement.pillars.map((pillar) => (
-                  <li key={pillar.word.tr}>
-                    <strong>{t(pillar.word)}</strong>
-                    <span>{t(pillar.note)}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </section>
@@ -186,16 +162,15 @@ export default function KalviaWorksPage() {
         {/* Services: big terms on the left, a sticky print on the right that follows the pointer. */}
         <section className="kw-services container">
           <div className="kw-services__head" data-reveal>
-            <span className="kw-eyebrow">{t(services.eyebrow)}</span>
             <h2>{t(services.title)}</h2>
-            <p>{t(services.intro)}</p>
           </div>
 
           <div className="kw-services__body">
             <ul className="kw-services__list">
               {services.items.map((item, i) => (
                 <li
-                  className={`kw-services__row${activeService === i ? ' is-active' : ''}`}
+                  className="kw-services__row"
+                  data-active={activeService === i ? 'true' : undefined}
                   key={item.title.tr}
                   onMouseEnter={() => setActiveService(i)}
                   data-reveal
@@ -234,10 +209,9 @@ export default function KalviaWorksPage() {
           <div className="container">
             <div className="kw-projects__head" data-reveal>
               <div className="kw-projects__title">
-                <span className="kw-eyebrow">{t(projects.label)}</span>
                 <h2>
                   <span>{t(projects.titleTop)}</span>
-                  <em>{t(projects.titleBottom)}</em>
+                  <span>{t(projects.titleBottom)}</span>
                 </h2>
               </div>
               <div className="kw-projects__aside">
@@ -248,9 +222,14 @@ export default function KalviaWorksPage() {
               </div>
             </div>
             <div className="kw-projects__grid">
-              {projects.items.map((item) => (
+              {projects.items.map((item, i) => (
                 <figure className={`kw-project kw-project--${item.key}`} key={item.key} data-reveal>
-                  <div className="kw-project__photo">
+                  <button
+                    type="button"
+                    className="kw-project__photo"
+                    onClick={() => setZoomIndex(i)}
+                    aria-label={`${t(item.title)} — görseli büyüt`}
+                  >
                     <Image
                       src={item.image}
                       alt={`${t(item.title)} — Kalvia Works uygulaması`}
@@ -258,7 +237,7 @@ export default function KalviaWorksPage() {
                       height={item.height}
                       sizes="(max-width: 767px) 86vw, 40vw"
                     />
-                  </div>
+                  </button>
                   <figcaption>
                     <span className="kw-project__tag">{t(item.tag)}</span>
                     <h3>{t(item.title)}</h3>
@@ -269,6 +248,14 @@ export default function KalviaWorksPage() {
             </div>
           </div>
         </section>
+
+        <Lightbox
+          open={zoomIndex !== null}
+          images={projects.items.map((item) => item.image)}
+          initialIndex={zoomIndex ?? 0}
+          alt="Kalvia Works uygulaması"
+          onClose={() => setZoomIndex(null)}
+        />
 
         {/* Work order: one ruled strip, four stops. */}
         <section className="kw-process container">
@@ -307,77 +294,49 @@ export default function KalviaWorksPage() {
             </figure>
           </aside>
           <div className="kw-faq__list" data-reveal>
-            {faq.items.map((item) => (
-              <details className="kw-faq__item" key={item.q.tr}>
-                <summary>
-                  <span>{t(item.q)}</span>
-                  <span className="kw-faq__chevron" aria-hidden="true" />
-                </summary>
-                <p>{t(item.a)}</p>
-              </details>
-            ))}
+            {faq.items.map((item, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <div className="kw-faq__item" data-open={isOpen ? 'true' : undefined} key={item.q.tr}>
+                  <h3>
+                    <button
+                      type="button"
+                      className="kw-faq__trigger"
+                      aria-expanded={isOpen}
+                      aria-controls={`kw-faq-panel-${i}`}
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                    >
+                      <span>{t(item.q)}</span>
+                      <span className="kw-faq__chevron" aria-hidden="true" />
+                    </button>
+                  </h3>
+                  <div className="kw-faq__panel" id={`kw-faq-panel-${i}`} role="region">
+                    <div className="kw-faq__panel-inner">
+                      <p>{t(item.a)}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
-        {/* Contact: the promise up front, channels as one ruled card. */}
+        {/* Contact: the homepage ledger line — four entries on a heavy rule. */}
         <section className="kw-contact">
-          <div className="container kw-contact__inner">
-            <div className="kw-contact__lead" data-reveal>
-              <h2>{t(contact.title)}</h2>
-              <p className="kw-contact__promise">
-                <span>{t(contact.promiseTop)}</span>
-                <em>{t(contact.promiseBottom)}</em>
-              </p>
-              <p className="kw-contact__note">{t(contact.note)}</p>
-              <div className="kw-contact__actions">
-                <Surface
-                  as="a"
-                  href={waLink(contact.whatsappMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="surface--cta"
-                  contentClassName="kw-btn"
-                >
-                  <span className="kw-contact__wa-icon">{ICONS.whatsapp}</span>
-                  <span className="btn__label">{t(contact.whatsapp)}</span>
-                </Surface>
-                <a className="kw-link" href={kw.siteHref} target="_blank" rel="noopener noreferrer">
-                  {t(contact.site)} ↗
-                </a>
-              </div>
-            </div>
-
-            <div className="kw-contact__card" data-reveal>
-              <ul className="kw-contact__channels">
-                {channels.map((row) => (
-                  <li key={row.label}>
-                    <a
-                      className="kw-contact__channel"
-                      href={row.href}
-                      {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      <span className="kw-contact__icon">{ICONS[row.icon]}</span>
-                      <span className="kw-contact__channel-text">
-                        <span className="kw-contact__label">{row.label}</span>
-                        <span className="kw-contact__value">{row.value}</span>
-                      </span>
-                      <span className="kw-contact__go" aria-hidden="true">{ARROW}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div className="kw-contact__atelier">
-                <span className="kw-contact__icon">{ICONS.pin}</span>
-                <div>
-                  <span className="kw-contact__label">{t(contact.atelier)}</span>
-                  <address className="kw-contact__address">{kw.address}</address>
-                  <p className="kw-contact__hours">{t(kw.hours)}</p>
-                  <a className="kw-link" href={contact.mapHref} target="_blank" rel="noopener noreferrer">
-                    {t(contact.mapLabel)} ↗
+          <div className="container">
+            <ul className="contact-section__info-row" data-reveal>
+              {channels.map((row) => (
+                <li key={row.label}>
+                  <a className="contact-section__info-link" href={row.href} target={row.icon === 'phone' ? undefined : '_blank'} rel={row.icon === 'phone' ? undefined : 'noopener noreferrer'}>
+                    <span className={`contact-section__info-icon${row.icon === 'whatsapp' ? ' contact-section__info-icon--whatsapp' : ''}`}>{ICONS[row.icon]}</span>
+                    <span className="contact-section__info-text">
+                      <span className="contact-section__info-label">{row.label}</span>
+                      <span className="contact-section__info-value">{row.value}</span>
+                    </span>
                   </a>
-                </div>
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </main>

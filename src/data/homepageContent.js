@@ -9,7 +9,7 @@ export const header = {
     { href: '/urunler', label: { tr: 'Ürünler' } },
     { href: '#hakkimizda', label: { tr: 'Hakkımızda' } },
     { href: '#iletisim', label: { tr: 'İletişim' } },
-    { href: '/kalvia-works', label: { tr: 'Kalvia Works' } },
+    { href: '/kalvia-works', label: { tr: 'KALVIA WORKS' } },
   ],
 };
 

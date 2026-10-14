@@ -20,14 +20,14 @@ export default function useBodyScrollLock(active) {
 
     if (lockCount === 0) {
       savedScrollY = window.scrollY;
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       const { body } = document;
       body.style.position = 'fixed';
       body.style.top = `-${savedScrollY}px`;
       body.style.left = '0';
       body.style.right = '0';
       body.style.width = '100%';
-      if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
+      // No scrollbar padding: html has scrollbar-gutter: stable (globals.scss), so the gutter
+      // stays reserved while body is pinned. Adding it again left a strip on the right.
     }
     lockCount += 1;
 
@@ -40,7 +40,6 @@ export default function useBodyScrollLock(active) {
       body.style.left = '';
       body.style.right = '';
       body.style.width = '';
-      body.style.paddingRight = '';
       window.scrollTo(0, savedScrollY);
     };
   }, [active]);

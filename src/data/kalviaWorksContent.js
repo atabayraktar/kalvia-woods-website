@@ -17,7 +17,7 @@ export const kalviaWorks = {
 
   hero: {
     stamp: { tr: 'Kalvia Woods’un kardeş markası' },
-    wordmark: 'Kalvia Works',
+    wordmark: 'KALVIA WORKS',
     lead: { tr: 'Mekânınıza karakter katan duvar paneli, lambri ve cephe kaplama.' },
     text: { tr: 'Çanakkale’de ev dekorasyonu ve iç mekân uygulaması. Ölçüden montaja her adım tek elde.' },
     cta: { tr: 'Ücretsiz keşif iste' },
@@ -28,22 +28,6 @@ export const kalviaWorks = {
     imageSecond: `${PHOTOS}/galeri-antre-gold.webp`,
     imageSecondAlt: { tr: 'Altın damarlı taş doku panel, lambri bordür ve gizli LED aydınlatmalı antre duvarı' },
     caption: { tr: 'Salon TV duvarı, Çanakkale' },
-  },
-
-  statement: {
-    quote: { tr: 'Her detay, mekânın hikâyesini anlatır.' },
-    attribution: { tr: 'Kalvia Works' },
-    text: {
-      tr: 'Modern cephe ve duvar paneli sistemlerinde uzmanlaşmış bir uygulama atölyesiyiz. Amacımız yüzeyi kaplamak değil; yaşadığınız ve çalıştığınız mekâna karakter katmak.',
-    },
-    image: `${PHOTOS}/salon-tas-panel-2.webp`,
-    imageAlt: { tr: 'Taş dokulu panel ve lambri ile kaplanmış salon duvarı' },
-    imageCaption: { tr: 'Taş panel salon, Çanakkale' },
-    pillars: [
-      { word: { tr: 'Tasarla' }, note: { tr: 'Ölçü, ışık ve doku birlikte planlanır.' } },
-      { word: { tr: 'Uygula' }, note: { tr: 'Milimetrik kesim, temiz montaj.' } },
-      { word: { tr: 'Fark yarat' }, note: { tr: 'Mekân kendi karakterini bulur.' } },
-    ],
   },
 
   services: {

@@ -39,6 +39,12 @@
     margin-inline: auto;
     padding: 10px var(--container-pad);
     min-height: var(--header-height);
+
+    // Large monitors: the bar stretches edge to edge with tighter side padding.
+    @media (min-width: 1600px) {
+      max-width: none;
+      padding-inline: 32px;
+    }
   }
 
   &__brand {
