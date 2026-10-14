@@ -66,14 +66,14 @@
   box-shadow: var(--shadow-raised);
 
   @media (min-width: 768px) {
-    padding: var(--space-6);
+    padding: var(--space-5) var(--space-6);
   }
 
   @media (min-width: 900px) {
     grid-column: 7 / 13;
     grid-row: 1;
     margin: var(--space-9) 0 0;
-    padding: var(--space-7) var(--space-7) var(--space-7) var(--space-8);
+    padding: var(--space-6) var(--space-6) var(--space-6) var(--space-7);
   }
 }
 

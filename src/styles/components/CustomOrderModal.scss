@@ -107,3 +107,11 @@
     opacity: 0;
   }
 }
+
+// A little breathing room before the text/placeholder so it does not sit flush on the rule.
+.order-modal .contact-section__field {
+  input,
+  textarea {
+    padding-inline: var(--space-3);
+  }
+}

@@ -17,8 +17,7 @@ export const kalviaWorks = {
 
   hero: {
     stamp: { tr: 'Kalvia Woods’un kardeş markası' },
-    titleTop: 'Kalvia',
-    titleBottom: 'Works',
+    wordmark: 'Kalvia Works',
     lead: { tr: 'Mekânınıza karakter katan duvar paneli, lambri ve cephe kaplama.' },
     text: { tr: 'Çanakkale’de ev dekorasyonu ve iç mekân uygulaması. Ölçüden montaja her adım tek elde.' },
     cta: { tr: 'Ücretsiz keşif iste' },
@@ -33,28 +32,83 @@ export const kalviaWorks = {
 
   statement: {
     quote: { tr: 'Her detay, mekânın hikâyesini anlatır.' },
+    attribution: { tr: 'Kalvia Works' },
     text: {
-      tr: 'Kalvia Works, modern cephe ve duvar paneli sistemlerinde uzmanlaşmış bir uygulama atölyesi. Amacımız yüzeyi kaplamak değil; yaşadığınız ve çalıştığınız mekâna karakter katmak.',
+      tr: 'Modern cephe ve duvar paneli sistemlerinde uzmanlaşmış bir uygulama atölyesiyiz. Amacımız yüzeyi kaplamak değil; yaşadığınız ve çalıştığınız mekâna karakter katmak.',
     },
-    motto: { tr: 'Tasarla · Uygula · Fark yarat' },
+    image: `${PHOTOS}/salon-tas-panel-2.webp`,
+    imageAlt: { tr: 'Taş dokulu panel ve lambri ile kaplanmış salon duvarı' },
+    imageCaption: { tr: 'Taş panel salon, Çanakkale' },
+    pillars: [
+      { word: { tr: 'Tasarla' }, note: { tr: 'Ölçü, ışık ve doku birlikte planlanır.' } },
+      { word: { tr: 'Uygula' }, note: { tr: 'Milimetrik kesim, temiz montaj.' } },
+      { word: { tr: 'Fark yarat' }, note: { tr: 'Mekân kendi karakterini bulur.' } },
+    ],
   },
 
   services: {
-    title: { tr: 'Yüzeylere karakter.' },
-    intro: { tr: 'Tasarımdan montaja, ihtiyacınıza göre panel ve lambri çözümleri.' },
+    eyebrow: { tr: 'Hizmetler' },
+    title: { tr: 'Duvardan cepheye.' },
+    intro: { tr: 'Panel, lambri ve cephe kaplama; tasarımdan montaja tek ekip.' },
     items: [
-      { title: { tr: 'Duvar paneli' }, text: { tr: 'Salon, yatak odası, ofis ya da mağaza; mekâna göre doku ve ton seçilen derzsiz duvarlar.' } },
-      { title: { tr: 'Lambri uygulaması' }, text: { tr: 'Mekâna sıcaklık taşıyan, kolay bakımlı, uzun ömürlü kaplama.' } },
-      { title: { tr: 'Cephe kaplama' }, text: { tr: 'Hava koşullarına dirençli, dayanıklı ve estetik dış cephe sistemleri.' } },
-      { title: { tr: 'Akustik panel' }, text: { tr: 'Yankıyı azaltan, ritmik çizgileriyle mekâna karakter veren çözümler.' } },
-      { title: { tr: 'Tasarım ve danışmanlık' }, text: { tr: 'Ölçü, ışık, doku ve bitişi projenizin hedefiyle birlikte planlıyoruz.' } },
-      { title: { tr: 'Profesyonel montaj' }, text: { tr: 'Milimetrik kesim ve birleşim; çoğu zaman mevcut duvarın üzerine, kırım ve moloz olmadan.' } },
+      {
+        title: { tr: 'Duvar paneli' },
+        text: { tr: 'Salon, yatak odası, ofis ya da mağaza; mekâna göre doku ve ton seçilen derzsiz duvarlar.' },
+        image: `${PHOTOS}/galeri-yesil-mermer-gold.webp`,
+        width: 900,
+        height: 1600,
+        alt: { tr: 'Yeşil mermer desenli duvar paneli ve altın çerçeveli oval aynalar' },
+      },
+      {
+        title: { tr: 'Lambri uygulaması' },
+        text: { tr: 'Mekâna sıcaklık taşıyan, kolay bakımlı, uzun ömürlü kaplama.' },
+        image: `${PHOTOS}/oluklu-ahsap.webp`,
+        width: 1200,
+        height: 900,
+        alt: { tr: 'Oluklu lambri panel örnekleri' },
+      },
+      {
+        title: { tr: 'Cephe kaplama' },
+        text: { tr: 'Hava koşullarına dirençli, dayanıklı ve estetik dış cephe sistemleri.' },
+        image: `${PHOTOS}/galeri-flora-cephe.webp`,
+        width: 1200,
+        height: 1600,
+        alt: { tr: 'Antrasit lambri ile kaplanmış çiçekçi dükkânı cephesi' },
+      },
+      {
+        title: { tr: 'Akustik panel' },
+        text: { tr: 'Yankıyı azaltan, ritmik çizgileriyle mekâna karakter veren çözümler.' },
+        image: `${PHOTOS}/galeri-siyah-lambri-led.webp`,
+        width: 1199,
+        height: 1600,
+        alt: { tr: 'Siyah lambri ve LED şeritli oturma alanı duvarı' },
+      },
+      {
+        title: { tr: 'Tasarım ve danışmanlık' },
+        text: { tr: 'Ölçü, ışık, doku ve bitişi projenizin hedefiyle birlikte planlıyoruz.' },
+        image: `${PHOTOS}/galeri-restoran.webp`,
+        width: 900,
+        height: 1600,
+        alt: { tr: 'Oluklu lambri ve mermer desenli panelle tasarlanmış restoran iç mekânı' },
+      },
+      {
+        title: { tr: 'Profesyonel montaj' },
+        text: { tr: 'Milimetrik kesim ve birleşim; çoğu zaman mevcut duvarın üzerine, kırım ve moloz olmadan.' },
+        image: `${PHOTOS}/galeri-tas-panel-led.webp`,
+        width: 1200,
+        height: 1600,
+        alt: { tr: 'Taş dokulu panel nişi ve gizli LED aydınlatma' },
+      },
     ],
   },
 
   projects: {
-    title: { tr: 'Gerçek mekânlar, gerçek montaj.' },
-    intro: { tr: 'Her kare bizim uygulamamız. Beğendiğiniz işin fotoğrafını WhatsApp’tan gönderin, benzerini mekânınız için fiyatlandıralım.' },
+    titleTop: { tr: 'Gerçek mekânlar,' },
+    titleBottom: { tr: 'gerçek montaj.' },
+    label: { tr: 'Uygulamalarımız' },
+    intro: { tr: 'Her kare bizim uygulamamız. Beğendiğiniz işin fotoğrafını gönderin, benzerini mekânınız için fiyatlandıralım.' },
+    cta: { tr: 'Fotoğraf gönder' },
+    ctaMessage: 'Merhaba, Kalvia Works sitesindeki bir uygulamanın benzerini mekânım için fiyatlandırmanızı istiyorum.',
     items: [
       {
         key: 'a',
@@ -134,6 +188,12 @@ export const kalviaWorks = {
 
   faq: {
     title: { tr: 'Aklınıza takılanlar' },
+    intro: { tr: 'Cevabı burada yoksa mekânınızın fotoğrafını gönderin; aynı gün dönelim.' },
+    cta: { tr: 'WhatsApp’tan sor' },
+    ctaMessage: 'Merhaba, Kalvia Works hakkında bir sorum var.',
+    image: `${PHOTOS}/galeri-antre-gold.webp`,
+    imageAlt: { tr: 'Altın damarlı taş doku panel, lambri bordür ve gizli LED aydınlatmalı antre duvarı' },
+    imageCaption: { tr: 'Antre duvarı, altın taş doku' },
     items: [
       {
         q: { tr: 'Uygulama ne kadar sürer?' },
@@ -168,9 +228,14 @@ export const kalviaWorks = {
 
   contact: {
     title: { tr: 'Projenizi konuşalım.' },
-    text: { tr: 'Mekânınızın fotoğrafını gönderin, aynı gün fiyat aralığıyla dönelim.' },
+    promiseTop: { tr: 'Mekânınızın fotoğrafını gönderin,' },
+    promiseBottom: { tr: 'aynı gün fiyat aralığıyla dönelim.' },
+    note: { tr: 'Çanakkale’de keşif ücretsiz. Panel ve lambri ürünleri Türkiye geneline gönderilir.' },
     whatsapp: { tr: 'WhatsApp’tan yaz' },
     whatsappMessage: 'Merhaba, Kalvia Works lambri/panel uygulaması için bilgi almak istiyorum.',
     site: { tr: 'Kalvia Works sitesi' },
+    mapLabel: { tr: 'Haritada aç' },
+    mapHref: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('İsmetpaşa Mah. 60. Sk. No:6/2B, Çanakkale')}`,
+    atelier: { tr: 'Atölye' },
   },
 };

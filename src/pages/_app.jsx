@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Fraunces, IBM_Plex_Sans } from 'next/font/google';
+import { Fraunces, IBM_Plex_Sans, Marcellus } from 'next/font/google';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import '@/styles/main.scss';
@@ -20,6 +20,14 @@ const fraunces = Fraunces({
   style: ['normal', 'italic'],
   axes: ['opsz'],
   variable: '--font-fraunces',
+  display: 'swap',
+});
+
+// Marcellus is the one exception to the two-family rule: the Kalvia Works wordmark only.
+const marcellus = Marcellus({
+  subsets: ['latin', 'latin-ext'],
+  weight: '400',
+  variable: '--font-marcellus',
   display: 'swap',
 });
 
@@ -165,7 +173,7 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <div className={`${fraunces.variable} ${plexSans.variable} font-root`}>
+    <div className={`${fraunces.variable} ${plexSans.variable} ${marcellus.variable} font-root`}>
       <LanguageProvider>
         <a href="#main-content" className="skip-link">
           Ana içeriğe geç
